@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events | LDM Global</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --primary: #152148;
+            --secondary: #446280;
+            --accent-start: #FF9425;
+            --accent-end: #FE720D;
+            --white: #ffffff;
+            --light-bg: #f8f9fa;
+            --text-dark: #1a1a1a;
+            --text-muted: #6c757d;
+            --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--white);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            z-index: 10000;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        /* Sticky Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            background: rgba(21, 33, 72, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s var(--transition-smooth);
+        }
+
+        .header.scrolled {
+            background: rgba(21, 33, 72, 0.98);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--white);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            transform: translateX(-100%);
+            transition: transform 0.4s var(--transition-smooth);
+        }
+
+        .logo:hover::after {
+            transform: translateX(0);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-tab {
+            padding: 0.75rem 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 50px;
+            transition: all 0.3s var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            opacity: 0;
+            transition: opacity 0.3s var(--transition-smooth);
+            z-index: -1;
+        }
+
+        .nav-tab:hover,
+        .nav-tab.active {
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .nav-tab.active::before,
+        .nav-tab:hover::before {
+            opacity: 1;
+        }
+
+        /* Hero Section with Parallax */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: var(--primary);
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 148, 37, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(68, 98, 128, 0.3) 0%, transparent 50%),
+                linear-gradient(135deg, var(--primary) 0%, #0f1835 100%);
+            z-index: 1;
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 2;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            padding: 0 4rem;
+            text-align: left;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.25rem;
+            background: rgba(255, 148, 37, 0.15);
+            border: 1px solid rgba(255, 148, 37, 0.5);
+            border-radius: 50px;
+            color: var(--accent-start);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s var(--transition-smooth) forwards;
+            box-shadow: 0 0 20px rgba(255, 148, 37, 0.3), inset 0 0 10px rgba(255, 148, 37, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-badge::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 148, 37, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .hero-badge::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent-start);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 10px var(--accent-start);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+        }
+
+        .hero-title .line {
+            display: block;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeUp 0.8s var(--transition-smooth) forwards;
+        }
+
+        .hero-title .line:nth-child(1) { animation-delay: 0.2s; }
+        .hero-title .line:nth-child(2) { animation-delay: 0.4s; }
+
+        .hero-title .accent {
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 400;
+            max-width: 600px;
+            margin-bottom: 3rem;
+            line-height: 1.7;
+            opacity: 0;
+            animation: fadeUp 0.8s var(--transition-smooth) 0.6s forwards;
+        }
+
+        .hero-cta {
+            opacity: 0;
+            animation: fadeUp 0.8s var(--transition-smooth) 0.8s forwards;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 4rem;
+            z-index: 10;
+            opacity: 0;
+            animation: fadeUp 0.8s var(--transition-smooth) 1s forwards;
+        }
+
+        .scroll-mouse {
+            width: 26px;
+            height: 40px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 13px;
+            position: relative;
+        }
+
+        .scroll-wheel {
+            width: 4px;
+            height: 8px;
+            background: var(--accent-start);
+            border-radius: 2px;
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scrollWheel 2s infinite;
+        }
+
+        @keyframes scrollWheel {
+            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(12px); }
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 8rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-header {
+            max-width: 1400px;
+            margin: 0 auto 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .section-label {
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-start);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-label::after {
+            content: '';
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.2;
+            max-width: 600px;
+        }
+
+        /* Featured Event */
+        .featured-section {
+            background: var(--light-bg);
+        }
+
+        .featured-event {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .featured-visual {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 40px 80px rgba(21, 33, 72, 0.2);
+            transform: perspective(1000px) rotateY(-5deg);
+            transition: transform 0.6s var(--transition-smooth);
+        }
+
+        .featured-visual:hover {
+            transform: perspective(1000px) rotateY(0deg);
+        }
+
+        .featured-image {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></svg>');
+            opacity: 0.3;
+        }
+
+        .featured-date {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .featured-date .month {
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-start);
+        }
+
+        .featured-date .day {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .featured-content {
+            padding: 2rem 0;
+        }
+
+        .event-meta {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .meta-icon {
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.7rem;
+        }
+
+        .featured-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .featured-description {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s var(--transition-smooth);
+            box-shadow: 0 10px 30px rgba(255, 148, 37, 0.3);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--accent-end), var(--accent-start));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(255, 148, 37, 0.4);
+        }
+
+        .btn:hover::before {
+            opacity: 1;
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Events Grid */
+        .events-section {
+            background: var(--white);
+        }
+
+        .events-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .event-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.4s var(--transition-smooth);
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .event-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(21, 33, 72, 0.15);
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            transform: scaleX(0);
+            transition: transform 0.4s var(--transition-smooth);
+        }
+
+        .event-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .event-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(21, 33, 72, 0.8) 100%);
+        }
+
+        .event-date-badge {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            background: var(--white);
+            padding: 0.75rem 1.25rem;
+            border-radius: 10px;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.875rem;
+            z-index: 2;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-type {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            color: var(--white);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 2;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .event-details {
+            padding: 2rem;
+        }
+
+        .event-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .event-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .event-description {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .event-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-start);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: gap 0.3s;
+        }
+
+        .event-link:hover {
+            gap: 1rem;
+        }
+
+        /* Past Events Timeline */
+        .past-section {
+            background: var(--light-bg);
+        }
+
+        .timeline {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent-start), var(--accent-end));
+            opacity: 0.3;
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 50%;
+            position: relative;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.6s var(--transition-smooth);
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-right: 0;
+            padding-left: 50%;
+            transform: translateX(50px);
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .timeline-content {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            max-width: 400px;
+            margin-right: 3rem;
+            position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-right: 0;
+            margin-left: 3rem;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            border-radius: 50%;
+            border: 4px solid var(--white);
+            box-shadow: 0 0 0 4px rgba(255, 148, 37, 0.2);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -42px;
+            transform: translateY(-50%);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -42px;
+            transform: translateY(-50%);
+        }
+
+        .timeline-year {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--accent-start);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-location {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary) 0%, #0f1835 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 6rem 2rem;
+        }
+
+        .cta-bg {
+            position: absolute;
+            inset: 0;
+            opacity: 0.1;
+            background-image: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M30 0L60 30L30 60L0 30L30 0z" fill="none" stroke="white" stroke-width="1"/></svg>');
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-text {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2.5rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--primary);
+            border-color: var(--white);
+        }
+
+        /* Footer */
+        .footer {
+            background: #0a0f1f;
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand {
+            color: var(--white);
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .footer-tagline {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-heading {
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            display: inline-block;
+            position: relative;
+        }
+
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent-start);
+            transition: width 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .featured-event {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                justify-content: flex-start;
+                padding-left: 80px;
+                padding-right: 0;
+                transform: translateX(0);
+            }
+            
+            .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                margin-left: 0;
+                margin-right: 0;
+                max-width: 100%;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content::before,
+            .timeline-item:nth-child(even) .timeline-content::before {
+                left: -52px;
+                right: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-tabs {
+                display: none;
+            }
+            
+            .hero-content {
+                padding: 0 2rem;
+            }
+            
+            .scroll-indicator {
+                left: 2rem;
+            }
+            
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-container">
+            <a href="#" class="logo">LDM GLOBAL</a>
+            <nav class="nav-tabs">
+                <a href="#upcoming" class="nav-tab active">Upcoming</a>
+                <a href="#featured" class="nav-tab">Featured</a>
+                <a href="#past" class="nav-tab">Past Events</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="upcoming">
+        <div class="hero-bg"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <div class="hero-badge">Global Legal Events</div>
+            <h1 class="hero-title">
+                <span class="line">Strategic Counsel.</span>
+                <span class="line"><span class="accent">Global Presence.</span></span>
+            </h1>
+            <p class="hero-subtitle">LDM Global partners with leading law firms and corporate legal departments at the industry's most critical forums. From eDiscovery complexities to cyber risk governance, our experts deliver actionable intelligence that drives litigation strategy and regulatory compliance.</p>
+            <div class="hero-cta">
+                <a href="#featured" class="btn">
+                    <span>Explore Our Calendar</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Event -->
+    <section class="section featured-section" id="featured">
+        <div class="section-header">
+            <div>
+                <div class="section-label">Featured Event</div>
+                <h2 class="section-title">Legalweek New York 2026</h2>
+            </div>
+        </div>
+        <div class="featured-event">
+            <div class="featured-visual">
+                <div class="featured-image">
+                    <div class="featured-date">
+                        <div class="month">March</div>
+                        <div class="day">09-12</div>
+                    </div>
+                </div>
+            </div>
+            <div class="featured-content">
+                <div class="event-meta">
+                    <div class="meta-item">
+                        <div class="meta-icon">📍</div>
+                        <span>North Javits Center, New York</span>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-icon">🏢</div>
+                        <span>Booth TBD</span>
+                    </div>
+                </div>
+                <h3 class="featured-title">Where Legal Strategy Converges with Technology</h3>
+                <p class="featured-description">
+                    Legalweek New York represents the definitive gathering for AmLaw 200 firms and Fortune 500 legal departments. LDM Global's presence underscores our commitment to advancing eDiscovery protocols, data governance frameworks, and cyber incident response strategies. Schedule a consultation with our senior litigation support architects to assess your matter management infrastructure and regulatory compliance posture.
+                </p>
+                <a href="mailto:sales@ldmglobal.com" class="btn">
+                    <span>Schedule Executive Briefing</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upcoming Events Grid -->
+    <section class="section events-section">
+        <div class="section-header">
+            <div>
+                <div class="section-label">Upcoming Events</div>
+                <h2 class="section-title">2026 Strategic Engagement Calendar</h2>
+            </div>
+        </div>
+        <div class="events-grid">
+            <div class="event-card">
+                <div class="event-image">
+                    <div class="event-date-badge">Mar 9-12, 2026</div>
+                    <div class="event-type">Conference</div>
+                </div>
+                <div class="event-details">
+                    <h3 class="event-title">Legalweek New York 2026</h3>
+                    <div class="event-location">📍 North Javits Center, NY</div>
+                    <p class="event-description">The preeminent global legal technology conference. LDM Global presents case studies on cross-border discovery protocols and AI-assisted document review for complex litigation.</p>
+                    <a href="#" class="event-link">Request Meeting →</a>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-image">
+                    <div class="event-date-badge">Feb 8-9, 2026</div>
+                    <div class="event-type">Conference</div>
+                </div>
+                <div class="event-details">
+                    <h3 class="event-title">UF Law E-Discovery Conference</h3>
+                    <div class="event-location">📍 Gainesville, FL / Virtual</div>
+                    <p class="event-description">11th Annual academic symposium on electronic discovery. LDM Global contributes thought leadership on proportionality standards and defensible data retention policies.</p>
+                    <a href="#" class="event-link">Register Interest →</a>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-image">
+                    <div class="event-date-badge">Q2 2026</div>
+                    <div class="event-type">Executive Summit</div>
+                </div>
+                <div class="event-details">
+                    <h3 class="event-title">Cyber Risk & Data Breach Response Summit</h3>
+                    <div class="event-location">📍 Virtual Event</div>
+                    <p class="event-description">Invitation-only briefing for General Counsel and CISOs. LDM Global addresses incident response workflows, regulatory notification obligations, and privilege preservation in cyber investigations.</p>
+                    <a href="#" class="event-link">Request Invitation →</a>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-image">
+                    <div class="event-date-badge">Jun 2026</div>
+                    <div class="event-type">Conference</div>
+                </div>
+                <div class="event-details">
+                    <h3 class="event-title">INSOL International</h3>
+                    <div class="event-location">📍 London, UK</div>
+                    <p class="event-description">World federation of insolvency practitioners. LDM Global demonstrates specialized eDiscovery solutions for bankruptcy proceedings, asset tracing, and cross-jurisdictional restructuring matters.</p>
+                    <a href="#" class="event-link">Schedule Consultation →</a>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-image">
+                    <div class="event-date-badge">Sep 2026</div>
+                    <div class="event-type">Conference</div>
+                </div>
+                <div class="event-details">
+                    <h3 class="event-title">Relativity Fest 2026</h3>
+                    <div class="event-location">📍 Chicago, IL</div>
+                    <p class="event-description">The definitive Relativity community gathering. LDM Global showcases advanced analytics workflows, technology-assisted review methodologies, and defensible data processing standards.</p>
+                    <a href="#" class="event-link">Book Demo →</a>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-image">
+                    <div class="event-date-badge">Oct 2026</div>
+                    <div class="event-type">Summit</div>
+                </div>
+                <div class="event-details">
+                    <h3 class="event-title">NetDiligence Cyber Risk Summit</h3>
+                    <div class="event-location">📍 Location TBD</div>
+                    <p class="event-description">Premier cyber insurance and risk management forum. LDM Global advises on forensic readiness, data breach response protocols, and regulatory examination preparedness.</p>
+                    <a href="#" class="event-link">Learn More →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Past Events Timeline -->
+    <section class="section past-section" id="past">
+        <div class="section-header" style="text-align: center; display: block;">
+            <div class="section-label" style="justify-content: center;">Past Events</div>
+            <h2 class="section-title" style="margin: 0 auto;">Demonstrated Expertise</h2>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-year">2025</div>
+                    <h3 class="timeline-title">Legalweek New York</h3>
+                    <div class="timeline-location">New York Hilton Midtown</div>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-year">2024</div>
+                    <h3 class="timeline-title">NetDiligence Cyber Risk Summit</h3>
+                    <div class="timeline-location">Multiple Global Locations</div>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-year">2024</div>
+                    <h3 class="timeline-title">Relativity Fest Chicago</h3>
+                    <div class="timeline-location">Chicago, IL</div>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-year">2024</div>
+                    <h3 class="timeline-title">Legalweek New York</h3>
+                    <div class="timeline-location">New York Hilton Midtown</div>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-year">2023</div>
+                    <h3 class="timeline-title">UF Law E-Discovery Conference</h3>
+                    <div class="timeline-location">Gainesville, FL</div>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-year">2022</div>
+                    <h3 class="timeline-title">INSOL London</h3>
+                    <div class="timeline-location">JW Marriott London</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-bg"></div>
+        <div class="cta-content">
+            <h2 class="cta-title">Advance Your Litigation Strategy</h2>
+            <p class="cta-text">Whether at conference or in your boardroom, LDM Global delivers the technical excellence and regulatory insight that complex matters demand.</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="mailto:sales@ldmglobal.com" class="btn">
+                    <span>Contact Our Team</span>
+                </a>
+                <a href="#" class="btn btn-outline">
+                    <span>Explore Capabilities</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">LDM GLOBAL</div>
+                <p class="footer-tagline">Premier litigation support and legal technology services for AmLaw 200 firms and Fortune 500 legal departments worldwide.</p>
+            </div>
+            <div>
+                <h4 class="footer-heading">Practice Areas</h4>
+                <ul class="footer-links">
+                    <li><a href="#">eDiscovery & Disclosure</a></li>
+                    <li><a href="#">Litigation Support</a></li>
+                    <li><a href="#">Cyber Incident Response</a></li>
+                    <li><a href="#">Data Governance</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-heading">Firm</h4>
+                <ul class="footer-links">
+                    <li><a href="#">About LDM Global</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">News & Insights</a></li>
+                    <li><a href="#">Events</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-heading">Contact</h4>
+                <ul class="footer-links">
+                    <li><a href="mailto:sales@ldmglobal.com">sales@ldmglobal.com</a></li>
+                    <li><a href="#">Global Offices</a></li>
+                    <li><a href="#">Client Support</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>&copy; 2026 LDM Global. All rights reserved.</div>
+            <div>Attorney Advertising | Confidential & Privileged</div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scrollProgress').style.width = scrolled + '%';
+        });
+
+        // Header Scroll Effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer for Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements
+        document.querySelectorAll('.event-card, .timeline-item').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth Scroll for Navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Active Tab Indicator
+        const sections = document.querySelectorAll('section[id]');
+        const navTabs = document.querySelectorAll('.nav-tab');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navTabs.forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.getAttribute('href') === '#' + current) {
+                    tab.classList.add('active');
+                }
+            });
+        });
+
+        // Parallax Effect for Hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            const heroContent = document.querySelector('.hero-content');
+            
+            if (hero && scrolled < window.innerHeight) {
+                heroContent.style.transform = `translateY(${scrolled * 0.3}px)`;
+                heroContent.style.opacity = 1 - (scrolled / window.innerHeight) * 0.5;
+            }
+        });
+    </script>
+</body>
+</html>

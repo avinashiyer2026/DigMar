@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legal | LDM Global — Privacy & Terms</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy: #152148;
+  --navy-light: #1e2d5c;
+  --blue: #446280;
+  --light: #E7EAE7;
+  --grey: #8C9196;
+  --accent: #FF9425;
+  --accent-dark: #FE720D;
+  --white: #FFFFFF;
+  --gradient-hero: linear-gradient(135deg, #152148 0%, #1e3a5f 50%, #446280 100%);
+  --gradient-accent: linear-gradient(135deg, #FF9425 0%, #FE720D 100%);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { 
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--white);
+  color: var(--navy);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ---------- ANIMATIONS ---------- */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 148, 37, 0.4); }
+  50% { box-shadow: 0 0 40px rgba(255, 148, 37, 0.7); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  background: var(--gradient-hero);
+  color: var(--white);
+  padding: 140px 10% 100px;
+  position: relative;
+  overflow: hidden;
+  text-align: left;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -30%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255, 148, 37, 0.12) 0%, transparent 70%);
+  animation: float 8s ease-in-out infinite;
+  border-radius: 50%;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  bottom: -20%;
+  left: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(68, 98, 128, 0.2) 0%, transparent 70%);
+  animation: float 10s ease-in-out infinite reverse;
+  border-radius: 50%;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  animation: slideUp 0.8s ease-out;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 148, 37, 0.2);
+  border: 1px solid rgba(255, 148, 37, 0.4);
+  padding: 10px 24px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  color: var(--accent);
+  backdrop-filter: blur(10px);
+  animation: pulse-glow 3s infinite;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse-glow 2s infinite;
+}
+
+.hero h1 {
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 25px;
+  color: var(--blue);
+}
+
+.hero h1 span {
+  color: var(--accent);
+}
+
+.hero > p {
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 700px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+/* ---------- INTRO SECTION ---------- */
+.intro-section {
+  background: linear-gradient(to bottom, var(--white) 0%, #f8f9fa 100%);
+  padding: 80px 10%;
+}
+
+.intro-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: var(--white);
+  padding: 50px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(21, 33, 72, 0.08);
+  border: 1px solid rgba(21, 33, 72, 0.06);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+
+.intro-container.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.intro-container h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 20px;
+}
+
+.intro-container h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: var(--gradient-accent);
+  margin-top: 15px;
+  border-radius: 3px;
+}
+
+.intro-container p {
+  color: var(--grey);
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.intro-container ul {
+  margin-left: 20px;
+  color: var(--grey);
+}
+
+.intro-container li {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+/* ---------- NAVIGATION TABS ---------- */
+.legal-nav {
+  background: var(--white);
+  padding: 30px 10%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(21, 33, 72, 0.08);
+  border-bottom: 1px solid rgba(21, 33, 72, 0.06);
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.nav-tab {
+  padding: 14px 28px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  background: transparent;
+  color: var(--navy);
+  cursor: pointer;
+}
+
+.nav-tab:hover {
+  background: rgba(21, 33, 72, 0.05);
+  color: var(--accent-dark);
+}
+
+.nav-tab.active {
+  background: var(--gradient-accent);
+  color: var(--white);
+  box-shadow: 0 4px 15px rgba(255, 148, 37, 0.3);
+}
+
+/* ---------- CONTENT SECTIONS ---------- */
+.content-section {
+  display: none;
+  padding: 80px 10%;
+  max-width: 1000px;
+  margin: 0 auto;
+  animation: fadeIn 0.5s ease;
+}
+
+.content-section.active {
+  display: block;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+
+.section-header.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-header h2 {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 15px;
+}
+
+.section-header h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: var(--gradient-accent);
+  margin: 20px auto 0;
+  border-radius: 3px;
+}
+
+.section-header p {
+  color: var(--grey);
+  font-size: 18px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* ---------- ACCORDION CARDS ---------- */
+.legal-card {
+  background: var(--white);
+  border-radius: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 20px rgba(21, 33, 72, 0.06);
+  border: 1px solid rgba(21, 33, 72, 0.06);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.5s ease;
+}
+
+.legal-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-header {
+  padding: 25px 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(to right, rgba(255, 148, 37, 0.03), transparent);
+  border-left: 4px solid var(--accent);
+  transition: all 0.3s ease;
+}
+
+.card-header:hover {
+  background: linear-gradient(to right, rgba(255, 148, 37, 0.08), transparent);
+}
+
+.card-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-number {
+  width: 32px;
+  height: 32px;
+  background: var(--gradient-accent);
+  color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.card-toggle {
+  width: 30px;
+  height: 30px;
+  background: rgba(21, 33, 72, 0.05);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--navy);
+  transition: all 0.3s ease;
+}
+
+.legal-card.active .card-toggle {
+  transform: rotate(45deg);
+  background: var(--accent);
+  color: var(--white);
+}
+
+.card-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+}
+
+.legal-card.active .card-content {
+  max-height: 2000px;
+  padding: 0 30px 30px;
+}
+
+.card-content p, .card-content li {
+  color: var(--grey);
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 15px;
+}
+
+.card-content ul, .card-content ol {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.card-content li {
+  margin-bottom: 10px;
+}
+
+.sub-section {
+  margin-top: 25px;
+  padding-top: 25px;
+  border-top: 1px solid rgba(21, 33, 72, 0.08);
+}
+
+.sub-section h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sub-section h4::before {
+  content: "▸";
+  color: var(--accent);
+}
+
+.highlight-box {
+  background: linear-gradient(135deg, rgba(255, 148, 37, 0.08) 0%, rgba(254, 114, 13, 0.05) 100%);
+  border-left: 4px solid var(--accent);
+  padding: 20px 25px;
+  border-radius: 0 12px 12px 0;
+  margin: 20px 0;
+}
+
+.highlight-box p {
+  margin: 0;
+  color: var(--navy);
+  font-weight: 500;
+}
+
+/* ---------- QUICK LINKS ---------- */
+.quick-links {
+  background: linear-gradient(to bottom, #f8f9fa 0%, var(--white) 100%);
+  padding: 80px 10%;
+}
+
+.quick-links h2 {
+  text-align: center;
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 50px;
+}
+
+.quick-links h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: var(--gradient-accent);
+  margin: 20px auto 0;
+  border-radius: 3px;
+}
+
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.link-card {
+  background: var(--white);
+  padding: 35px 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(21, 33, 72, 0.06);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: var(--navy);
+  border: 1px solid rgba(21, 33, 72, 0.06);
+  opacity: 0;
+  transform: translateY(20px);
+  text-align: center;
+}
+
+.link-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.link-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(21, 33, 72, 0.12);
+  border-color: rgba(255, 148, 37, 0.3);
+}
+
+.link-icon {
+  font-size: 40px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.link-card h4 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.link-card p {
+  font-size: 14px;
+  color: var(--grey);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ---------- CONTACT STRIP ---------- */
+.contact-strip {
+  background: var(--navy);
+  color: var(--white);
+  padding: 80px 10%;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-strip::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 30% 50%, rgba(255, 148, 37, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 70% 50%, rgba(68, 98, 128, 0.1) 0%, transparent 50%);
+}
+
+.contact-strip h3 {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.contact-strip p {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 30px;
+  font-size: 18px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 2;
+}
+
+.contact-email {
+  display: inline-block;
+  background: var(--gradient-accent);
+  color: var(--white);
+  padding: 18px 40px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(255, 148, 37, 0.3);
+  position: relative;
+  z-index: 2;
+  animation: pulse-glow 3s infinite;
+}
+
+.contact-email:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(255, 148, 37, 0.4);
+}
+
+/* ---------- FOOTER ---------- */
+.legal-footer {
+  background: var(--navy);
+  color: rgba(255, 255, 255, 0.6);
+  padding: 40px 10%;
+  text-align: center;
+  font-size: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.legal-footer a {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.legal-footer a:hover {
+  color: var(--accent);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1024px) {
+  .links-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero { 
+    padding: 100px 5% 80px; 
+    text-align: center;
+  }
+  .hero h1 { 
+    font-size: 36px; 
+  }
+  .hero > p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .intro-container {
+    padding: 30px;
+  }
+  .legal-nav { 
+    padding: 20px 5%; 
+  }
+  .nav-tab { 
+    padding: 12px 20px; 
+    font-size: 13px; 
+  }
+  .content-section { 
+    padding: 60px 5%; 
+  }
+  .card-header { 
+    padding: 20px; 
+  }
+  .card-header h3 { 
+    font-size: 16px; 
+  }
+  .legal-card.active .card-content { 
+    padding: 0 20px 20px; 
+  }
+  .section-header h2 { 
+    font-size: 28px; 
+  }
+  .links-grid {
+    grid-template-columns: 1fr;
+  }
+  .quick-links h2 {
+    font-size: 28px;
+  }
+  .contact-strip h3 {
+    font-size: 24px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="pulse-dot"></span>
+      Transparency & Trust
+    </div>
+    <h1><span>Legal</span> Center</h1>
+    <p>Our commitment to data protection, privacy rights, and transparent business practices. Review our policies to understand how we safeguard your information and maintain professional standards.</p>
+  </div>
+</section>
+
+<!-- INTRO SECTION -->
+<section class="intro-section">
+  <div class="intro-container">
+    <h2>Privacy & Cookies Policy</h2>
+    <p>LDM Global, a company registered in the USA, with our registered office at 1169 Hilltop Parkway, Suite 204, Steamboat Springs, Colorado, is committed to protecting and respecting your privacy in line with the U.S. Privacy Act of 1974.</p>
+    <p>This Policy together with any other documents referred to on it sets out the basis of:</p>
+    <ul>
+      <li>What Personal Data we collect and why</li>
+      <li>What we do with your Personal Data</li>
+      <li>How we secure your Personal Data</li>
+    </ul>
+    <p><strong>Please read the following carefully to understand.</strong></p>
+  </div>
+</section>
+
+<!-- NAVIGATION -->
+<nav class="legal-nav">
+  <div class="nav-container">
+    <button class="nav-tab active" onclick="showSection('privacy')">Privacy Policy</button>
+    <button class="nav-tab" onclick="showSection('terms')">Terms of Service</button>
+    <button class="nav-tab" onclick="showSection('dpf')">Data Privacy Framework</button>
+    <button class="nav-tab" onclick="showSection('cookies')">Cookie Policy</button>
+  </div>
+</nav>
+
+<!-- PRIVACY POLICY SECTION -->
+<section id="privacy" class="content-section active">
+  <div class="section-header">
+    <h2>Privacy Policy</h2>
+    <p>How we collect, use, protect, and manage your personal information across our global operations.</p>
+  </div>
+
+  <!-- Card 1: About -->
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">1</span> About This Privacy Policy</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>LDM Global provides electronic discovery and hosting services to its clients, which includes the use of various applications, websites and servers (together, the <strong>"Service"</strong>).</p>
+      <p>The purpose of this Policy is to detail how we protect your privacy and how we comply with the requirements of global privacy laws (<strong>"Privacy Laws"</strong>):</p>
+      <div class="highlight-box">
+        <p>By visiting our website, or by purchasing or using the Service, you accept the privacy practices described in this Policy.</p>
+      </div>
+      <p><strong>"Personal information"</strong> is any information that allows an individual to be personally identified and <strong>"personal data"</strong> means any information relating to an identified or identifiable natural person (together <strong>"Personal Information"</strong>).</p>
+      <p><strong>"Client Data"</strong> means Information, data, reports, addresses, and other files, folders or documents in electronic form that a user stores within the Service.</p>
+      <p>This policy describes:</p>
+      <ul>
+        <li>From whom we collect Personal Information</li>
+        <li>The types of Personal Information collected and held by us</li>
+        <li>How this Personal Information is collected and held</li>
+        <li>The purposes for which your Personal Information is collected, held, used and disclosed</li>
+        <li>How you can gain access to your Personal Information and seek its correction</li>
+        <li>How you may complain or inquire about our collection, handling, use or disclosure of your Personal Information</li>
+        <li>Whether we are likely to disclose your Personal Information to any overseas recipients</li>
+        <li>How we report any data breaches</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Card 2: Collection Sources -->
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">2</span> Who Do We Collect Personal Information From?</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>LDM Global collects Personal Information from:</p>
+      <ul>
+        <li>Our clients</li>
+        <li>Our suppliers</li>
+        <li>Our staff</li>
+        <li>Our sub-contractors</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Card 3: Information Types -->
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">3</span> What Information Do We Collect?</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>We collect and process different types of Personal Information from or through the Service. The legal bases for our processing are primarily that the processing is necessary for providing the Service and that the processing is carried out in our legitimate interests.</p>
+      
+      <div class="sub-section">
+        <h4>Information You Provide Directly</h4>
+        <p>You may provide us with Personal Information when you register for an account, use the Service, post Client Data, interact with other users through communication or messaging capabilities, or send us customer service-related requests.</p>
+        <p>Generally we collect Personal Information such as:</p>
+        <ul>
+          <li>Name, address, telephone numbers, email address</li>
+          <li>Type of services you may be interested in</li>
+          <li>Billing information</li>
+        </ul>
+        <p>We endeavour not to collect Personal Information that we do not require.</p>
+      </div>
+
+      <div class="sub-section">
+        <h4>Automatically Collected Information</h4>
+        <p>When you use the Service, we may automatically record certain Personal Information from your device using various types of technology, including cookies, "clear gifs" or "web beacons." This may include:</p>
+        <ul>
+          <li>IP address or other device address or ID</li>
+          <li>Web browser and/or device type</li>
+          <li>Web pages or sites visited just before or just after using the Service</li>
+          <li>Pages or content you view or interact with on the Service</li>
+          <li>Dates and times of the visit, access, or use of the Service</li>
+        </ul>
+      </div>
+
+      <div class="sub-section">
+        <h4>Integrated Services</h4>
+        <p>You may access or register for the Service through third-party services (each, an <strong>"Integrated Service"</strong>), such as through your Google account. By authorizing us to connect with an Integrated Service, you authorize us to access and store your name, email address(es), date of birth, gender, current city, profile picture URL, and other information that the Integrated Service makes available to us.</p>
+      </div>
+
+      <div class="sub-section">
+        <h4>Client Data</h4>
+        <p>A client or user may store or upload Personal Information to our applications and to the Service. <strong>We have no direct relationship with the individuals whose Personal Information we host as part of Client Data.</strong> Each client is responsible for providing notice to its customers and third persons concerning the purpose for which client collects their Personal Information.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 4: Collection Methods -->
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">4</span> How Do We Collect Your Personal Information?</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>We may collect Personal Information from you when you:</p>
+      <ul>
+        <li>Instruct LDM Global to provide you with services</li>
+        <li>Purchase or subscribe to an LDM Global online service</li>
+        <li>Subscribe to an LDM Global newsletter</li>
+        <li>Attend an LDM Global seminar or marketing event</li>
+        <li>Have business dealings with LDM Global</li>
+        <li>Apply or register your interest for employment with LDM Global</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Card 5: Usage -->
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">5</span> How Do We Use Your Personal Information?</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>We only use Personal Information collected from business contacts for the business purpose for which it was collected. We also collect Personal Information so that we can communicate new developments to our clients and to those people who have subscribed to our website or mailing lists.</p>
+      
+      <div class="sub-section">
+        <h4>Automatically Collected Information</h4>
+        <p>We use automatically collected information to:</p>
+        <ul>
+          <li>Personalise our Service, such as remembering a user's information so that the user will not have to re-enter it</li>
+          <li>Provide customised advertisements, content, and information</li>
+          <li>Monitor and analyse the effectiveness of Service and third-party marketing activities</li>
+          <li>Monitor aggregate site usage metrics such as total number of visitors and pages viewed</li>
+          <li>Track your entries, submissions, and status in any promotions or other activities</li>
+        </ul>
+      </div>
+
+      <div class="sub-section">
+        <h4>Google Analytics</h4>
+        <p>We may use Google Analytics to measure and evaluate access to and traffic on the public area of our website. Google operates independently from us and has its own privacy policy. We take measures to protect the technical information collected by our use of Google Analytics.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 6: Disclosure -->
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">6</span> Will Your Information Be Given to Anyone Else?</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <div class="highlight-box">
+        <p>We do not sell, rent or otherwise trade Personal Information with third parties.</p>
+      </div>
+      
+      <p>We may disclose Personal Information to external service providers who help us operate our business. We limit the information provided to these service providers to that which is reasonably necessary for them to perform their functions, and our contracts with them require them to maintain the confidentiality of such information.</p>
+      
+      <p>Where we engage external information technology service providers, we ensure that wherever possible, our data is stored within the country in which we are engaged, however some of our suppliers do store data in other locations.</p>
+      
+      <p>We will only disclose personal information if this is required by law or permitted under Privacy Laws. We are bound by professional obligations of confidentiality, including in relation to personal information.</p>
+    </div>
+  </div>
+
+  <!-- Card 7: Minors -->
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">7</span> Minors and Children's Privacy</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <div class="highlight-box">
+        <p>Our Service is not directed to children under the age of 18, and we do not knowingly collect Personal Information from children under 18 without obtaining parental consent.</p>
+      </div>
+      <p>If you are under 18 years of age, please do not use or access the Service at any time or in any manner. If we learn that Personal Information has been collected on the Service from persons under 18 years of age and without verifiable parental consent, then we will take the appropriate steps to delete this information.</p>
+      <p>If you are a parent or guardian and discover that your child under 18 years of age has obtained an account on the Service, you may alert us and request that we delete that child's Personal Information from our systems.</p>
+    </div>
+  </div>
+
+  <!-- Card 8: Security -->
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">8</span> Storage and Security of Personal Information</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>We store Personal Information in a variety of formats including on databases, in hard copy files and on personal devices. The security of your Personal Information is important to us and we take reasonable steps to protect it from misuse, loss, unauthorised access, modification or disclosure.</p>
+      
+      <div class="sub-section">
+        <h4>Security Measures</h4>
+        <ul>
+          <li>Restricting access to information on our databases on a need-to-know basis</li>
+          <li>Ensuring all staff are aware that they are not to reveal or share personal passwords</li>
+          <li>Implementing security systems, policies and procedures designed to protect personal information storage</li>
+          <li>Implementing HR policies regarding email and internet usage, confidentiality and document security</li>
+          <li>Undertaking due diligence with respect to third party service providers</li>
+        </ul>
+      </div>
+
+      <div class="highlight-box">
+        <p>However, no method of transmission over the internet, or method of electronic storage, is 100% secure. We cannot ensure or warrant the security of any information you transmit to us or store on the Service.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 9: Data Breaches -->
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">9</span> Notification of Data Breaches</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>If we have reasonable grounds to suspect that a data breach has occurred, we will:</p>
+      <ul>
+        <li>Complete an assessment of the suspected data breach within 30 days</li>
+        <li>If appropriate, take remedial action to address any potential harm to individuals before any serious harm is caused</li>
+      </ul>
+      <p>We will otherwise comply with privacy data breach notification requirements as set out in the Privacy Laws, including notifying affected individuals and the relevant regulatory body as applicable.</p>
+    </div>
+  </div>
+
+  <!-- Card 10: Access -->
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">10</span> Access to Your Personal Information</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>We respect your privacy rights and provide you with reasonable access to the Personal Information that you may have provided through your use of the Services.</p>
+      
+      <div class="sub-section">
+        <h4>Your Rights</h4>
+        <ul>
+          <li>Seek access to your personal information handled by us</li>
+          <li>Ask us to update or correct your personal information when it is inaccurate, incomplete or out of date</li>
+          <li>Opt-out of receiving direct marketing communications from us</li>
+        </ul>
+      </div>
+      
+      <p>You may update, correct, or delete your Account information and preferences at any time by accessing your Account settings page on the Service.</p>
+    </div>
+  </div>
+
+  <!-- Card 11: Data Controller -->
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">11</span> Data Controller and Data Processor</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>We do not own, control or direct the use of any of the Client Data stored or processed by a Client or User via the Service. Only the Client or Users are entitled to access, retrieve and direct the use of such Client Data.</p>
+      
+      <div class="highlight-box">
+        <p>We are not acting in the capacity of data controller in terms of the GDPR. We are a processor on behalf of our Clients and users. The Client or the user is the data controller under the Regulation for any Client Data containing Personal Information.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 12: DPF -->
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">12</span> Data Privacy Framework</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>LDM Global complies with EU-U.S. Data Privacy Framework (EU-U.S. DPF), the UK Extension to the EU-U.S. DPF, and the Swiss-U.S. Data Privacy Framework (Swiss-U.S. DPF) regarding the collection, use, and retention of personal information transferred from the European Union, United Kingdom, and Switzerland to the United States.</p>
+      
+      <div class="sub-section">
+        <h4>Our Commitments</h4>
+        <ul>
+          <li>We adhere to the Data Privacy Framework Principles of Notice, Choice, Accountability for Onward Transfer, Security, Data Integrity and Purpose Limitation, Access, and Recourse, Enforcement, and Liability</li>
+          <li>We are subject to investigatory and enforcement powers of the Federal Trade Commission</li>
+          <li>We commit to cooperate with EU data protection authorities (DPAs), UK ICO, and Swiss FDPIC regarding unresolved complaints</li>
+        </ul>
+      </div>
+      
+      <p>To learn more about the Data Privacy Framework Program, and to view our certification, please visit <a href="https://www.dataprivacyframework.gov/" target="_blank" style="color: var(--accent-dark);">https://www.dataprivacyframework.gov/</a></p>
+    </div>
+  </div>
+
+  <!-- Card 13: Complaints -->
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">13</span> Privacy Complaints</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>At any time, you may object to the processing of your Personal Information, on legitimate grounds, except if otherwise permitted by applicable law. If you believe your right to privacy granted by applicable data protection laws has been infringed upon, please contact us.</p>
+      
+      <p>If you wish to make a complaint about a potential breach by us you may do so by providing your written complaint by email or by letter. We will respond to your complaint within a reasonable time (usually no longer than 30 days).</p>
+      
+      <p>Your complaint may also be taken to the relevant regulatory body.</p>
+    </div>
+  </div>
+
+  <!-- Card 14: Contact -->
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">14</span> How to Contact Us</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>This LDM Global Privacy Policy may change from time to time.</p>
+      <p>If you have any questions or comments about the LDM Global Privacy Policy, please set out your request in writing, and forward this to LDM Global.</p>
+      <div class="highlight-box">
+        <p><strong>Privacy Contact:</strong><br>
+        Email: <a href="mailto:contactus@ldmglobal.com" style="color: var(--accent-dark); text-decoration: none;">contactus@ldmglobal.com</a></p>
+      </div>
+      <p>If practical, you can contact us anonymously (i.e. without identifying yourself) or by using a pseudonym. However, if you choose not to identify yourself, we may not be able to give you the information or provide the assistance you might otherwise receive.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TERMS OF SERVICE SECTION -->
+<section id="terms" class="content-section">
+  <div class="section-header">
+    <h2>Terms of Service</h2>
+    <p>The rules and guidelines governing your use of LDM Global's services and platforms.</p>
+  </div>
+
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">1</span> Acceptance of Terms</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>By accessing or using LDM Global's services, websites, or applications, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services.</p>
+      <p>These terms apply to all clients, users, and visitors of our platforms.</p>
+    </div>
+  </div>
+
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">2</span> Service Description</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>LDM Global provides electronic discovery, legal technology services, cyber incident response, managed document review, and related professional services. All services are provided subject to the terms of applicable Master Services Agreements and Statements of Work.</p>
+      <p>We reserve the right to modify, suspend, or discontinue any aspect of our services at any time with appropriate notice to affected clients.</p>
+    </div>
+  </div>
+
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">3</span> Client Obligations</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>Clients using our services agree to:</p>
+      <ul>
+        <li>Provide accurate and complete information when registering for accounts</li>
+        <li>Maintain the security of account credentials and notify us immediately of any unauthorized access</li>
+        <li>Ensure they have legal authority to upload, process, and store all data submitted to our platforms</li>
+        <li>Comply with all applicable laws and regulations regarding data privacy and protection</li>
+        <li>Not use our services for any unlawful purpose or in any way that could damage our reputation or operations</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">4</span> Intellectual Property</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>All content, software, technology, and materials provided by LDM Global remain our intellectual property or that of our licensors. Clients retain ownership of their data submitted to our platforms.</p>
+      <p>Clients grant LDM Global a limited license to process their data solely for the purpose of providing the agreed-upon services.</p>
+    </div>
+  </div>
+
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">5</span> Confidentiality</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>LDM Global maintains strict confidentiality regarding all client data and matters. Our staff are bound by professional obligations of confidentiality, and we implement technical and organizational measures to protect sensitive information.</p>
+      <p>Confidentiality obligations survive termination of services and remain in effect indefinitely.</p>
+    </div>
+  </div>
+
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">6</span> Limitation of Liability</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>LDM Global's liability is limited to the extent permitted by applicable law. We are not liable for:</p>
+      <ul>
+        <li>Indirect, incidental, special, consequential, or punitive damages</li>
+        <li>Loss of profits, data, or business opportunities</li>
+        <li>Issues arising from client-provided data or instructions</li>
+        <li>Force majeure events beyond our reasonable control</li>
+      </ul>
+      <p>Our total liability shall not exceed the fees paid for the specific services giving rise to the claim.</p>
+    </div>
+  </div>
+
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">7</span> Governing Law</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>These terms are governed by the laws of the State of Colorado, USA, without regard to conflict of law principles. Any disputes shall be resolved in the courts of Denver County, Colorado.</p>
+      <p>For clients in other jurisdictions, local consumer protection laws may apply in addition to these terms.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DATA PRIVACY FRAMEWORK SECTION -->
+<section id="dpf" class="content-section">
+  <div class="section-header">
+    <h2>Data Privacy Framework</h2>
+    <p>Our certification and commitments under the EU-U.S., UK, and Swiss Data Privacy Framework programs.</p>
+  </div>
+
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">1</span> Certification Overview</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>LDM Global complies with the EU-U.S. Data Privacy Framework (EU-U.S. DPF), the UK Extension to the EU-U.S. DPF, and the Swiss-U.S. Data Privacy Framework (Swiss-U.S. DPF) as set forth by the U.S. Department of Commerce.</p>
+      <div class="highlight-box">
+        <p>We have certified to the U.S. Department of Commerce that we adhere to the DPF Principles regarding the processing of personal data received from the European Union, United Kingdom, and Switzerland.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">2</span> Principles We Adhere To</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <ul>
+        <li><strong>Notice:</strong> Clear information about our data practices</li>
+        <li><strong>Choice:</strong> Options regarding how your data is used</li>
+        <li><strong>Accountability for Onward Transfer:</strong> Responsibility for data shared with third parties</li>
+        <li><strong>Security:</strong> Protection of personal data from loss, misuse, and unauthorized access</li>
+        <li><strong>Data Integrity and Purpose Limitation:</strong> Data is relevant, reliable, and used appropriately</li>
+        <li><strong>Access:</strong> Ability to access and correct your personal data</li>
+        <li><strong>Recourse, Enforcement, and Liability:</strong> Mechanisms for ensuring compliance</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">3</span> Dispute Resolution</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>In compliance with the DPF, LDM Global commits to cooperate with:</p>
+      <ul>
+        <li>The panel established by EU data protection authorities (DPAs)</li>
+        <li>The UK Information Commissioner's Office (ICO)</li>
+        <li>The Swiss Federal Data Protection and Information Commissioner (FDPIC)</li>
+      </ul>
+      <p>EU, UK, and Swiss individuals have the option to select binding arbitration under the Data Privacy Framework Panel for resolution of complaints under certain circumstances.</p>
+    </div>
+  </div>
+
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">4</span> FTC Oversight</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>LDM Global is subject to the investigatory and enforcement powers of the Federal Trade Commission (FTC) regarding our compliance with the Data Privacy Framework.</p>
+    </div>
+  </div>
+
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">5</span> Onward Transfer Liability</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>We remain fully responsible and liable for any onward transfer of personal data to third parties, including sub-processors or affiliates. We ensure that any third party receiving personal data provides at least the same level of protection as required under applicable data protection laws.</p>
+      <p>Any onward transfer is subject to a written agreement ensuring equivalent protection.</p>
+    </div>
+  </div>
+
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">6</span> Verification</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>To view our Data Privacy Framework certification, please visit:</p>
+      <div class="highlight-box">
+        <p><a href="https://www.dataprivacyframework.gov/" target="_blank" style="color: var(--accent-dark); text-decoration: none; font-weight: 600;">https://www.dataprivacyframework.gov/</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COOKIE POLICY SECTION -->
+<section id="cookies" class="content-section">
+  <div class="section-header">
+    <h2>Cookie Policy</h2>
+    <p>How we use cookies and similar technologies to enhance your experience and improve our services.</p>
+  </div>
+
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">1</span> What Are Cookies?</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>Cookies are small text files that are stored on your device when you visit a website. They help websites remember your preferences, understand how you interact with the site, and improve your browsing experience.</p>
+    </div>
+  </div>
+
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">2</span> How We Use Cookies</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>We use cookies and similar technologies to:</p>
+      <ul>
+        <li>Personalize our Service, such as remembering your information so you don't have to re-enter it</li>
+        <li>Provide customized content and information</li>
+        <li>Monitor and analyze the effectiveness of our website and marketing activities</li>
+        <li>Monitor aggregate site usage metrics such as total number of visitors and pages viewed</li>
+        <li>Track your entries, submissions, and status in any promotions or activities</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">3</span> Types of Cookies We Use</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <div class="sub-section">
+        <h4>Essential Cookies</h4>
+        <p>Required for the website to function properly. These cannot be disabled.</p>
+      </div>
+      <div class="sub-section">
+        <h4>Analytics Cookies</h4>
+        <p>Help us understand how visitors interact with our website. We use Google Analytics for this purpose.</p>
+      </div>
+      <div class="sub-section">
+        <h4>Functional Cookies</h4>
+        <p>Remember your preferences and settings to enhance your experience.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">4</span> Managing Cookies</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>Most web browsers allow you to control cookies through their settings. You can usually find these settings in the "Options" or "Preferences" menu of your browser. You can also delete cookies already stored on your computer.</p>
+      <div class="highlight-box">
+        <p>Please note that disabling cookies may affect the functionality of our website and prevent you from accessing certain features.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="legal-card">
+    <div class="card-header" onclick="toggleCard(this)">
+      <h3><span class="card-number">5</span> Third-Party Cookies</h3>
+      <span class="card-toggle">+</span>
+    </div>
+    <div class="card-content">
+      <p>We may allow third-party service providers to place cookies on your device for analytics and marketing purposes. These providers have their own privacy policies and cookie practices. We recommend reviewing their policies for more information.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK LINKS -->
+<section class="quick-links">
+  <h2>Quick Navigation</h2>
+  <div class="links-grid">
+    <a href="#privacy" class="link-card" onclick="showSection('privacy'); return false;">
+      <div class="link-icon">🔒</div>
+      <h4>Privacy Policy</h4>
+      <p>How we collect, use, and protect your personal information across our global operations.</p>
+    </a>
+    <a href="#terms" class="link-card" onclick="showSection('terms'); return false;">
+      <div class="link-icon">📋</div>
+      <h4>Terms of Service</h4>
+      <p>Rules and guidelines governing your use of LDM Global services and platforms.</p>
+    </a>
+    <a href="#dpf" class="link-card" onclick="showSection('dpf'); return false;">
+      <div class="link-icon">🌐</div>
+      <h4>Data Privacy Framework</h4>
+      <p>Our EU-U.S., UK, and Swiss Data Privacy Framework certification and commitments.</p>
+    </a>
+    <a href="mailto:contactus@ldmglobal.com" class="link-card">
+      <div class="link-icon">✉️</div>
+      <h4>Contact Us</h4>
+      <p>Questions about your data? Reach out to our team directly for assistance.</p>
+    </a>
+  </div>
+</section>
+
+<!-- CONTACT STRIP -->
+<section class="contact-strip">
+  <h3>Questions About Your Privacy?</h3>
+  <p>Our team is ready to address your concerns and provide clarity on our data practices.</p>
+  <a href="mailto:contactus@ldmglobal.com" class="contact-email">contactus@ldmglobal.com</a>
+</section>
+
+<!-- FOOTER -->
+<footer class="legal-footer">
+  <p>&copy; 2026 LDM Global. All rights reserved. | <a href="#privacy">Privacy</a> | <a href="#terms">Terms</a></p>
+</footer>
+
+<script>
+// Tab switching
+function showSection(sectionId) {
+  // Hide all sections
+  document.querySelectorAll('.content-section').forEach(section => {
+    section.classList.remove('active');
+  });
+  
+  // Remove active class from all tabs
+  document.querySelectorAll('.nav-tab').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  
+  // Show selected section
+  document.getElementById(sectionId).classList.add('active');
+  
+  // Add active class to clicked tab
+  event.target.classList.add('active');
+  
+  // Scroll to top of content
+  document.querySelector('.legal-nav').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Accordion toggle
+function toggleCard(header) {
+  const card = header.parentElement;
+  const isActive = card.classList.contains('active');
+  
+  // Close all cards in the same section
+  const section = card.closest('.content-section');
+  section.querySelectorAll('.legal-card').forEach(c => {
+    c.classList.remove('active');
+  });
+  
+  // Open clicked card if it wasn't active
+  if (!isActive) {
+    card.classList.add('active');
+  }
+}
+
+// Intersection Observer for scroll animations
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, observerOptions);
+
+// Observe elements
+document.querySelectorAll('.intro-container, .section-header, .legal-card, .link-card').forEach(el => {
+  observer.observe(el);
+});
+
+// Stagger animations for cards
+const cards = document.querySelectorAll('.legal-card');
+cards.forEach((card, index) => {
+  card.style.transitionDelay = `${index * 0.05}s`;
+});
+
+const linkCards = document.querySelectorAll('.link-card');
+linkCards.forEach((card, index) => {
+  card.style.transitionDelay = `${index * 0.1}s`;
+});
+
+// Open first card in each section by default
+document.querySelectorAll('.content-section').forEach(section => {
+  const firstCard = section.querySelector('.legal-card');
+  if (firstCard) {
+    firstCard.classList.add('active');
+  }
+});
+</script>
+
+</body>
+</html>

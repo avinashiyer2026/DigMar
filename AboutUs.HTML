@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About LDM Global | Strategic Legal Solutions for Law Firms</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy: #152148;
+  --navy-light: #1e2d5c;
+  --blue: #446280;
+  --light: #E7EAE7;
+  --grey: #8C9196;
+  --accent: #FF9425;
+  --accent-dark: #FE720D;
+  --white: #FFFFFF;
+  --gradient-hero: linear-gradient(135deg, #152148 0%, #1e3a5f 50%, #446280 100%);
+  --gradient-accent: linear-gradient(135deg, #FF9425 0%, #FE720D 100%);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--white);
+  color: var(--navy);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  background: var(--gradient-hero);
+  color: var(--white);
+  padding: 140px 10% 160px;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(255, 148, 37, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(68, 98, 128, 0.15) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  right: -100px;
+  top: -100px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  opacity: 0.12;
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.12; }
+  50% { transform: scale(1.1); opacity: 0.18; }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+}
+
+.hero-badge {
+  display: inline-block;
+  background: rgba(255, 148, 37, 0.2);
+  border: 1px solid rgba(255, 148, 37, 0.4);
+  color: var(--accent);
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  animation: fadeUp 0.8s ease forwards;
+  backdrop-filter: blur(10px);
+  opacity: 0;
+}
+
+.hero h1 {
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 30px;
+  animation: fadeUp 1s ease forwards 0.2s;
+  background: linear-gradient(to right, #ffffff 0%, #e7eae7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0;
+}
+
+.hero > p {
+  font-size: 22px;
+  max-width: 750px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.9);
+  animation: fadeUp 1.2s ease forwards 0.4s;
+  font-weight: 400;
+  opacity: 0;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 50px;
+  margin-top: 50px;
+  animation: fadeUp 1.4s ease forwards 0.6s;
+  opacity: 0;
+}
+
+.stat-item {
+  text-align: left;
+}
+
+.stat-number {
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--accent);
+  display: block;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-top: 5px;
+}
+
+/* ---------- SECTION ---------- */
+.section {
+  padding: 100px 10%;
+  position: relative;
+}
+
+.section-header {
+  max-width: 900px;
+  margin-bottom: 60px;
+}
+
+.section h2 {
+  font-size: 42px;
+  margin-bottom: 20px;
+  font-weight: 800;
+  position: relative;
+  display: inline-block;
+  color: var(--navy);
+}
+
+.section h2::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 5px;
+  background: var(--gradient-accent);
+  margin-top: 20px;
+  border-radius: 3px;
+}
+
+.section-subtitle {
+  font-size: 20px;
+  color: var(--blue);
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.section p {
+  max-width: 900px;
+  margin-bottom: 20px;
+  color: var(--grey);
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+/* ---------- CLIENT-CENTRIC INTRO ---------- */
+.client-centric-intro {
+  background: linear-gradient(to bottom, var(--white) 0%, #f8f9fa 100%);
+}
+
+.client-perspective {
+  background: var(--navy);
+  color: var(--white);
+  padding: 50px;
+  border-radius: 20px;
+  margin-bottom: 60px;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+
+.client-perspective.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.client-perspective::before {
+  content: """;
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  font-size: 120px;
+  color: rgba(255, 148, 37, 0.2);
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+
+.client-perspective h3 {
+  font-size: 28px;
+  margin-bottom: 25px;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+  padding-left: 40px;
+}
+
+.client-perspective p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 18px;
+  line-height: 1.8;
+  position: relative;
+  z-index: 1;
+  padding-left: 40px;
+  margin: 0;
+}
+
+/* ---------- DIFFERENTIATORS - 4 IN A ROW ---------- */
+.diff-section {
+  background: linear-gradient(to bottom, #f8f9fa 0%, var(--white) 100%);
+}
+
+.diff-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  margin-top: 50px;
+}
+
+.diff-card {
+  background: var(--white);
+  padding: 35px 25px;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(21, 33, 72, 0.08);
+  box-shadow: 0 4px 20px rgba(21, 33, 72, 0.06);
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.diff-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.diff-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--gradient-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.diff-card:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(21, 33, 72, 0.12);
+  border-color: rgba(255, 148, 37, 0.3);
+}
+
+.diff-card:hover::before {
+  transform: scaleX(1);
+}
+
+.diff-icon {
+  width: 55px;
+  height: 55px;
+  background: linear-gradient(135deg, rgba(255, 148, 37, 0.1) 0%, rgba(254, 114, 13, 0.1) 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-size: 26px;
+  color: var(--accent-dark);
+  transition: all 0.3s ease;
+}
+
+.diff-card:hover .diff-icon {
+  background: var(--gradient-accent);
+  color: var(--white);
+  transform: scale(1.1) rotate(5deg);
+}
+
+.diff-card h3 {
+  margin-bottom: 12px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.3;
+}
+
+.diff-card .outcome {
+  display: block;
+  color: var(--accent-dark);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.diff-card p {
+  color: var(--grey);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ---------- TIMELINE ---------- */
+.timeline-section {
+  background: var(--navy);
+  color: var(--white);
+  padding: 100px 10%;
+  position: relative;
+  overflow: hidden;
+}
+
+.timeline-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(255, 148, 37, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(68, 98, 128, 0.1) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.timeline-section h2 {
+  color: var(--white);
+  position: relative;
+  z-index: 2;
+}
+
+.timeline-section h2::after {
+  background: var(--gradient-accent);
+}
+
+.timeline-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 60px auto 0;
+  z-index: 2;
+}
+
+.timeline-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--accent), var(--accent-dark));
+  transform: translateX(-50%);
+  border-radius: 3px;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 1.5s ease;
+}
+
+.timeline-line.visible {
+  transform: scaleY(1) translateX(-50%);
+}
+
+.timeline-item {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 50%;
+  position: relative;
+  margin-bottom: 50px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+
+.timeline-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.timeline-item:nth-child(even) {
+  justify-content: flex-start;
+  padding-right: 0;
+  padding-left: 50%;
+}
+
+.timeline-content {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 16px;
+  max-width: 450px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.timeline-content:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: scale(1.02);
+  border-color: rgba(255, 148, 37, 0.3);
+}
+
+.timeline-year {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gradient-accent);
+  color: var(--white);
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 4px 15px rgba(255, 148, 37, 0.4);
+  z-index: 3;
+  white-space: nowrap;
+}
+
+.timeline-item:nth-child(odd) .timeline-year {
+  top: 20px;
+}
+
+.timeline-item:nth-child(even) .timeline-year {
+  top: 20px;
+}
+
+.timeline-content h3 {
+  color: var(--accent);
+  font-size: 20px;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.timeline-content p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ---------- LEADERSHIP ---------- */
+.leadership-section {
+  background: linear-gradient(to bottom, #f8f9fa 0%, var(--white) 100%);
+}
+
+.leadership-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.leader-card {
+  background: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(21, 33, 72, 0.08);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(21, 33, 72, 0.06);
+  position: relative;
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.leader-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.leader-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-accent);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.leader-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(21, 33, 72, 0.15);
+}
+
+.leader-card:hover::after {
+  transform: scaleX(1);
+}
+
+.leader-header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+  padding: 30px;
+  color: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+
+.leader-header::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 148, 37, 0.2) 0%, transparent 70%);
+}
+
+.leader-header h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  position: relative;
+  z-index: 1;
+}
+
+.leader-title {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+
+.leader-body {
+  padding: 25px 30px;
+}
+
+.leader-body p {
+  color: var(--grey);
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ---------- GLOBAL LOCATIONS ---------- */
+.locations-section {
+  background: var(--navy);
+  color: var(--white);
+  padding: 100px 10%;
+  position: relative;
+  overflow: hidden;
+}
+
+.locations-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 30% 70%, rgba(255, 148, 37, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 70% 30%, rgba(68, 98, 128, 0.15) 0%, transparent 40%);
+}
+
+.locations-section h2 {
+  color: var(--white);
+}
+
+.map-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 60px auto 0;
+  z-index: 2;
+}
+
+.world-map {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+  padding: 60px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  min-height: 400px;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.8s ease;
+}
+
+.world-map.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.location-node {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: scale(0);
+}
+
+.location-node.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.location-node:hover {
+  transform: scale(1.1);
+  z-index: 10;
+}
+
+.node-dot {
+  width: 20px;
+  height: 20px;
+  background: var(--gradient-accent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 8px rgba(255, 148, 37, 0.2), 0 0 0 16px rgba(255, 148, 37, 0.1);
+  animation: pulse-dot 2s infinite;
+  position: relative;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 8px rgba(255, 148, 37, 0.2), 0 0 0 16px rgba(255, 148, 37, 0.1); }
+  50% { box-shadow: 0 0 0 12px rgba(255, 148, 37, 0.2), 0 0 0 24px rgba(255, 148, 37, 0.1); }
+}
+
+.node-label {
+  margin-top: 15px;
+  background: rgba(21, 33, 72, 0.9);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+  border: 1px solid rgba(255, 148, 37, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.node-details {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 10px;
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--navy);
+  padding: 20px;
+  border-radius: 12px;
+  width: 280px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  z-index: 20;
+}
+
+.location-node:hover .node-details {
+  opacity: 1;
+  visibility: visible;
+  margin-top: 20px;
+}
+
+.node-details h4 {
+  color: var(--accent-dark);
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.node-details p {
+  color: var(--grey);
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Position nodes on map */
+.node-americas { top: 35%; left: 20%; }
+.node-emea { top: 30%; left: 48%; }
+.node-apac { top: 50%; left: 75%; }
+.node-india { top: 45%; left: 65%; }
+
+.locations-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.location-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.location-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.location-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 148, 37, 0.4);
+  transform: translateY(-5px);
+}
+
+.location-card h3 {
+  color: var(--accent);
+  font-size: 20px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.location-card p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ---------- CTA ---------- */
+.cta {
+  background: var(--gradient-accent);
+  color: var(--white);
+  text-align: center;
+  padding: 100px 10%;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.cta-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+
+.cta-content.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cta h2 {
+  font-size: 42px;
+  margin-bottom: 20px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.cta p {
+  font-size: 20px;
+  margin-bottom: 40px;
+  opacity: 0.95;
+}
+
+.cta-button {
+  display: inline-block;
+  background: var(--white);
+  color: var(--accent-dark);
+  padding: 18px 40px;
+  border: none;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.cta-button:hover {
+  background: var(--navy);
+  color: var(--white);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* ---------- ANIMATIONS ---------- */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1200px) {
+  .diff-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 968px) {
+  .hero h1 { font-size: 40px; }
+  .hero > p { font-size: 18px; }
+  .hero-stats { flex-direction: column; gap: 30px; }
+  .section h2 { font-size: 32px; }
+  
+  .diff-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .timeline-line { left: 30px; }
+  .timeline-item,
+  .timeline-item:nth-child(even) {
+    justify-content: flex-start;
+    padding-left: 80px;
+    padding-right: 0;
+  }
+  .timeline-year {
+    left: 30px;
+    transform: translateX(-50%);
+  }
+  
+  .world-map { padding: 30px; min-height: 600px; }
+  .location-node { position: relative; top: auto !important; left: auto !important; margin-bottom: 30px; }
+  .node-details { position: relative; opacity: 1; visibility: visible; transform: none; margin-top: 15px; width: 100%; }
+}
+
+@media (max-width: 640px) {
+  .hero { padding: 100px 5% 120px; }
+  .section { padding: 80px 5%; }
+  .hero h1 { font-size: 32px; }
+  .client-perspective { padding: 30px; }
+  .client-perspective h3 { font-size: 22px; padding-left: 20px; }
+  .client-perspective p { padding-left: 20px; }
+  .client-perspective::before { font-size: 80px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Trusted by AmLaw 100 & Fortune 500</div>
+    <h1>When Data Breaches Strike.<br>When Discovery Overwhelms.<br>We Deliver Certainty.</h1>
+    <p>
+      Law firms and corporations don't need more vendors—they need strategic partners who understand the stakes. For 28 years, we've transformed legal chaos into controlled outcomes: containing cyber incidents before they escalate, reducing discovery costs by 90%, and delivering defensible results that withstand regulatory scrutiny.
+    </p>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-number">28+</span>
+        <div class="stat-label">Years Excellence</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">5,000+</span>
+        <div class="stat-label">Matters Managed</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">39</span>
+        <div class="stat-label">Countries Served</div>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">15min</span>
+        <div class="stat-label">Response SLA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENT-CENTRIC SOLUTIONS -->
+<section class="section client-centric-intro">
+  <div class="section-header">
+    <h2>We Speak Your Language</h2>
+    <p class="section-subtitle">Outcomes first. Methodology second.</p>
+  </div>
+
+  <div class="client-perspective">
+    <h3>We know what keeps you awake at 3 AM.</h3>
+    <p>
+      The midnight call about a data breach. The judge demanding production tomorrow. The partner questioning why costs spiraled. The client expecting perfection yesterday. We've sat in your seat. We know that "good enough" isn't good enough when your reputation—and your client's fate—hangs in the balance. That's why we don't just process data; we engineer outcomes that protect your practice, satisfy your clients, and stand up in court.
+    </p>
+  </div>
+
+  <div class="diff-grid">
+    <div class="diff-card">
+      <div class="diff-icon">⚡</div>
+      <span class="outcome">Rapid Crisis Containment</span>
+      <h3>When Every Minute Counts</h3>
+      <p>Stop breaches from becoming headlines. Our 24/7 Cyber Incident Response teams contain threats, preserve forensic integrity, and prepare defensible notification strategies—so you control the narrative, not the attackers.</p>
+    </div>
+    
+    <div class="diff-card">
+      <div class="diff-icon">🎯</div>
+      <span class="outcome">90% Cost Reduction</span>
+      <h3>Discovery Without the Drain</h3>
+      <p>Transform document review from profit killer to competitive advantage. AI-powered culling and expert-in-the-loop precision slash review volumes by 80%, delivering defensible results at a fraction of traditional costs.</p>
+    </div>
+    
+    <div class="diff-card">
+      <div class="diff-icon">🔒</div>
+      <span class="outcome">Enterprise-Grade Security</span>
+      <h3>Sleep-Sound Compliance</h3>
+      <p>ISO 27001 and SOC 2 Type II certified environments mean your sensitive data never leaves a fortress. End-to-end encryption, audit trails, and defensible chain-of-custody protocols that satisfy the strictest regulators.</p>
+    </div>
+    
+    <div class="diff-card">
+      <div class="diff-icon">🌐</div>
+      <span class="outcome">Global Reach, Local Touch</span>
+      <h3>Follow-the-Sun Delivery</h3>
+      <p>Deadlines don't wait for time zones. Our 24/7 rotational model across continents ensures continuous progress, with 15-minute response SLAs and senior attorneys available when your partners need answers.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-section">
+  <div class="section-header">
+    <h2>Our Evolution</h2>
+    <p style="color: rgba(255,255,255,0.8); font-size: 18px;">From London litigation support to global legal technology leader</p>
+  </div>
+  
+  <div class="timeline-container">
+    <div class="timeline-line"></div>
+    
+    <div class="timeline-item">
+      <div class="timeline-year">1996</div>
+      <div class="timeline-content">
+        <h3>The Beginning</h3>
+        <p>Founded in London as Law Copy by brothers Chris and Greg O'Reilly—pioneering 24/7/365 litigation support services.</p>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-year">2007</div>
+      <div class="timeline-content">
+        <h3>Technology Leadership</h3>
+        <p>Early adopter of Relativity in UK/European markets, establishing expertise in market-leading eDiscovery platforms.</p>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-year">2012</div>
+      <div class="timeline-content">
+        <h3>Global Expansion</h3>
+        <p>Headquarters moved to Colorado, USA. Data centers established across Denver, Sydney, and Grand Cayman.</p>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-year">2017</div>
+      <div class="timeline-content">
+        <h3>India Operations</h3>
+        <p>Chandigarh operations center opened with ISO 27001 certification, enabling scalable 24/7 delivery capabilities.</p>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-year">2021</div>
+      <div class="timeline-content">
+        <h3>Cyber Incident Response</h3>
+        <p>Launched dedicated CIR practice line supporting clients in data breach response and forensic investigation.</p>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-year">2023</div>
+      <div class="timeline-content">
+        <h3>SOC 2 Certification</h3>
+        <p>Achieved SOC 2 Type II certification for India operations center, reinforcing enterprise security commitment.</p>
+      </div>
+    </div>
+    
+    <div class="timeline-item">
+      <div class="timeline-year">2025</div>
+      <div class="timeline-content">
+        <h3>Strategic Leadership</h3>
+        <p>Diane McAuliffe appointed President of Global Legal Services; Avinash Pattabhiram joins leadership team.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERSHIP -->
+<section class="section leadership-section">
+  <div class="section-header">
+    <h2>Executive Leadership</h2>
+    <p class="section-subtitle">Global expertise. Local commitment. Strategic vision.</p>
+    <p>
+      Our leadership team combines decades of experience across legal services, technology, finance, and operations—ensuring governance-level confidence and delivery-level excellence for every client engagement.
+    </p>
+  </div>
+
+  <div class="leadership-grid">
+    <div class="leader-card">
+      <div class="leader-header">
+        <h3>Conor Looney</h3>
+        <div class="leader-title">Group Chief Executive Officer</div>
+      </div>
+      <div class="leader-body">
+        <p>30+ years global leadership across legal and business services. Former technology executive driving digital transformation and operational excellence.</p>
+      </div>
+    </div>
+    
+    <div class="leader-card">
+      <div class="leader-header">
+        <h3>Diane McAuliffe</h3>
+        <div class="leader-title">President – Global Legal Services</div>
+      </div>
+      <div class="leader-body">
+        <p>25+ years global leadership across USA, Europe, Asia, LATAM. Former BT, Digicel, and Vodafone executive driving business growth and client satisfaction.</p>
+      </div>
+    </div>
+    
+    <div class="leader-card">
+      <div class="leader-header">
+        <h3>Avinash Pattabhiram</h3>
+        <div class="leader-title">Senior Vice President</div>
+      </div>
+      <div class="leader-body">
+        <p>Strategic technology and operations leader driving innovation in legal service delivery and client success across global markets.</p>
+      </div>
+    </div>
+    
+    <div class="leader-card">
+      <div class="leader-header">
+        <h3>Prateek Natekar</h3>
+        <div class="leader-title">Managing Director, Legal</div>
+      </div>
+      <div class="leader-body">
+        <p>25+ years in operations, strategy, and delivery excellence. Oversees India operations center and global service delivery frameworks.</p>
+      </div>
+    </div>
+    
+    <div class="leader-card">
+      <div class="leader-header">
+        <h3>Vivek Sharma</h3>
+        <div class="leader-title">President & Group CFO</div>
+      </div>
+      <div class="leader-body">
+        <p>Chartered Accountant with deep financial and governance expertise. Drives fiscal strategy, risk management, and corporate governance.</p>
+      </div>
+    </div>
+    
+    <div class="leader-card">
+      <div class="leader-header">
+        <h3>Samit Mhatre</h3>
+        <div class="leader-title">Chief People Officer</div>
+      </div>
+      <div class="leader-body">
+        <p>Driving talent strategy, organizational development, and high-engagement culture across 1,300+ global associates.</p>
+      </div>
+    </div>
+    
+    <div class="leader-card">
+      <div class="leader-header">
+        <h3>Chris O'Reilly</h3>
+        <div class="leader-title">Founder & Strategic Advisor</div>
+      </div>
+      <div class="leader-body">
+        <p>Founded LDM Global in 1996. 30+ years international business management. Cross-border asset recovery and insolvency specialist.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GLOBAL LOCATIONS -->
+<section class="locations-section">
+  <div class="section-header">
+    <h2>Global Footprint</h2>
+    <p style="color: rgba(255,255,255,0.8); font-size: 18px;">Strategic presence across Americas, EMEA, and Asia-Pacific</p>
+  </div>
+  
+  <div class="map-container">
+    <div class="world-map">
+      <div class="location-node node-americas">
+        <div class="node-dot"></div>
+        <div class="node-label">Americas</div>
+        <div class="node-details">
+          <h4>Headquarters & Operations</h4>
+          <p>Denver, Colorado (HQ)<br>Grand Cayman, Caribbean<br>Dulles Tech Corridor Data Center</p>
+        </div>
+      </div>
+      
+      <div class="location-node node-emea">
+        <div class="node-dot"></div>
+        <div class="node-label">EMEA</div>
+        <div class="node-details">
+          <h4>European Operations</h4>
+          <p>London, UK (Founded 1996)<br>Manchester, UK<br>Dublin, Ireland<br>Serving EU data privacy requirements</p>
+        </div>
+      </div>
+      
+      <div class="location-node node-apac">
+        <div class="node-dot"></div>
+        <div class="node-label">Asia-Pacific</div>
+        <div class="node-details">
+          <h4>APAC Hub</h4>
+          <p>Sydney, Australia<br>Data Center & Review Operations<br>Serving Asia-Pacific clients</p>
+        </div>
+      </div>
+      
+      <div class="location-node node-india">
+        <div class="node-dot"></div>
+        <div class="node-label">India Operations</div>
+        <div class="node-details">
+          <h4>Global Delivery Center</h4>
+          <p>Chandigarh, India<br>70,000 sq. ft. facility<br>1,300 seat capacity<br>ISO 27001 & SOC 2 certified</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="locations-list">
+      <div class="location-card">
+        <h3>🇺🇸 Americas</h3>
+        <p>Denver HQ, Grand Cayman office, and US data centers supporting North American and Caribbean clients with 24/7 coverage.</p>
+      </div>
+      <div class="location-card">
+        <h3>🇬🇧 EMEA</h3>
+        <p>London origins with Manchester and Dublin offices. Expertise in EU data privacy and cross-border discovery protocols.</p>
+      </div>
+      <div class="location-card">
+        <h3>🇮🇳 India Center</h3>
+        <p>State-of-the-art Chandigarh facility enabling scalable, secure delivery with business continuity and disaster recovery.</p>
+      </div>
+      <div class="location-card">
+        <h3>🇦🇺 Asia-Pacific</h3>
+        <p>Sydney operations serving APAC region with localized data centers and compliance with regional privacy regulations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-content">
+    <h2>Your Next Crisis Doesn't Wait.<br>Neither Do We.</h2>
+    <p>Join the law firms and corporations who sleep better knowing LDM Global is on speed dial. Strategic partnership starts with a conversation.</p>
+    <a href="#" class="cta-button">Contact LDM Global</a>
+  </div>
+</section>
+
+<script>
+// Intersection Observer for scroll animations
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, observerOptions);
+
+// Observe all animated elements
+document.querySelectorAll('.client-perspective, .diff-card, .leader-card, .location-card, .timeline-item, .world-map, .cta-content, .timeline-line').forEach(el => observer.observe(el));
+
+// Stagger animation for cards
+const cards = document.querySelectorAll('.diff-card');
+cards.forEach((card, index) => {
+  card.style.transitionDelay = `${index * 0.15}s`;
+});
+
+const leaderCards = document.querySelectorAll('.leader-card');
+leaderCards.forEach((card, index) => {
+  card.style.transitionDelay = `${index * 0.1}s`;
+});
+
+const locationCards = document.querySelectorAll('.location-card');
+locationCards.forEach((card, index) => {
+  card.style.transitionDelay = `${index * 0.1}s`;
+});
+
+const locationNodes = document.querySelectorAll('.location-node');
+locationNodes.forEach((node, index) => {
+  node.style.transitionDelay = `${index * 0.2}s`;
+  observer.observe(node);
+});
+
+// Timeline items stagger
+const timelineItems = document.querySelectorAll('.timeline-item');
+timelineItems.forEach((item, index) => {
+  item.style.transitionDelay = `${index * 0.15}s`;
+});
+</script>
+
+</body>
+</html>

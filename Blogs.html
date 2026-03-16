@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Insights | LDM Global</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #152148;
+            --secondary: #446280;
+            --accent-start: #FF9425;
+            --accent-end: #FE720D;
+            --white: #ffffff;
+            --light-bg: #f8f9fa;
+            --text-dark: #1a1a1a;
+            --text-muted: #6c757d;
+            --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--white);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            z-index: 10000;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        /* Sticky Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            background: rgba(21, 33, 72, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s var(--transition-smooth);
+        }
+
+        .header.scrolled {
+            background: rgba(21, 33, 72, 0.98);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--white);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            transform: translateX(-100%);
+            transition: transform 0.4s var(--transition-smooth);
+        }
+
+        .logo:hover::after {
+            transform: translateX(0);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-tab {
+            padding: 0.75rem 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 50px;
+            transition: all 0.3s var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            opacity: 0;
+            transition: opacity 0.3s var(--transition-smooth);
+            z-index: -1;
+        }
+
+        .nav-tab:hover,
+        .nav-tab.active {
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .nav-tab.active::before,
+        .nav-tab:hover::before {
+            opacity: 1;
+        }
+
+        /* Hero Section with Parallax */
+        .hero {
+            position: relative;
+            height: 85vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: var(--primary);
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 148, 37, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(68, 98, 128, 0.3) 0%, transparent 50%),
+                linear-gradient(135deg, var(--primary) 0%, #0f1835 100%);
+            z-index: 1;
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 2;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            padding: 0 4rem;
+            text-align: left;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.25rem;
+            background: rgba(255, 148, 37, 0.15);
+            border: 1px solid rgba(255, 148, 37, 0.5);
+            border-radius: 50px;
+            color: var(--accent-start);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s var(--transition-smooth) forwards;
+            box-shadow: 0 0 20px rgba(255, 148, 37, 0.3), inset 0 0 10px rgba(255, 148, 37, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-badge::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 148, 37, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .hero-badge::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent-start);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 10px var(--accent-start);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+        }
+
+        .hero-title .line {
+            display: block;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeUp 0.8s var(--transition-smooth) forwards;
+        }
+
+        .hero-title .line:nth-child(1) { animation-delay: 0.2s; }
+        .hero-title .line:nth-child(2) { animation-delay: 0.4s; }
+
+        .hero-title .accent {
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 400;
+            max-width: 600px;
+            margin-bottom: 3rem;
+            line-height: 1.7;
+            opacity: 0;
+            animation: fadeUp 0.8s var(--transition-smooth) 0.6s forwards;
+        }
+
+        .hero-cta {
+            opacity: 0;
+            animation: fadeUp 0.8s var(--transition-smooth) 0.8s forwards;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 4rem;
+            z-index: 10;
+            opacity: 0;
+            animation: fadeUp 0.8s var(--transition-smooth) 1s forwards;
+        }
+
+        .scroll-mouse {
+            width: 26px;
+            height: 40px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 13px;
+            position: relative;
+        }
+
+        .scroll-wheel {
+            width: 4px;
+            height: 8px;
+            background: var(--accent-start);
+            border-radius: 2px;
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scrollWheel 2s infinite;
+        }
+
+        @keyframes scrollWheel {
+            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(12px); }
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-header {
+            max-width: 1400px;
+            margin: 0 auto 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .section-label {
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-start);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-label::after {
+            content: '';
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.2;
+            max-width: 600px;
+        }
+
+        /* Filter Tabs */
+        .filter-section {
+            background: var(--light-bg);
+            padding: 2rem 0;
+            position: sticky;
+            top: 70px;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .filter-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-label {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-right: 1rem;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--white);
+            border: 2px solid transparent;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.3s var(--transition-smooth);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            border-color: var(--accent-start);
+            color: var(--accent-start);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 148, 37, 0.2);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            color: var(--white);
+            border-color: transparent;
+        }
+
+        /* Blog Grid */
+        .blog-section {
+            background: var(--light-bg);
+            min-height: 100vh;
+        }
+
+        .blog-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 2rem;
+        }
+
+        .blog-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.4s var(--transition-smooth);
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(21, 33, 72, 0.15);
+        }
+
+        .blog-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            transform: scaleX(0);
+            transition: transform 0.4s var(--transition-smooth);
+        }
+
+        .blog-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .blog-image {
+            height: 220px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(21, 33, 72, 0.8) 100%);
+        }
+
+        .blog-category {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-start);
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .blog-content {
+            padding: 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .blog-date {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .blog-readtime {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .blog-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+            transition: color 0.3s;
+        }
+
+        .blog-card:hover .blog-title {
+            color: var(--accent-start);
+        }
+
+        .blog-excerpt {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .blog-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .author-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .author-info {
+            flex: 1;
+        }
+
+        .author-name {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
+
+        .author-role {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .blog-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-start);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: gap 0.3s;
+            margin-top: auto;
+        }
+
+        .blog-link:hover {
+            gap: 1rem;
+        }
+
+        /* Featured Post */
+        .featured-section {
+            background: var(--white);
+            padding-top: 4rem;
+        }
+
+        .featured-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .featured-post {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 4rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 40px 80px rgba(21, 33, 72, 0.3);
+        }
+
+        .featured-image-large {
+            position: relative;
+            min-height: 500px;
+            background: linear-gradient(135deg, rgba(255,148,37,0.2), rgba(68,98,128,0.3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--accent-start);
+            color: var(--white);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 30px rgba(255, 148, 37, 0.4);
+        }
+
+        .featured-content {
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-category {
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-start);
+            margin-bottom: 1rem;
+        }
+
+        .featured-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .featured-excerpt {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .btn-white {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2.5rem;
+            background: var(--white);
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 50px;
+            transition: all 0.3s var(--transition-smooth);
+            align-self: flex-start;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .btn-white:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            background: var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 0% 0%, rgba(255, 148, 37, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(68, 98, 128, 0.2) 0%, transparent 50%);
+        }
+
+        .newsletter-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .newsletter-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .newsletter-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            min-width: 300px;
+            padding: 1rem 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .newsletter-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .newsletter-input:focus {
+            border-color: var(--accent-start);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-accent {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s var(--transition-smooth);
+            box-shadow: 0 10px 30px rgba(255, 148, 37, 0.3);
+        }
+
+        .btn-accent:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(255, 148, 37, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background: #0a0f1f;
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand {
+            color: var(--white);
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .footer-tagline {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-heading {
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            display: inline-block;
+            position: relative;
+        }
+
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent-start);
+            transition: width 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .featured-post {
+                grid-template-columns: 1fr;
+            }
+            
+            .featured-image-large {
+                min-height: 300px;
+            }
+            
+            .featured-content {
+                padding: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-tabs {
+                display: none;
+            }
+            
+            .hero-content {
+                padding: 0 2rem;
+            }
+            
+            .scroll-indicator {
+                left: 2rem;
+            }
+            
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-container {
+                justify-content: center;
+            }
+            
+            .filter-label {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 1rem;
+            }
+            
+            .featured-title {
+                font-size: 1.75rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .newsletter-input {
+                min-width: 100%;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-container">
+            <a href="#" class="logo">LDM GLOBAL</a>
+            <nav class="nav-tabs">
+                <a href="#insights" class="nav-tab active">Insights</a>
+                <a href="#eDiscovery" class="nav-tab">eDiscovery</a>
+                <a href="#contracts" class="nav-tab">Contracts</a>
+                <a href="#regulatory" class="nav-tab">Regulatory</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="insights">
+        <div class="hero-bg"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <div class="hero-badge">Strategic Intelligence</div>
+            <h1 class="hero-title">
+                <span class="line">Legal Insight.</span>
+                <span class="line"><span class="accent">Competitive Advantage.</span></span>
+            </h1>
+            <p class="hero-subtitle">LDM Global's Legal Consulting practice delivers actionable intelligence on eDiscovery trends, contract lifecycle optimization, regulatory developments, and operational excellence. Our perspectives are forged from managing complex matters for AmLaw 200 firms and Fortune 500 legal departments across jurisdictions.</p>
+            <div class="hero-cta">
+                <a href="#featured" class="btn-white">
+                    <span>Explore Insights</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Post -->
+    <section class="section featured-section" id="featured">
+        <div class="featured-container">
+            <div class="featured-post">
+                <div class="featured-image-large">
+                    <div class="featured-badge">Featured</div>
+                    <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <div class="featured-content">
+                    <div class="featured-category">Artificial Intelligence</div>
+                    <h2 class="featured-title">The Defensible Use of Generative AI in Document Review: A Framework for 2025</h2>
+                    <p class="featured-excerpt">As courts grapple with AI-assisted discovery protocols, legal departments must establish defensible frameworks for generative AI deployment. This comprehensive analysis examines recent rulings, proposes governance structures, and provides practical implementation guidance for technology-assisted review 2.0.</p>
+                    <a href="#" class="btn-white">
+                        <span>Read Analysis</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <div class="filter-section">
+        <div class="filter-container">
+            <span class="filter-label">Filter by Topic:</span>
+            <button class="filter-btn active" data-filter="all">All Insights</button>
+            <button class="filter-btn" data-filter="eDiscovery">eDiscovery</button>
+            <button class="filter-btn" data-filter="contracts">Contract Management</button>
+            <button class="filter-btn" data-filter="regulatory">Regulatory</button>
+            <button class="filter-btn" data-filter="operations">Legal Operations</button>
+            <button class="filter-btn" data-filter="crossborder">Cross-Border</button>
+        </div>
+    </div>
+
+    <!-- Blog Grid -->
+    <section class="section blog-section">
+        <div class="blog-grid">
+            <!-- eDiscovery Posts -->
+            <article class="blog-card" data-category="eDiscovery">
+                <div class="blog-image">
+                    <div class="blog-category">eDiscovery</div>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-date">📅 March 2026</span>
+                        <span class="blog-readtime">⏱️ 8 min read</span>
+                    </div>
+                    <h3 class="blog-title">Proportionality in Practice: Post-2025 Amendments to Federal Rule 26</h3>
+                    <p class="blog-excerpt">Analysis of recent amendments to Federal Rule 26 and their practical impact on discovery scope negotiations. Includes sample proportionality memoranda and meet-and-confer strategies.</p>
+                    <div class="blog-author">
+                        <div class="author-avatar">JD</div>
+                        <div class="author-info">
+                            <div class="author-name">Jennifer Donovan</div>
+                            <div class="author-role">Director, eDiscovery Services</div>
+                        </div>
+                    </div>
+                    <a href="#" class="blog-link">Read Article →</a>
+                </div>
+            </article>
+
+            <article class="blog-card" data-category="eDiscovery">
+                <div class="blog-image">
+                    <div class="blog-category">eDiscovery</div>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-date">📅 February 2026</span>
+                        <span class="blog-readtime">⏱️ 6 min read</span>
+                    </div>
+                    <h3 class="blog-title">Slack, Teams, and Ephemeral Data: Preservation Strategies for Modern Collaboration</h3>
+                    <p class="blog-excerpt">Practical guidance on preserving and collecting ephemeral messaging data. Covers retention policy design, litigation hold implementation, and defensible deletion protocols.</p>
+                    <div class="blog-author">
+                        <div class="author-avatar">MK</div>
+                        <div class="author-info">
+                            <div class="author-name">Michael Kim</div>
+                            <div class="author-role">Senior Manager, Forensic Technology</div>
+                        </div>
+                    </div>
+                    <a href="#" class="blog-link">Read Article →</a>
+                </div>
+            </article>
+
+            <!-- Contract Management Posts -->
+            <article class="blog-card" data-category="contracts">
+                <div class="blog-image">
+                    <div class="blog-category">Contracts</div>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-date">📅 March 2026</span>
+                        <span class="blog-readtime">⏱️ 10 min read</span>
+                    </div>
+                    <h3 class="blog-title">Contract Lifecycle Metrics That Matter: KPIs for Legal Operations</h3>
+                    <p class="blog-excerpt">Comprehensive framework for measuring contract management effectiveness. Includes benchmarking data from 200+ legal departments and actionable dashboards for GC reporting.</p>
+                    <div class="blog-author">
+                        <div class="author-avatar">SP</div>
+                        <div class="author-info">
+                            <div class="author-name">Sarah Peterson</div>
+                            <div class="author-role">VP, Contract Solutions</div>
+                        </div>
+                    </div>
+                    <a href="#" class="blog-link">Read Article →</a>
+                </div>
+            </article>
+
+            <article class="blog-card" data-category="contracts">
+                <div class="blog-image">
+                    <div class="blog-category">Contracts</div>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-date">📅 January 2026</span>
+                        <span class="blog-readtime">⏱️ 7 min read</span>
+                    </div>
+                    <h3 class="blog-title">Force Majeure in a Post-Pandemic World: Drafting for Uncertainty</h3>
+                    <p class="blog-excerpt">Examination of evolving force majeure jurisprudence and practical drafting recommendations for supply chain resilience, including alternative clause structures and risk allocation strategies.</p>
+                    <div class="blog-author">
+                        <div class="author-avatar">RL</div>
+                        <div class="author-info">
+                            <div class="author-name">Robert Liu</div>
+                            <div class="author-role">Senior Counsel, Contract Advisory</div>
+                        </div>
+                    </div>
+                    <a href="#" class="blog-link">Read Article →</a>
+                </div>
+            </article>
+
+            <!-- Regulatory Posts -->
+            <article class="blog-card" data-category="regulatory">
+                <div class="blog-image">
+                    <div class="blog-category">Regulatory</div>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-date">📅 March 2026</span>
+                        <span class="blog-readtime">⏱️ 12 min read</span>
+                    </div>
+                    <h3 class="blog-title">GDPR, CCPA, and the Patchwork Problem: Unified Compliance Frameworks</h3>
+                    <p class="blog-excerpt">Strategic approach to managing conflicting data privacy regimes. Includes jurisdiction-by-jurisdiction comparison matrices and practical implementation roadmaps for multinational organizations.</p>
+                    <div class="blog-author">
+                        <div class="author-avatar">EW</div>
+                        <div class="author-info">
+                            <div class="author-name">Emma Williams</div>
+                            <div class="author-role">Director, Data Governance</div>
+                        </div>
+                    </div>
+                    <a href="#" class="blog-link">Read Article →</a>
+                </div>
+            </article>
+
+            <article class="blog-card" data-category="regulatory">
+                <div class="blog-image">
+                    <div class="blog-category">Regulatory</div>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-date">📅 February 2026</span>
+                        <span class="blog-readtime">⏱️ 9 min read</span>
+                    </div>
+                    <h3 class="blog-title">SEC Disclosure Obligations for Cyber Incidents: Navigating the New Regime</h3>
+                    <p class="blog-excerpt">Detailed analysis of SEC cybersecurity disclosure rules and their intersection with privilege protection. Includes decision trees for materiality determinations and sample disclosure language.</p>
+                    <div class="blog-author">
+                        <div class="author-avatar">JC</div>
+                        <div class="author-info">
+                            <div class="author-name">James Chen</div>
+                            <div class="author-role">Partner, Regulatory Advisory</div>
+                        </div>
+                    </div>
+                    <a href="#" class="blog-link">Read Article →</a>
+                </div>
+            </article>
+
+            <!-- Legal Operations Posts -->
+            <article class="blog-card" data-category="operations">
+                <div class="blog-image">
+                    <div class="blog-category">Operations</div>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-date">📅 March 2026</span>
+                        <span class="blog-readtime">⏱️ 6 min read</span>
+                    </div>
+                    <h3 class="blog-title">Alternative Legal Service Providers: Building the Business Case</h3>
+                    <p class="blog-excerpt">Quantitative analysis of ALSP engagement models and their impact on legal spend. Includes total cost of ownership calculators and vendor evaluation scorecards for procurement teams.</p>
+                    <div class="blog-author">
+                        <div class="author-avatar">AM</div>
+                        <div class="author-info">
+                            <div class="author-name">Amanda Martinez</div>
+                            <div class="author-role">Chief Operating Officer</div>
+                        </div>
+                    </div>
+                    <a href="#" class="blog-link">Read Article →</a>
+                </div>
+            </article>
+
+            <article class="blog-card" data-category="operations">
+                <div class="blog-image">
+                    <div class="blog-category">Operations</div>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-date">📅 January 2026</span>
+                        <span class="blog-readtime">⏱️ 5 min read</span>
+                    </div>
+                    <h3 class="blog-title">Matter Management Systems: RFP Template and Evaluation Guide</h3>
+                    <p class="blog-excerpt">Comprehensive RFP template for legal matter management system selection. Includes functional requirements matrices, vendor comparison frameworks, and implementation planning checklists.</p>
+                    <div class="blog-author">
+                        <div class="author-avatar">TK</div>
+                        <div class="author-info">
+                            <div class="author-name">Thomas Keller</div>
+                            <div class="author-role">Director, Legal Technology</div>
+                        </div>
+                    </div>
+                    <a href="#" class="blog-link">Read Article →</a>
+                </div>
+            </article>
+
+            <!-- Cross-Border Posts -->
+            <article class="blog-card" data-category="crossborder">
+                <div class="blog-image">
+                    <div class="blog-category">Cross-Border</div>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-date">📅 February 2026</span>
+                        <span class="blog-readtime">⏱️ 11 min read</span>
+                    </div>
+                    <h3 class="blog-title">Blocking Statutes and Cross-Border Discovery: Navigating Conflict</h3>
+                    <p class="blog-excerpt">Examination of GDPR Article 48 blocking statutes, China's Data Security Law, and their impact on US litigation. Includes practical strategies for data transfer and privilege preservation.</p>
+                    <div class="blog-author">
+                        <div class="author-avatar">DL</div>
+                        <div class="author-info">
+                            <div class="author-name">David Lee</div>
+                            <div class="author-role">Partner, International Discovery</div>
+                        </div>
+                    </div>
+                    <a href="#" class="blog-link">Read Article →</a>
+                </div>
+            </article>
+
+            <article class="blog-card" data-category="crossborder">
+                <div class="blog-image">
+                    <div class="blog-category">Cross-Border</div>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="blog-date">📅 December 2025</span>
+                        <span class="blog-readtime">⏱️ 8 min read</span>
+                    </div>
+                    <h3 class="blog-title">Arbitration Discovery: Common Law vs. Civil Law Approaches</h3>
+                    <p class="blog-excerpt">Comparative analysis of discovery protocols in international arbitration. Includes practical guidance for managing US-style discovery expectations in civil law jurisdictions.</p>
+                    <div class="blog-author">
+                        <div class="author-avatar">NS</div>
+                        <div class="author-info">
+                            <div class="author-name">Nina Schmidt</div>
+                            <div class="author-role">Director, International Operations</div>
+                        </div>
+                    </div>
+                    <a href="#" class="blog-link">Read Article →</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="section newsletter-section">
+        <div class="newsletter-container">
+            <h2 class="newsletter-title">Stay Ahead of Developments</h2>
+            <p class="newsletter-text">Subscribe to LDM Global's Legal Consulting Digest for monthly analysis of regulatory changes, technology trends, and operational best practices.</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                <button type="submit" class="btn-accent">
+                    <span>Subscribe</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">LDM GLOBAL</div>
+                <p class="footer-tagline">Premier legal consulting, litigation support, and legal operations services for AmLaw 200 firms and Fortune 500 legal departments worldwide.</p>
+            </div>
+            <div>
+                <h4 class="footer-heading">Insights</h4>
+                <ul class="footer-links">
+                    <li><a href="#">eDiscovery</a></li>
+                    <li><a href="#">Contract Management</a></li>
+                    <li><a href="#">Regulatory</a></li>
+                    <li><a href="#">Legal Operations</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-heading">Services</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Legal Consulting</a></li>
+                    <li><a href="#">Managed Review</a></li>
+                    <li><a href="#">Contract Solutions</a></li>
+                    <li><a href="#">Cross-Border Discovery</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-heading">Contact</h4>
+                <ul class="footer-links">
+                    <li><a href="mailto:consulting@ldmglobal.com">consulting@ldmglobal.com</a></li>
+                    <li><a href="#">Global Offices</a></li>
+                    <li><a href="#">Client Support</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>&copy; 2026 LDM Global. All rights reserved.</div>
+            <div>Attorney Advertising | Confidential & Privileged</div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scrollProgress').style.width = scrolled + '%';
+        });
+
+        // Header Scroll Effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer for Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements
+        document.querySelectorAll('.blog-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Filter Functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const blogCards = document.querySelectorAll('.blog-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+
+                const filter = btn.getAttribute('data-filter');
+
+                blogCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'flex';
+                        setTimeout(() => {
+                            card.classList.add('visible');
+                        }, 50);
+                    } else {
+                        card.classList.remove('visible');
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 400);
+                    }
+                });
+            });
+        });
+
+        // Smooth Scroll for Navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Active Tab Indicator
+        const sections = document.querySelectorAll('section[id]');
+        const navTabs = document.querySelectorAll('.nav-tab');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navTabs.forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.getAttribute('href') === '#' + current) {
+                    tab.classList.add('active');
+                }
+            });
+        });
+
+        // Parallax Effect for Hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            const heroContent = document.querySelector('.hero-content');
+            
+            if (hero && scrolled < window.innerHeight) {
+                heroContent.style.transform = `translateY(${scrolled * 0.3}px)`;
+                heroContent.style.opacity = 1 - (scrolled / window.innerHeight) * 0.5;
+            }
+        });
+    </script>
+</body>
+</html>

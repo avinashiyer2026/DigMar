@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diversity & Inclusion | LDM Global — Governance Through Inclusion</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy: #152148;
+  --navy-light: #1e2d5c;
+  --blue: #446280;
+  --light: #E7EAE7;
+  --grey: #8C9196;
+  --accent: #FF9425;
+  --accent-dark: #FE720D;
+  --white: #FFFFFF;
+  --gradient-hero: linear-gradient(135deg, #152148 0%, #1e3a5f 50%, #446280 100%);
+  --gradient-accent: linear-gradient(135deg, #FF9425 0%, #FE720D 100%);
+  --gradient-warm: linear-gradient(135deg, #FF9425 0%, #ff6b35 100%);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--white);
+  color: var(--navy);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ---------- ANIMATIONS ---------- */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-25px) rotate(2deg); }
+}
+
+@keyframes float-reverse {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(25px) rotate(-2deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 148, 37, 0.4); }
+  50% { box-shadow: 0 0 50px rgba(255, 148, 37, 0.7); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  background: var(--gradient-hero);
+  color: var(--white);
+  padding: 140px 10% 100px;
+  position: relative;
+  overflow: hidden;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255, 148, 37, 0.15) 0%, transparent 70%);
+  animation: float 8s ease-in-out infinite;
+  border-radius: 50%;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  bottom: -30%;
+  left: -15%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(68, 98, 128, 0.25) 0%, transparent 70%);
+  animation: float-reverse 10s ease-in-out infinite;
+  border-radius: 50%;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  animation: slideUp 1s ease-out;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 148, 37, 0.2);
+  border: 1px solid rgba(255, 148, 37, 0.4);
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  color: var(--accent);
+  backdrop-filter: blur(10px);
+  animation: pulse-glow 3s infinite;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse-glow 2s infinite;
+}
+
+.hero h1 {
+  font-size: 58px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 25px;
+}
+
+.hero h1 span {
+  color: var(--accent);
+}
+
+.hero-subtitle {
+  font-size: 24px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+.hero-description {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.8;
+  max-width: 700px;
+}
+
+/* ---------- GOVERNANCE STRIP ---------- */
+.governance-strip {
+  background: var(--navy);
+  color: var(--white);
+  padding: 50px 10%;
+  position: relative;
+  overflow: hidden;
+}
+
+.governance-strip::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(255, 148, 37, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(68, 98, 128, 0.1) 0%, transparent 50%);
+}
+
+.governance-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 2;
+}
+
+.governance-text {
+  font-size: 20px;
+  font-weight: 600;
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+.governance-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--gradient-accent);
+  color: var(--white);
+  padding: 16px 32px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 148, 37, 0.3);
+}
+
+.governance-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 148, 37, 0.4);
+}
+
+/* ---------- METRICS SECTION ---------- */
+.metrics-section {
+  background: linear-gradient(to bottom, var(--white) 0%, #f8f9fa 100%);
+  padding: 100px 10%;
+}
+
+.metrics-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 60px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+
+.metrics-header.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.metrics-header h2 {
+  font-size: 42px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: var(--navy);
+}
+
+.metrics-header h2::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 5px;
+  background: var(--gradient-accent);
+  margin: 20px auto 0;
+  border-radius: 3px;
+}
+
+.metrics-header p {
+  color: var(--grey);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.metric-card {
+  background: var(--white);
+  padding: 40px 30px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(21, 33, 72, 0.08);
+  border: 1px solid rgba(21, 33, 72, 0.06);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.metric-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.metric-card:hover {
+  transform: translateY(-15px) scale(1.02);
+  box-shadow: 0 20px 60px rgba(21, 33, 72, 0.12);
+  border-color: rgba(255, 148, 37, 0.2);
+}
+
+.metric-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.metric-number {
+  font-size: 56px;
+  font-weight: 800;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.metric-label {
+  font-size: 14px;
+  color: var(--grey);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+}
+
+.metric-context {
+  font-size: 13px;
+  color: var(--blue);
+  margin-top: 10px;
+  font-style: italic;
+}
+
+/* ---------- PHILOSOPHY SECTION ---------- */
+.philosophy-section {
+  background: var(--navy);
+  color: var(--white);
+  padding: 100px 10%;
+  position: relative;
+  overflow: hidden;
+}
+
+.philosophy-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 30% 20%, rgba(255, 148, 37, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 70% 80%, rgba(68, 98, 128, 0.15) 0%, transparent 40%);
+}
+
+.philosophy-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.philosophy-content h2 {
+  font-size: 42px;
+  font-weight: 800;
+  margin-bottom: 25px;
+  line-height: 1.2;
+}
+
+.philosophy-content h2 span {
+  color: var(--accent);
+}
+
+.philosophy-content > p {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.8;
+  margin-bottom: 40px;
+}
+
+.philosophy-pillars {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.pillar {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  padding: 25px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.pillar.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.pillar:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 148, 37, 0.3);
+  transform: translateX(10px);
+}
+
+.pillar-number {
+  width: 45px;
+  height: 45px;
+  background: var(--gradient-accent);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.pillar-content h4 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.pillar-content p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.philosophy-visual {
+  position: relative;
+  height: 500px;
+  background: linear-gradient(135deg, rgba(255, 148, 37, 0.1) 0%, rgba(68, 98, 128, 0.1) 100%);
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.visual-content {
+  text-align: center;
+  padding: 40px;
+}
+
+.certification-badge {
+  width: 200px;
+  height: 200px;
+  background: var(--gradient-accent);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 30px;
+  box-shadow: 0 20px 60px rgba(255, 148, 37, 0.4);
+  animation: pulse-glow 4s infinite;
+}
+
+.certification-badge span {
+  font-size: 72px;
+  line-height: 1;
+}
+
+.certification-badge p {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 10px;
+}
+
+.visual-text h3 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.visual-text p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* ---------- ACCOLADES SECTION ---------- */
+.accolades-section {
+  background: linear-gradient(to bottom, #f8f9fa 0%, var(--white) 100%);
+  padding: 100px 10%;
+}
+
+.accolades-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 60px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+
+.accolades-header.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.accolades-header h2 {
+  font-size: 42px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: var(--navy);
+}
+
+.accolades-header h2::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 5px;
+  background: var(--gradient-accent);
+  margin: 20px auto 0;
+  border-radius: 3px;
+}
+
+.accolades-header p {
+  color: var(--grey);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.accolades-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.accolade-card {
+  background: var(--white);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(21, 33, 72, 0.08);
+  border: 1px solid rgba(21, 33, 72, 0.06);
+  transition: all 0.4s ease;
+  opacity: 0;
+  transform: translateY(30px);
+  position: relative;
+  overflow: hidden;
+}
+
+.accolade-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.accolade-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--gradient-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.accolade-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 60px rgba(21, 33, 72, 0.12);
+}
+
+.accolade-card:hover::before {
+  transform: scaleX(1);
+}
+
+.accolade-year {
+  display: inline-block;
+  background: rgba(255, 148, 37, 0.1);
+  color: var(--accent-dark);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+.accolade-card h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 15px;
+  line-height: 1.3;
+}
+
+.accolade-card p {
+  color: var(--grey);
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.accolade-icon {
+  font-size: 40px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+/* ---------- INITIATIVES SECTION ---------- */
+.initiatives-section {
+  background: var(--white);
+  padding: 100px 10%;
+}
+
+.initiatives-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 60px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+
+.initiatives-header.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.initiatives-header h2 {
+  font-size: 42px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: var(--navy);
+}
+
+.initiatives-header h2::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 5px;
+  background: var(--gradient-accent);
+  margin: 20px auto 0;
+  border-radius: 3px;
+}
+
+.initiatives-header p {
+  color: var(--grey);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.initiatives-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.initiative-card {
+  background: linear-gradient(135deg, #f8f9fa 0%, var(--white) 100%);
+  padding: 40px;
+  border-radius: 20px;
+  border: 1px solid rgba(21, 33, 72, 0.06);
+  transition: all 0.4s ease;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.initiative-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.initiative-card:hover {
+  background: var(--white);
+  box-shadow: 0 15px 50px rgba(21, 33, 72, 0.1);
+  border-color: rgba(255, 148, 37, 0.2);
+  transform: translateY(-5px);
+}
+
+.initiative-icon {
+  width: 60px;
+  height: 60px;
+  background: var(--gradient-accent);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-bottom: 25px;
+  color: var(--white);
+  transition: all 0.3s ease;
+}
+
+.initiative-card:hover .initiative-icon {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 10px 30px rgba(255, 148, 37, 0.3);
+}
+
+.initiative-card h3 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 15px;
+}
+
+.initiative-card p {
+  color: var(--grey);
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ---------- COMMITMENT SECTION ---------- */
+.commitment-section {
+  background: var(--navy);
+  color: var(--white);
+  padding: 100px 10%;
+  position: relative;
+  overflow: hidden;
+}
+
+.commitment-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 148, 37, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 80% 20%, rgba(68, 98, 128, 0.15) 0%, transparent 40%);
+}
+
+.commitment-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+
+.commitment-content.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.commitment-content h2 {
+  font-size: 48px;
+  font-weight: 800;
+  margin-bottom: 30px;
+  line-height: 1.2;
+}
+
+.commitment-content h2 span {
+  color: var(--accent);
+}
+
+.commitment-content > p {
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.8;
+  margin-bottom: 50px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.commitment-stats {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  flex-wrap: wrap;
+  margin-top: 50px;
+}
+
+.commitment-stat {
+  text-align: center;
+}
+
+.commitment-stat-number {
+  font-size: 64px;
+  font-weight: 800;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.commitment-stat-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+}
+
+/* ---------- CTA SECTION ---------- */
+.cta-section {
+  background: var(--gradient-accent);
+  color: var(--white);
+  padding: 100px 10%;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-section::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+  animation: rotate 30s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.cta-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.cta-content h2 {
+  font-size: 48px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.cta-content p {
+  font-size: 20px;
+  opacity: 0.95;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+.cta-button {
+  display: inline-block;
+  background: var(--white);
+  color: var(--accent-dark);
+  padding: 20px 50px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: shimmer 3s infinite;
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  background: var(--navy);
+  color: var(--white);
+}
+
+/* ---------- FOOTER ---------- */
+.diversity-footer {
+  background: var(--navy);
+  color: rgba(255, 255, 255, 0.6);
+  padding: 40px 10%;
+  text-align: center;
+  font-size: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1024px) {
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .accolades-grid { grid-template-columns: repeat(2, 1fr); }
+  .philosophy-grid { grid-template-columns: 1fr; gap: 50px; }
+  .initiatives-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 42px; }
+  .philosophy-visual { height: 400px; }
+}
+
+@media (max-width: 768px) {
+  .hero { padding: 100px 5% 80px; min-height: auto; }
+  .hero h1 { font-size: 32px; }
+  .hero-subtitle { font-size: 18px; }
+  .governance-content { flex-direction: column; text-align: center; }
+  .metrics-grid { grid-template-columns: 1fr; }
+  .accolades-grid { grid-template-columns: 1fr; }
+  .commitment-content h2 { font-size: 32px; }
+  .cta-content h2 { font-size: 32px; }
+  section { padding: 80px 5%; }
+  .pillar { flex-direction: column; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="pulse-dot"></span>
+      Great Place to Work Certified™
+    </div>
+    <h1>Diversity & Inclusion:<br>Not Compliance.<br><span>Governance.</span></h1>
+    <p class="hero-subtitle">High-trust cultures outperform. Inclusive teams innovate faster. Diverse perspectives de-risk decisions.</p>
+    <p class="hero-description">At LDM Global, we don't treat diversity as a checkbox or inclusion as a program. We operate as a high-performance organization where cognitive diversity, psychological safety, and equitable opportunity are structural advantages—directly correlated to the quality of legal outcomes we deliver for our clients.</p>
+  </div>
+</section>
+
+<!-- GOVERNANCE STRIP -->
+<section class="governance-strip">
+  <div class="governance-content">
+    <p class="governance-text">"Defensible legal outcomes depend not only on technology, but on empowered teams who understand legal risk, data sensitivity, and operational discipline."</p>
+    <a href="#philosophy" class="governance-cta">Our Philosophy →</a>
+  </div>
+</section>
+
+<!-- METRICS SECTION -->
+<section class="metrics-section">
+  <div class="metrics-header">
+    <h2>Inclusion by the Numbers</h2>
+    <p>We measure what matters. These metrics reflect our commitment to building a workplace where talent thrives regardless of background, identity, or circumstance.</p>
+  </div>
+
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <span class="metric-icon">🌍</span>
+      <div class="metric-number" data-target="39">0</div>
+      <div class="metric-label">Nationalities Represented</div>
+      <div class="metric-context">Global talent, local expertise</div>
+    </div>
+    <div class="metric-card">
+      <span class="metric-icon">⚖️</span>
+      <div class="metric-number" data-target="45">0</div>
+      <div class="metric-label">% Women in Leadership</div>
+      <div class="metric-context">Above industry average</div>
+    </div>
+    <div class="metric-card">
+      <span class="metric-icon">📈</span>
+      <div class="metric-number" data-target="70">0</div>
+      <div class="metric-label">NPS Score</div>
+      <div class="metric-context">Employee satisfaction</div>
+    </div>
+    <div class="metric-card">
+      <span class="metric-icon">🏆</span>
+      <div class="metric-number" data-target="100">0</div>
+      <div class="metric-label">% Pay Equity Audited</div>
+      <div class="metric-context">Annual compensation review</div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY SECTION -->
+<section class="philosophy-section" id="philosophy">
+  <div class="philosophy-grid">
+    <div class="philosophy-content">
+      <h2>Our Operating <span>Principles</span></h2>
+      <p>Inclusion isn't an HR initiative at LDM Global—it's how we govern ourselves. Our four pillars ensure that every team member can contribute their full cognitive capacity to solving complex legal and technical challenges.</p>
+      
+      <div class="philosophy-pillars">
+        <div class="pillar">
+          <div class="pillar-number">1</div>
+          <div class="pillar-content">
+            <h4>Cognitive Diversity as Risk Mitigation</h4>
+            <p>Homogeneous teams miss blind spots. We actively recruit for diverse problem-solving approaches, ensuring our legal technology solutions account for perspectives our clients may not have considered.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-number">2</div>
+          <div class="pillar-content">
+            <h4>Psychological Safety = Speed</h4>
+            <p>In high-stakes litigation and cyber response, hesitation kills. We build environments where junior analysts challenge senior partners, where mistakes are caught early, and where speaking up is rewarded—not punished.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-number">3</div>
+          <div class="pillar-content">
+            <h4>Equity in Opportunity, Not Just Outcome</h4>
+            <p>We don't just track diversity metrics—we audit who gets stretch assignments, client-facing roles, and promotion pathways. Our 24/7 global model creates flexible pathways for talent regardless of geography or caregiving responsibilities.</p>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-number">4</div>
+          <div class="pillar-content">
+            <h4>Accountability at Every Level</h4>
+            <p>Inclusion is a leadership KPI. From the C-suite to practice managers, we measure and compensate leaders on team health, retention of underrepresented talent, and inclusive decision-making practices.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="philosophy-visual">
+      <div class="visual-content">
+        <div class="certification-badge">
+          <span>★</span>
+          <p>Certified<br>2025</p>
+        </div>
+        <div class="visual-text">
+          <h3>Great Place to Work®</h3>
+          <p>Our certification reflects a high-trust culture where employees feel they belong, their unique talents matter, and their individual needs are cared for by colleagues and leaders.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCOLADES SECTION -->
+<section class="accolades-section">
+  <div class="accolades-header">
+    <h2>Recognition & Impact</h2>
+    <p>External validation matters. These accolades reflect our commitment to building not just a successful company, but a sustainable, equitable workplace that attracts and retains exceptional talent.</p>
+  </div>
+
+  <div class="accolades-grid">
+    <div class="accolade-card">
+      <span class="accolade-icon">🏆</span>
+      <span class="accolade-year">2025</span>
+      <h3>Great Place to Work® Certified</h3>
+      <p>Certified based on direct employee feedback, recognizing our high-trust culture, collaborative environment, and commitment to employee well-being across all levels of the organization.</p>
+    </div>
+    <div class="accolade-card">
+      <span class="accolade-icon">⚖️</span>
+      <span class="accolade-year">Ongoing</span>
+      <h3>Pay Equity Leadership</h3>
+      <p>Annual third-party pay equity audits ensure gender and ethnicity wage gaps are identified and remediated. We maintain 100% audit coverage across all roles and geographies.</p>
+    </div>
+    <div class="accolade-card">
+      <span class="accolade-icon">🌐</span>
+      <span class="accolade-year">Since 2017</span>
+      <h3>Global Inclusion Model</h3>
+      <p>Our 24/7 follow-the-sun operations create career pathways for talent in 39 countries, with leadership representation from APAC, EMEA, and Americas regions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INITIATIVES SECTION -->
+<section class="initiatives-section">
+  <div class="initiatives-header">
+    <h2>Structural Inclusion Initiatives</h2>
+    <p>We don't rely on good intentions. These programs embed inclusion into our operating model, ensuring measurable outcomes and sustainable culture change.</p>
+  </div>
+
+  <div class="initiatives-grid">
+    <div class="initiative-card">
+      <div class="initiative-icon">🎯</div>
+      <h3>Inclusive Leadership Training</h3>
+      <p>Mandatory for all people managers. Covers mitigating unconscious bias in hiring, equitable performance evaluation, and creating psychological safety for high-stakes legal work. Refreshed annually with new case studies from our own operations.</p>
+    </div>
+    <div class="initiative-card">
+      <div class="initiative-icon">🔄</div>
+      <h3>Rotational Assignment Program</h3>
+      <p>Emerging talent from India operations rotate to US and UK client sites. US and UK analysts spend time in our Chandigarh delivery center. Breaks down regional silos and creates global career pathways for underrepresented groups.</p>
+    </div>
+    <div class="initiative-card">
+      <div class="initiative-icon">📊</div>
+      <h3>Transparency in Promotion</h3>
+      <p>Quarterly diversity data published internally: who got promoted, who got stretch assignments, who left and why. Leaders are held accountable for equitable talent development in their practice areas.</p>
+    </div>
+    <div class="initiative-card">
+      <div class="initiative-icon">🤝</div>
+      <h3>Employee Resource Networks</h3>
+      <p>Voluntary, employee-led groups focusing on gender equity, LGBTQ+ inclusion, disability accessibility, and multicultural celebration. Executive sponsors ensure these groups influence policy, not just plan events.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMMITMENT SECTION -->
+<section class="commitment-section">
+  <div class="commitment-content">
+    <h2>Our Commitment to <span>For All™</span></h2>
+    <p>We have evolved beyond "Diversity and Inclusion" to a For All™ workplace—where the goal is to create a consistently high-trust experience for everyone, no matter who they are or what they do for the organization. When companies achieve For All, they tap into the collective intelligence of every person, maximizing potential and driving superior legal outcomes for our clients.</p>
+    
+    <div class="commitment-stats">
+      <div class="commitment-stat">
+        <div class="commitment-stat-number">9.8x</div>
+        <div class="commitment-stat-label">More likely to look forward to work</div>
+      </div>
+      <div class="commitment-stat">
+        <div class="commitment-stat-number">6.3x</div>
+        <div class="commitment-stat-label">More pride in their work</div>
+      </div>
+      <div class="commitment-stat">
+        <div class="commitment-stat-number">5.4x</div>
+        <div class="commitment-stat-label">Higher retention intent</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section">
+  <div class="cta-content">
+    <h2>Join a Team Where You Belong</h2>
+    <p>We're building the future of legal technology with people who bring diverse perspectives, challenge assumptions, and drive innovation. If you want to do meaningful work in an environment that values your whole self, we want to hear from you.</p>
+    <a href="/careers" class="cta-button">Explore Careers</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="diversity-footer">
+  <p>&copy; 2026 LDM Global. All rights reserved. | Building high-trust cultures through inclusive governance.</p>
+</footer>
+
+<script>
+// Intersection Observer for scroll animations
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, observerOptions);
+
+// Observe all animated elements
+document.querySelectorAll('.metrics-header, .metric-card, .pillar, .accolades-header, .accolade-card, .initiatives-header, .initiative-card, .commitment-content').forEach(el => {
+  observer.observe(el);
+});
+
+// Stagger animations
+const metricCards = document.querySelectorAll('.metric-card');
+metricCards.forEach((card, index) => {
+  card.style.transitionDelay = `${index * 0.1}s`;
+});
+
+const pillars = document.querySelectorAll('.pillar');
+pillars.forEach((pillar, index) => {
+  pillar.style.transitionDelay = `${index * 0.15}s`;
+});
+
+const accoladeCards = document.querySelectorAll('.accolade-card');
+accoladeCards.forEach((card, index) => {
+  card.style.transitionDelay = `${index * 0.1}s`;
+});
+
+const initiativeCards = document.querySelectorAll('.initiative-card');
+initiativeCards.forEach((card, index) => {
+  card.style.transitionDelay = `${index * 0.1}s`;
+});
+
+// Counter animation
+const animateCounter = (el) => {
+  const target = parseInt(el.getAttribute('data-target'));
+  const duration = 2000;
+  const step = target / (duration / 16);
+  let current = 0;
+  
+  const update = () => {
+    current += step;
+    if (current < target) {
+      el.textContent = Math.floor(current);
+      requestAnimationFrame(update);
+    } else {
+      el.textContent = target + (target === 70 ? '+' : (target === 100 ? '%' : ''));
+    }
+  };
+  
+  update();
+};
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+      entry.target.classList.add('counted');
+      const number = entry.target.querySelector('.metric-number');
+      animateCounter(number);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.metric-card').forEach(card => {
+  counterObserver.observe(card);
+});
+</script>
+
+</body>
+</html>

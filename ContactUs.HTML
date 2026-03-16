@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact LDM Global | 24/7 Legal Technology & Crisis Response</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --navy: #152148;
+  --navy-light: #1e2d5c;
+  --blue: #446280;
+  --light: #E7EAE7;
+  --grey: #8C9196;
+  --accent: #FF9425;
+  --accent-dark: #FE720D;
+  --white: #FFFFFF;
+  --gradient-hero: linear-gradient(135deg, #152148 0%, #1e3a5f 50%, #446280 100%);
+  --gradient-accent: linear-gradient(135deg, #FF9425 0%, #FE720D 100%);
+  --gradient-warm: linear-gradient(135deg, #FF9425 0%, #ff6b35 100%);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--white);
+  color: var(--navy);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ---------- ANIMATIONS ---------- */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-30px) rotate(2deg); }
+}
+
+@keyframes float-reverse {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(30px) rotate(-2deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 148, 37, 0.4); }
+  50% { box-shadow: 0 0 40px rgba(255, 148, 37, 0.7); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(60px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  background: var(--gradient-hero);
+  color: var(--white);
+  padding: 140px 10% 100px;
+  position: relative;
+  overflow: hidden;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255, 148, 37, 0.15) 0%, transparent 70%);
+  animation: float 8s ease-in-out infinite;
+  border-radius: 50%;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  bottom: -30%;
+  left: -15%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(68, 98, 128, 0.25) 0%, transparent 70%);
+  animation: float-reverse 10s ease-in-out infinite;
+  border-radius: 50%;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 80px;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.hero-content {
+  animation: slideUp 1s ease-out;
+}
+
+.emergency-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 148, 37, 0.2);
+  border: 1px solid rgba(255, 148, 37, 0.4);
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  backdrop-filter: blur(10px);
+  animation: pulse-glow 3s infinite;
+}
+
+.pulse-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse-glow 2s infinite;
+}
+
+.hero h1 {
+  font-size: 58px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 25px;
+  background: linear-gradient(to right, #ffffff 0%, #ffd700 50%, #ffffff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 5s ease infinite;
+}
+
+.hero-subtitle {
+  font-size: 22px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+.hero-description {
+  font-size: 17px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.8;
+  margin-bottom: 40px;
+  max-width: 600px;
+}
+
+.contact-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-method {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  padding: 25px 30px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.4s ease;
+  text-decoration: none;
+  color: var(--white);
+}
+
+.contact-method:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 148, 37, 0.4);
+  transform: translateX(10px);
+}
+
+.method-icon {
+  width: 50px;
+  height: 50px;
+  background: var(--gradient-accent);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.method-info h4 {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 5px;
+}
+
+.method-info p {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--white);
+  margin: 0;
+}
+
+/* ---------- TRUST STRIP ---------- */
+.trust-strip {
+  background: var(--navy);
+  padding: 60px 10%;
+  position: relative;
+  overflow: hidden;
+}
+
+.trust-strip::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 30% 50%, rgba(255, 148, 37, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 70% 50%, rgba(68, 98, 128, 0.1) 0%, transparent 50%);
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.trust-item {
+  text-align: center;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+
+.trust-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.trust-number {
+  font-size: 48px;
+  font-weight: 800;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.trust-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+}
+
+.trust-context {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 8px;
+}
+
+/* ---------- FORM SECTION ---------- */
+.form-section {
+  background: linear-gradient(to bottom, var(--white) 0%, #f8f9fa 100%);
+  padding: 100px 10%;
+}
+
+.form-container {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 80px;
+  max-width: 1400px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+.form-info h2 {
+  font-size: 42px;
+  font-weight: 800;
+  margin-bottom: 25px;
+  color: var(--navy);
+}
+
+.form-info h2::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 5px;
+  background: var(--gradient-accent);
+  margin-top: 20px;
+  border-radius: 3px;
+}
+
+.form-info > p {
+  font-size: 18px;
+  color: var(--grey);
+  line-height: 1.8;
+  margin-bottom: 40px;
+}
+
+.security-badge {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: linear-gradient(135deg, rgba(21, 33, 72, 0.05) 0%, rgba(68, 98, 128, 0.05) 100%);
+  padding: 30px;
+  border-radius: 16px;
+  border-left: 4px solid var(--accent);
+  margin-bottom: 30px;
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: all 0.6s ease;
+}
+
+.security-badge.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.security-icon {
+  font-size: 40px;
+}
+
+.security-text h4 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.security-text p {
+  font-size: 14px;
+  color: var(--grey);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.response-features {
+  list-style: none;
+}
+
+.response-features li {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: var(--navy);
+  font-weight: 500;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.4s ease;
+}
+
+.response-features li.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.response-features li::before {
+  content: "✓";
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 148, 37, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-dark);
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+form {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  padding: 50px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 
+    0 20px 60px rgba(21, 33, 72, 0.1),
+    0 0 0 1px rgba(21, 33, 72, 0.05);
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+form.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--navy);
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 16px 20px;
+  border: 2px solid rgba(21, 33, 72, 0.1);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--navy);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--white);
+  box-shadow: 0 0 0 4px rgba(255, 148, 37, 0.1);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--grey);
+}
+
+select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FF9425' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 20px center;
+}
+
+.radio-group {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 12px 20px;
+  background: rgba(21, 33, 72, 0.05);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.radio-option:hover {
+  background: rgba(255, 148, 37, 0.1);
+}
+
+.radio-option input[type="radio"] {
+  width: auto;
+  margin: 0;
+}
+
+.radio-option.selected {
+  border-color: var(--accent);
+  background: rgba(255, 148, 37, 0.1);
+}
+
+.urgency-indicator {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(255, 148, 37, 0.1) 0%, rgba(254, 114, 13, 0.1) 100%);
+  border-radius: 12px;
+  margin-bottom: 25px;
+  border: 1px solid rgba(255, 148, 37, 0.2);
+}
+
+.urgency-icon {
+  font-size: 28px;
+}
+
+.urgency-text h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent-dark);
+  margin-bottom: 5px;
+}
+
+.urgency-text p {
+  font-size: 14px;
+  color: var(--grey);
+  margin: 0;
+}
+
+button {
+  width: 100%;
+  background: var(--gradient-accent);
+  color: var(--white);
+  padding: 20px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(255, 148, 37, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: shimmer 3s infinite;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(255, 148, 37, 0.4);
+}
+
+/* ---------- LOCATIONS ---------- */
+.locations-section {
+  background: var(--navy);
+  color: var(--white);
+  padding: 100px 10%;
+  position: relative;
+  overflow: hidden;
+}
+
+.locations-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(255, 148, 37, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(68, 98, 128, 0.15) 0%, transparent 40%);
+}
+
+.locations-section h2 {
+  text-align: center;
+  font-size: 42px;
+  margin-bottom: 60px;
+  position: relative;
+  z-index: 2;
+}
+
+.locations-section h2::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 5px;
+  background: var(--gradient-accent);
+  margin: 20px auto 0;
+  border-radius: 3px;
+}
+
+.locations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.location-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  padding: 40px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.4s ease;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.location-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.location-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 148, 37, 0.3);
+  transform: translateY(-10px);
+}
+
+.location-icon {
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+.location-card h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: var(--accent);
+}
+
+.location-card p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 15px;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.location-meta {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ---------- FAQ ---------- */
+.faq-section {
+  background: linear-gradient(to bottom, #f8f9fa 0%, var(--white) 100%);
+  padding: 100px 10%;
+}
+
+.faq-section h2 {
+  text-align: center;
+  font-size: 42px;
+  margin-bottom: 60px;
+}
+
+.faq-section h2::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 5px;
+  background: var(--gradient-accent);
+  margin: 20px auto 0;
+  border-radius: 3px;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  background: var(--white);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(21, 33, 72, 0.06);
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.faq-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.faq-item:hover {
+  box-shadow: 0 10px 40px rgba(21, 33, 72, 0.1);
+  transform: translateY(-5px);
+}
+
+.faq-item h4 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.faq-item h4::before {
+  content: "Q:";
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.faq-item p {
+  color: var(--grey);
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0;
+  padding-left: 28px;
+}
+
+/* ---------- CTA ---------- */
+.final-cta {
+  background: var(--gradient-accent);
+  color: var(--white);
+  text-align: center;
+  padding: 100px 10%;
+  position: relative;
+  overflow: hidden;
+}
+
+.final-cta::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+  animation: rotate 30s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.final-cta h2 {
+  font-size: 48px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.final-cta p {
+  font-size: 20px;
+  opacity: 0.95;
+  max-width: 600px;
+  margin: 0 auto 40px;
+  position: relative;
+  z-index: 2;
+}
+
+.cta-button {
+  display: inline-block;
+  background: var(--white);
+  color: var(--accent-dark);
+  padding: 20px 50px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 18px;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  background: var(--navy);
+  color: var(--white);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1024px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 50px; }
+  .form-container { grid-template-columns: 1fr; }
+  .trust-grid { grid-template-columns: repeat(2, 1fr); }
+  .faq-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 42px; }
+}
+
+@media (max-width: 768px) {
+  .hero { padding: 100px 5% 80px; min-height: auto; }
+  .hero h1 { font-size: 32px; }
+  .trust-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  form { padding: 30px; }
+  section { padding: 80px 5%; }
+  .final-cta h2 { font-size: 32px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-content">
+      <div class="emergency-badge">
+        <span class="pulse-dot"></span>
+        24/7 Crisis Response Available
+      </div>
+      <h1>When Every Minute Counts.<br>When Evidence Can't Wait.<br>We Answer.</h1>
+      <p class="hero-subtitle">Data breach at midnight? Discovery deadline tomorrow? Complex cross-border litigation? Our global team responds in 15 minutes—guaranteed.</p>
+      <p class="hero-description">
+        Legal professionals don't get second chances with deadlines. Neither do we. For 28 years, LDM Global has been the behind-the-scenes force that helps AmLaw 100 firms and Fortune 500 companies turn legal chaos into controlled outcomes. Your crisis is our command.
+      </p>
+      
+      <div class="contact-methods">
+        <a href="tel:+1-800-XXX-XXXX" class="contact-method">
+          <div class="method-icon">📞</div>
+          <div class="method-info">
+            <h4>Emergency Hotline</h4>
+            <p>+1 (800) XXX-XXXX</p>
+          </div>
+        </a>
+        <a href="mailto:urgent@ldmglobal.com" class="contact-method">
+          <div class="method-icon">⚡</div>
+          <div class="method-info">
+            <h4>Urgent Matters</h4>
+            <p>urgent@ldmglobal.com</p>
+          </div>
+        </a>
+        <a href="#consultation" class="contact-method">
+          <div class="method-icon">📅</div>
+          <div class="method-info">
+            <h4>Schedule Consultation</h4>
+            <p>Book a Strategy Call</p>
+          </div>
+        </a>
+      </div>
+    </div>
+    
+    <!-- Visual element could go here -->
+  </div>
+</section>
+
+<!-- TRUST STRIP -->
+<section class="trust-strip">
+  <div class="trust-grid">
+    <div class="trust-item">
+      <div class="trust-number" data-target="15">0</div>
+      <div class="trust-label">Minute Response</div>
+      <div class="trust-context">Guaranteed SLA</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-number" data-target="24">0</div>
+      <div class="trust-label">Hour Coverage</div>
+      <div class="trust-context">Follow-the-sun model</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-number" data-target="39">0</div>
+      <div class="trust-label">Countries</div>
+      <div class="trust-context">Global reach</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-number" data-target="28">0</div>
+      <div class="trust-label">Years</div>
+      <div class="trust-context">Proven track record</div>
+    </div>
+  </div>
+</section>
+
+<!-- FORM SECTION -->
+<section class="form-section" id="consultation">
+  <div class="form-container">
+    <div class="form-info">
+      <h2>Start the Conversation</h2>
+      <p>
+        Whether you're facing an immediate crisis or planning for complex litigation, 
+        our team is ready to architect a solution. Tell us what you're up against—
+        we'll respond with a strategy, not a sales pitch.
+      </p>
+      
+      <div class="security-badge">
+        <div class="security-icon">🔒</div>
+        <div class="security-text">
+          <h4>Attorney-Client Privilege Protected</h4>
+          <p>All communications are confidential and protected. Our ISO 27001 and SOC 2 Type II certified environments ensure your sensitive information remains secure from first contact to final delivery.</p>
+        </div>
+      </div>
+      
+      <ul class="response-features">
+        <li>Initial response within 15 minutes during business hours</li>
+        <li>Dedicated matter manager assigned immediately</li>
+        <li>Preliminary scope and timeline within 4 hours</li>
+        <li>Secure client portal activation for document sharing</li>
+        <li>Direct access to senior leadership for complex matters</li>
+      </ul>
+    </div>
+
+    <form action="mailto:contact@ldmglobal.com" method="post" enctype="multipart/form-data">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" name="firstname" placeholder="John" required>
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" name="lastname" placeholder="Doe" required>
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="john.doe@lawfirm.com" required>
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="tel" name="phone" placeholder="+1 (555) 000-0000">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Organization</label>
+        <input type="text" name="organization" placeholder="Law Firm / Corporation Name">
+      </div>
+
+      <div class="form-group">
+        <label>How Can We Help?</label>
+        <select name="service" required>
+          <option value="">Select your primary need...</option>
+          <option value="cyber-emergency">🚨 Cyber Incident Response (Emergency)</option>
+          <option value="cyber-planned">🛡️ Cyber Incident Response (Planned)</option>
+          <option value="ediscovery-urgent">⚖️ eDiscovery & Litigation Support (Urgent)</option>
+          <option value="ediscovery-planned">📁 eDiscovery & Litigation Support (Planned)</option>
+          <option value="managed-review">👥 Managed Document Review</option>
+          <option value="contracts">📝 Contract Lifecycle Management</option>
+          <option value="consultation">💡 General Consultation</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Matter Urgency</label>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="urgency" value="critical">
+            <span>Critical (0-24 hours)</span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="urgency" value="high">
+            <span>High (1-3 days)</span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="urgency" value="standard">
+            <span>Standard (1+ weeks)</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="urgency-indicator" id="urgencyIndicator" style="display: none;">
+        <div class="urgency-icon">🚨</div>
+        <div class="urgency-text">
+          <h4>Critical Matter Detected</h4>
+          <p>For matters requiring response within 24 hours, please also call our emergency hotline at +1 (800) XXX-XXXX to ensure immediate attention.</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Tell Us About Your Matter</label>
+        <textarea name="details" rows="5" placeholder="Describe the situation, timeline, jurisdiction, and any specific compliance requirements. The more detail, the faster we can mobilize."></textarea>
+      </div>
+
+      <button type="submit">Initiate Response Protocol</button>
+    </form>
+  </div>
+</section>
+
+<!-- LOCATIONS -->
+<section class="locations-section">
+  <h2>Global Presence. Local Expertise.</h2>
+  
+  <div class="locations-grid">
+    <div class="location-card">
+      <div class="location-icon">🇺🇸</div>
+      <h3>Headquarters</h3>
+      <p>
+        <strong>Denver, Colorado</strong><br>
+        1234 Tech Center Drive<br>
+        Suite 500, Denver, CO 80202
+      </p>
+      <div class="location-meta">
+        <span class="meta-item">📞 +1 (303) XXX-XXXX</span>
+        <span class="meta-item">✉️ usa@ldmglobal.com</span>
+      </div>
+    </div>
+    
+    <div class="location-card">
+      <div class="location-icon">🇬🇧</div>
+      <h3>EMEA Hub</h3>
+      <p>
+        <strong>London, United Kingdom</strong><br>
+        15th Floor, The Shard<br>
+        32 London Bridge Street
+      </p>
+      <div class="location-meta">
+        <span class="meta-item">📞 +44 20 XXXX XXXX</span>
+        <span class="meta-item">✉️ emea@ldmglobal.com</span>
+      </div>
+    </div>
+    
+    <div class="location-card">
+      <div class="location-icon">🇮🇳</div>
+      <h3>Global Delivery Center</h3>
+      <p>
+        <strong>Chandigarh, India</strong><br>
+        IT Park, Sector 67<br>
+        70,000 sq. ft. Secure Facility
+      </p>
+      <div class="location-meta">
+        <span class="meta-item">🔒 ISO 27001 Certified</span>
+        <span class="meta-item">✉️ india@ldmglobal.com</span>
+      </div>
+    </div>
+    
+    <div class="location-card">
+      <div class="location-icon">🇦🇺</div>
+      <h3>Asia-Pacific</h3>
+      <p>
+        <strong>Sydney, Australia</strong><br>
+        Level 25, 200 George Street<br>
+        Sydney NSW 2000
+      </p>
+      <div class="location-meta">
+        <span class="meta-item">📞 +61 2 XXXX XXXX</span>
+        <span class="meta-item">✉️ apac@ldmglobal.com</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <h2>Common Questions</h2>
+  
+  <div class="faq-grid">
+    <div class="faq-item">
+      <h4>How quickly can you actually respond to a data breach?</h4>
+      <p>Our Cyber Incident Response team operates on a 15-minute response SLA, 24/7/365. For confirmed breaches, we can have forensic analysts and legal technology specialists mobilized within 2 hours, anywhere in the world.</p>
+    </div>
+    
+    <div class="faq-item">
+      <h4>Is our data secure during the consultation phase?</h4>
+      <p>Absolutely. Even before formal engagement, all communications occur through SOC 2 Type II certified channels. We treat preliminary discussions with the same confidentiality as attorney-client privileged matters.</p>
+    </div>
+    
+    <div class="faq-item">
+      <h4>Do you handle cross-border discovery and data privacy?</h4>
+      <p>Yes. With operations across 39 countries and expertise in GDPR, CCPA, and local privacy regulations, we navigate complex cross-border data transfers daily. Our India facility operates under strict EU-approved Standard Contractual Clauses.</p>
+    </div>
+    
+    <div class="faq-item">
+      <h4>What makes you different from other eDiscovery vendors?</h4>
+      <p>We don't just process data—we engineer outcomes. Our AI-enabled workflows combined with expert-in-the-loop precision have reduced client discovery costs by up to 90%. Plus, our 24/7 model means your matters progress while you sleep.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <h2>Your Next Crisis Won't Wait.<br>Neither Should You.</h2>
+  <p>Join the AmLaw 100 firms and Fortune 500 companies who trust LDM Global when the stakes are highest.</p>
+  <a href="#consultation" class="cta-button">Get Immediate Assistance</a>
+</section>
+
+<script>
+// Intersection Observer for scroll animations
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, observerOptions);
+
+// Observe all animated elements
+document.querySelectorAll('.trust-item, .security-badge, .response-features li, form, .location-card, .faq-item').forEach(el => {
+  observer.observe(el);
+});
+
+// Stagger animations
+const trustItems = document.querySelectorAll('.trust-item');
+trustItems.forEach((item, index) => {
+  item.style.transitionDelay = `${index * 0.1}s`;
+});
+
+const responseFeatures = document.querySelectorAll('.response-features li');
+responseFeatures.forEach((item, index) => {
+  item.style.transitionDelay = `${index * 0.1}s`;
+});
+
+const locationCards = document.querySelectorAll('.location-card');
+locationCards.forEach((card, index) => {
+  card.style.transitionDelay = `${index * 0.15}s`;
+});
+
+const faqItems = document.querySelectorAll('.faq-item');
+faqItems.forEach((item, index) => {
+  item.style.transitionDelay = `${index * 0.1}s`;
+});
+
+// Counter animation
+const animateCounter = (el) => {
+  const target = parseInt(el.getAttribute('data-target'));
+  const duration = 2000;
+  const step = target / (duration / 16);
+  let current = 0;
+  
+  const update = () => {
+    current += step;
+    if (current < target) {
+      el.textContent = Math.floor(current);
+      requestAnimationFrame(update);
+    } else {
+      el.textContent = target + (target === 15 ? '' : '');
+    }
+  };
+  
+  update();
+};
+
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+      entry.target.classList.add('counted');
+      const number = entry.target.querySelector('.trust-number');
+      animateCounter(number);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.trust-item').forEach(item => {
+  counterObserver.observe(item);
+});
+
+// Radio button selection styling
+const radioOptions = document.querySelectorAll('.radio-option');
+radioOptions.forEach(option => {
+  option.addEventListener('click', function() {
+    radioOptions.forEach(opt => opt.classList.remove('selected'));
+    this.classList.add('selected');
+    
+    // Show urgency indicator for critical
+    const radio = this.querySelector('input[type="radio"]');
+    const indicator = document.getElementById('urgencyIndicator');
+    if (radio.value === 'critical') {
+      indicator.style.display = 'flex';
+      indicator.style.animation = 'slideUp 0.5s ease';
+    } else {
+      indicator.style.display = 'none';
+    }
+  });
+});
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>

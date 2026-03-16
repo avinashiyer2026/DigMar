@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Operations Solutions | LDM Global</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #152148;
+            --secondary: #446280;
+            --accent-start: #FF9425;
+            --accent-end: #FE720D;
+            --white: #ffffff;
+            --light-bg: #f8f9fa;
+            --text-dark: #1a1a1a;
+            --text-muted: #6c757d;
+            --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--white);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            z-index: 10000;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        /* Sticky Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            background: rgba(21, 33, 72, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s var(--transition-smooth);
+        }
+
+        .header.scrolled {
+            background: rgba(21, 33, 72, 0.98);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--white);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            transform: translateX(-100%);
+            transition: transform 0.4s var(--transition-smooth);
+        }
+
+        .logo:hover::after {
+            transform: translateX(0);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-tab {
+            padding: 0.75rem 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 50px;
+            transition: all 0.3s var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-tab::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            opacity: 0;
+            transition: opacity 0.3s var(--transition-smooth);
+            z-index: -1;
+        }
+
+        .nav-tab:hover,
+        .nav-tab.active {
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .nav-tab.active::before,
+        .nav-tab:hover::before {
+            opacity: 1;
+        }
+
+        /* Hero Section with Parallax */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: var(--primary);
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 148, 37, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(68, 98, 128, 0.3) 0%, transparent 50%),
+                linear-gradient(135deg, var(--primary) 0%, #0f1835 100%);
+            z-index: 1;
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 2;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            padding: 0 4rem;
+            text-align: left;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.25rem;
+            background: rgba(255, 148, 37, 0.15);
+            border: 1px solid rgba(255, 148, 37, 0.5);
+            border-radius: 50px;
+            color: var(--accent-start);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s var(--transition-smooth) forwards;
+            box-shadow: 0 0 20px rgba(255, 148, 37, 0.3), inset 0 0 10px rgba(255, 148, 37, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-badge::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 148, 37, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .hero-badge::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent-start);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 10px var(--accent-start);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+        }
+
+        .hero-title .line {
+            display: block;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeUp 0.8s var(--transition-smooth) forwards;
+        }
+
+        .hero-title .line:nth-child(1) { animation-delay: 0.2s; }
+        .hero-title .line:nth-child(2) { animation-delay: 0.4s; }
+
+        .hero-title .accent {
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 400;
+            max-width: 600px;
+            margin-bottom: 3rem;
+            line-height: 1.7;
+            opacity: 0;
+            animation: fadeUp 0.8s var(--transition-smooth) 0.6s forwards;
+        }
+
+        .hero-cta {
+            opacity: 0;
+            animation: fadeUp 0.8s var(--transition-smooth) 0.8s forwards;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 4rem;
+            z-index: 10;
+            opacity: 0;
+            animation: fadeUp 0.8s var(--transition-smooth) 1s forwards;
+        }
+
+        .scroll-mouse {
+            width: 26px;
+            height: 40px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 13px;
+            position: relative;
+        }
+
+        .scroll-wheel {
+            width: 4px;
+            height: 8px;
+            background: var(--accent-start);
+            border-radius: 2px;
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scrollWheel 2s infinite;
+        }
+
+        @keyframes scrollWheel {
+            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(12px); }
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 8rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-header {
+            max-width: 1400px;
+            margin: 0 auto 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .section-label {
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-start);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-label::after {
+            content: '';
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.2;
+            max-width: 600px;
+        }
+
+        /* Case Studies Grid */
+        .case-studies-section {
+            background: var(--light-bg);
+        }
+
+        .case-studies-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .case-study-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.4s var(--transition-smooth);
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .case-study-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .case-study-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(21, 33, 72, 0.15);
+        }
+
+        .case-study-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+            transform: scaleX(0);
+            transition: transform 0.4s var(--transition-smooth);
+        }
+
+        .case-study-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .case-study-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .case-study-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,148,37,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .case-study-category {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-start);
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .case-study-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+            line-height: 1.4;
+        }
+
+        .case-study-content {
+            padding: 2rem;
+        }
+
+        .value-delivered {
+            background: linear-gradient(135deg, rgba(255, 148, 37, 0.1), rgba(254, 114, 13, 0.05));
+            border-left: 4px solid var(--accent-start);
+            padding: 1.5rem;
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .value-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-start);
+            margin-bottom: 0.5rem;
+        }
+
+        .value-text {
+            font-size: 1rem;
+            color: var(--primary);
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .case-study-details {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .case-study-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .meta-icon {
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.6rem;
+        }
+
+        .case-study-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-start);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: gap 0.3s;
+        }
+
+        .case-study-link:hover {
+            gap: 1rem;
+        }
+
+        /* Services Overview */
+        .services-section {
+            background: var(--white);
+        }
+
+        .services-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.4s var(--transition-smooth);
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .service-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(21, 33, 72, 0.15);
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 30px rgba(255, 148, 37, 0.3);
+        }
+
+        .service-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .service-description {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Process Section */
+        .process-section {
+            background: var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .process-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 0% 0%, rgba(255, 148, 37, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(68, 98, 128, 0.2) 0%, transparent 50%);
+        }
+
+        .process-header {
+            max-width: 1400px;
+            margin: 0 auto 4rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .process-header .section-label {
+            color: var(--accent-start);
+            justify-content: center;
+        }
+
+        .process-header .section-label::after {
+            display: none;
+        }
+
+        .process-header .section-title {
+            color: var(--white);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .process-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .process-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s var(--transition-smooth);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .process-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .process-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .process-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 30px rgba(255, 148, 37, 0.3);
+        }
+
+        .process-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .process-description {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary) 0%, #0f1835 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 6rem 2rem;
+        }
+
+        .cta-bg {
+            position: absolute;
+            inset: 0;
+            opacity: 0.1;
+            background-image: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M30 0L60 30L30 60L0 30L30 0z" fill="none" stroke="white" stroke-width="1"/></svg>');
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-text {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2.5rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s var(--transition-smooth);
+            box-shadow: 0 10px 30px rgba(255, 148, 37, 0.3);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--accent-end), var(--accent-start));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(255, 148, 37, 0.4);
+        }
+
+        .btn:hover::before {
+            opacity: 1;
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--primary);
+            border-color: var(--white);
+        }
+
+        /* Footer */
+        .footer {
+            background: #0a0f1f;
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand {
+            color: var(--white);
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .footer-tagline {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-heading {
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            display: inline-block;
+            position: relative;
+        }
+
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent-start);
+            transition: width 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .case-studies-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .process-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-tabs {
+                display: none;
+            }
+            
+            .hero-content {
+                padding: 0 2rem;
+            }
+            
+            .scroll-indicator {
+                left: 2rem;
+            }
+            
+            .case-studies-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .process-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-container">
+            <a href="#" class="logo">LDM GLOBAL</a>
+            <nav class="nav-tabs">
+                <a href="#case-studies" class="nav-tab active">Case Studies</a>
+                <a href="#services" class="nav-tab">Services</a>
+                <a href="#process" class="nav-tab">Process</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="case-studies">
+        <div class="hero-bg"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <div class="hero-badge">Legal Operations Excellence</div>
+            <h1 class="hero-title">
+                <span class="line">Operational Precision.</span>
+                <span class="line"><span class="accent">Tangible Outcomes.</span></span>
+            </h1>
+            <p class="hero-subtitle">LDM Global transforms legal operations for AmLaw 200 firms and Fortune 500 legal departments. From managed document review and contract lifecycle management to complex cross-border discovery and specialized finance operations, we deliver defensible, scalable solutions that reduce costs, accelerate timelines, and mitigate risk.</p>
+            <div class="hero-cta">
+                <a href="#services" class="btn">
+                    <span>Explore Solutions</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies Section -->
+    <section class="section case-studies-section">
+        <div class="section-header">
+            <div>
+                <div class="section-label">Proven Results</div>
+                <h2 class="section-title">Client Success Stories</h2>
+            </div>
+        </div>
+        <div class="case-studies-grid">
+            <!-- Managed Document Review -->
+            <div class="case-study-card">
+                <div class="case-study-header">
+                    <div class="case-study-category">Managed Review</div>
+                    <h3 class="case-study-title">Managed Document Review</h3>
+                </div>
+                <div class="case-study-content">
+                    <div class="value-delivered">
+                        <div class="value-label">Value Delivered</div>
+                        <div class="value-text">Reduced review timeline by 60% while maintaining 99.2% accuracy rate through AI-assisted workflows and senior attorney oversight.</div>
+                    </div>
+                    <div class="case-study-details">
+                        Deployed a team of 40+ contract attorneys for a Fortune 100 antitrust investigation. Implemented technology-assisted review protocols that prioritized hot documents and eliminated redundant review, resulting in significant cost savings for the client.
+                    </div>
+                    <div class="case-study-meta">
+                        <div class="meta-item">
+                            <div class="meta-icon">⚡</div>
+                            <span>60% Faster</span>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-icon">✓</div>
+                            <span>99.2% Accuracy</span>
+                        </div>
+                    </div>
+                    <a href="#" class="case-study-link">Read Case Study →</a>
+                </div>
+            </div>
+
+            <!-- Contract Abstraction -->
+            <div class="case-study-card">
+                <div class="case-study-header">
+                    <div class="case-study-category">Contract Management</div>
+                    <h3 class="case-study-title">Contract Abstraction & Database Management</h3>
+                </div>
+                <div class="case-study-content">
+                    <div class="value-delivered">
+                        <div class="value-label">Value Delivered</div>
+                        <div class="value-text">Centralized 50,000+ contractual agreements into a searchable database, reducing contract retrieval time from days to minutes.</div>
+                    </div>
+                    <div class="case-study-details">
+                        Structured abstraction of complex commercial agreements for a global financial institution. Extracted 200+ data points per contract, established automated renewal alerts, and enabled real-time compliance monitoring across the enterprise.
+                    </div>
+                    <div class="case-study-meta">
+                        <div class="meta-item">
+                            <div class="meta-icon">📄</div>
+                            <span>50,000+ Contracts</span>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-icon">⚡</div>
+                            <span>Instant Retrieval</span>
+                        </div>
+                    </div>
+                    <a href="#" class="case-study-link">Read Case Study →</a>
+                </div>
+            </div>
+
+            <!-- Contract Review & Redlining -->
+            <div class="case-study-card">
+                <div class="case-study-header">
+                    <div class="case-study-category">Contract Operations</div>
+                    <h3 class="case-study-title">Contract Review & Redlining</h3>
+                </div>
+                <div class="case-study-content">
+                    <div class="value-delivered">
+                        <div class="value-label">Value Delivered</div>
+                        <div class="value-text">Accelerated contract turnaround by 75% while standardizing risk provisions across 12 jurisdictions.</div>
+                    </div>
+                    <div class="case-study-details">
+                        Provided dedicated contract specialists for a technology company's high-volume sales cycle. Implemented playbooks for NDAs, MSAs, and DPAs that empowered business teams while ensuring legal compliance and risk mitigation.
+                    </div>
+                    <div class="case-study-meta">
+                        <div class="meta-item">
+                            <div class="meta-icon">⚡</div>
+                            <span>75% Faster</span>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-icon">🌍</div>
+                            <span>12 Jurisdictions</span>
+                        </div>
+                    </div>
+                    <a href="#" class="case-study-link">Read Case Study →</a>
+                </div>
+            </div>
+
+            <!-- Contract Organization -->
+            <div class="case-study-card">
+                <div class="case-study-header">
+                    <div class="case-study-category">Data Remediation</div>
+                    <h3 class="case-study-title">Contract Organization & Abstraction</h3>
+                </div>
+                <div class="case-study-content">
+                    <div class="value-delivered">
+                        <div class="value-label">Value Delivered</div>
+                        <div class="value-text">Remediated 15 years of decentralized contract storage, identifying $2.3M in unrealized revenue opportunities.</div>
+                    </div>
+                    <div class="case-study-details">
+                        Executed comprehensive contract inventory and remediation for a healthcare system post-merger. Reconstructed missing metadata, resolved version control issues, and established governance protocols for ongoing contract management.
+                    </div>
+                    <div class="case-study-meta">
+                        <div class="meta-item">
+                            <div class="meta-icon">💰</div>
+                            <span>$2.3M Recovered</span>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-icon">📅</div>
+                            <span>15 Years Data</span>
+                        </div>
+                    </div>
+                    <a href="#" class="case-study-link">Read Case Study →</a>
+                </div>
+            </div>
+
+            <!-- HOA Collections Support -->
+            <div class="case-study-card">
+                <div class="case-study-header">
+                    <div class="case-study-category">Legal Finance</div>
+                    <h3 class="case-study-title">HOA Collections Support & Legal Finance</h3>
+                </div>
+                <div class="case-study-content">
+                    <div class="value-delivered">
+                        <div class="value-label">Value Delivered</div>
+                        <div class="value-text">Improved collections rate by 40% through integrated legal and financial operations, reducing time-to-payment by 50%.</div>
+                    </div>
+                    <div class="case-study-details">
+                        Provided end-to-end collections support for a US law firm specializing in HOA enforcement. Managed demand letter campaigns, lien filings, foreclosure proceedings, and settlement negotiations while maintaining strict FDCPA compliance.
+                    </div>
+                    <div class="case-study-meta">
+                        <div class="meta-item">
+                            <div class="meta-icon">📈</div>
+                            <span>40% Improvement</span>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-icon">⚖️</div>
+                            <span>FDCPA Compliant</span>
+                        </div>
+                    </div>
+                    <a href="#" class="case-study-link">Read Case Study →</a>
+                </div>
+            </div>
+
+            <!-- Document Coding UK -->
+            <div class="case-study-card">
+                <div class="case-study-header">
+                    <div class="case-study-category">eDiscovery</div>
+                    <h3 class="case-study-title">Document Coding for UK Client</h3>
+                </div>
+                <div class="case-study-content">
+                    <div class="value-delivered">
+                        <div class="value-label">Value Delivered</div>
+                        <div class="value-text">Processed 2M+ documents under UK GDPR and privilege protocols, meeting aggressive FCA regulatory deadline.</div>
+                    </div>
+                    <div class="case-study-details">
+                        Deployed bilingual review teams for a UK financial services regulatory investigation. Implemented strict data residency controls, privilege logs, and redaction workflows compliant with UK and EU data protection frameworks.
+                    </div>
+                    <div class="case-study-meta">
+                        <div class="meta-item">
+                            <div class="meta-icon">📄</div>
+                            <span>2M+ Documents</span>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-icon">🏛️</div>
+                            <span>FCA Deadline Met</span>
+                        </div>
+                    </div>
+                    <a href="#" class="case-study-link">Read Case Study →</a>
+                </div>
+            </div>
+
+            <!-- Complex Document Review Offshore -->
+            <div class="case-study-card">
+                <div class="case-study-header">
+                    <div class="case-study-category">Cross-Border Discovery</div>
+                    <h3 class="case-study-title">Complex Document Review for Offshore Firm</h3>
+                </div>
+                <div class="case-study-content">
+                    <div class="value-delivered">
+                        <div class="value-label">Value Delivered</div>
+                        <div class="value-text">Coordinated multi-jurisdictional review across UK and Hong Kong, navigating conflicting privilege doctrines and data transfer restrictions.</div>
+                    </div>
+                    <div class="case-study-details">
+                        Supported an offshore law firm in simultaneous UK litigation and Hong Kong arbitration. Established secure review environments in both jurisdictions, trained teams on common law vs. civil law privilege concepts, and delivered consistent coding across matters.
+                    </div>
+                    <div class="case-study-meta">
+                        <div class="meta-item">
+                            <div class="meta-icon">🌍</div>
+                            <span>UK & Hong Kong</span>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-icon">⚖️</div>
+                            <span>Dual Jurisdiction</span>
+                        </div>
+                    </div>
+                    <a href="#" class="case-study-link">Read Case Study →</a>
+                </div>
+            </div>
+
+            <!-- Fast Turnaround Document Review -->
+            <div class="case-study-card">
+                <div class="case-study-header">
+                    <div class="case-study-category">Rapid Response</div>
+                    <h3 class="case-study-title">Fast Turnaround Document Review</h3>
+                </div>
+                <div class="case-study-content">
+                    <div class="value-delivered">
+                        <div class="value-label">Value Delivered</div>
+                        <div class="value-text">Deployed 60+ review attorneys within 48 hours for emergency injunction proceedings, meeting court-ordered deadline.</div>
+                    </div>
+                    <div class="case-study-details">
+                        Activated emergency response protocols for an offshore firm facing imminent court deadline. Conducted privilege review and production preparation across 500,000 documents over a weekend, enabling successful injunction hearing preparation.
+                    </div>
+                    <div class="case-study-meta">
+                        <div class="meta-item">
+                            <div class="meta-icon">⚡</div>
+                            <span>48-Hour Deployment</span>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-icon">👥</div>
+                            <span>60+ Attorneys</span>
+                        </div>
+                    </div>
+                    <a href="#" class="case-study-link">Read Case Study →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Overview -->
+    <section class="section services-section" id="services">
+        <div class="section-header" style="text-align: center; display: block;">
+            <div class="section-label" style="justify-content: center;">Core Capabilities</div>
+            <h2 class="section-title" style="margin: 0 auto;">Integrated Legal Operations</h2>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">📄</div>
+                <h3 class="service-title">Managed Review</h3>
+                <p class="service-description">Technology-assisted document review with senior attorney oversight, privilege protection, and defensible workflows.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📝</div>
+                <h3 class="service-title">Contract Operations</h3>
+                <p class="service-description">End-to-end contract lifecycle management including abstraction, redlining, negotiation support, and database administration.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">⚖️</div>
+                <h3 class="service-title">Legal Finance</h3>
+                <p class="service-description">Integrated collections, lien management, and financial operations with strict regulatory compliance.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🌍</div>
+                <h3 class="service-title">Cross-Border Discovery</h3>
+                <p class="service-description">Multi-jurisdictional review capabilities with expertise in conflicting privilege doctrines and data residency requirements.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="section process-section" id="process">
+        <div class="process-header">
+            <div class="section-label">Our Methodology</div>
+            <h2 class="section-title">Defensible. Scalable. Repeatable.</h2>
+        </div>
+        <div class="process-grid">
+            <div class="process-card">
+                <div class="process-number">1</div>
+                <h3 class="process-title">Matter Assessment</h3>
+                <p class="process-description">Deep-dive consultation to understand scope, risk profile, regulatory constraints, and success metrics.</p>
+            </div>
+            <div class="process-card">
+                <div class="process-number">2</div>
+                <h3 class="process-title">Workflow Design</h3>
+                <p class="process-description">Custom protocol development incorporating technology, quality controls, and defensible processes.</p>
+            </div>
+            <div class="process-card">
+                <div class="process-number">3</div>
+                <h3 class="process-title">Team Deployment</h3>
+                <p class="process-description">Rapid assembly of credentialed professionals with matter-specific training and security clearance.</p>
+            </div>
+            <div class="process-card">
+                <div class="process-number">4</div>
+                <h3 class="process-title">Continuous Optimization</h3>
+                <p class="process-description">Real-time quality monitoring, adaptive scaling, and iterative improvement throughout engagement.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-bg"></div>
+        <div class="cta-content">
+            <h2 class="cta-title">Transform Your Legal Operations</h2>
+            <p class="cta-text">From urgent document review to enterprise contract management, LDM Global delivers the operational excellence your matters demand.</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="mailto:solutions@ldmglobal.com" class="btn">
+                    <span>Discuss Your Matter</span>
+                </a>
+                <a href="#" class="btn btn-outline">
+                    <span>View All Capabilities</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">LDM GLOBAL</div>
+                <p class="footer-tagline">Premier legal operations and litigation support services for AmLaw 200 firms and Fortune 500 legal departments worldwide.</p>
+            </div>
+            <div>
+                <h4 class="footer-heading">Solutions</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Managed Review</a></li>
+                    <li><a href="#">Contract Operations</a></li>
+                    <li><a href="#">Legal Finance</a></li>
+                    <li><a href="#">Cross-Border Discovery</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-heading">Firm</h4>
+                <ul class="footer-links">
+                    <li><a href="#">About LDM Global</a></li>
+                    <li><a href="#">Case Studies</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">News & Insights</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-heading">Contact</h4>
+                <ul class="footer-links">
+                    <li><a href="mailto:solutions@ldmglobal.com">solutions@ldmglobal.com</a></li>
+                    <li><a href="#">Global Offices</a></li>
+                    <li><a href="#">Client Support</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>&copy; 2026 LDM Global. All rights reserved.</div>
+            <div>Attorney Advertising | Confidential & Privileged</div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scrollProgress').style.width = scrolled + '%';
+        });
+
+        // Header Scroll Effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer for Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements
+        document.querySelectorAll('.case-study-card, .service-card, .process-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth Scroll for Navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Active Tab Indicator
+        const sections = document.querySelectorAll('section[id]');
+        const navTabs = document.querySelectorAll('.nav-tab');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navTabs.forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.getAttribute('href') === '#' + current) {
+                    tab.classList.add('active');
+                }
+            });
+        });
+
+        // Parallax Effect for Hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            const heroContent = document.querySelector('.hero-content');
+            
+            if (hero && scrolled < window.innerHeight) {
+                heroContent.style.transform = `translateY(${scrolled * 0.3}px)`;
+                heroContent.style.opacity = 1 - (scrolled / window.innerHeight) * 0.5;
+            }
+        });
+    </script>
+</body>
+</html>
