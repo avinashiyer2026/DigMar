@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Managed Document Review | Strategic Legal Partnership | LDM Global</title>
+    <!-- Google Fonts: Montserrat for Sleek, Professional Look -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #152148;
+            --accent-blue: #446280;
+            --neutral-grey: #8C9196;
+            --light-bg: #E7EAE7;
+            --white: #FFFFFF;
+            --cta-orange: #FE720D;
+            --cta-gradient: linear-gradient(90deg, #FFAB43 0%, #FE720D 100%);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary-dark);
+            line-height: 1.6;
+            background-color: var(--white);
+        }
+
+        /* Navigation Placeholder */
+        nav {
+            padding: 20px 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--white);
+            border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            height: 45px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(21, 33, 72, 0.9), rgba(21, 33, 72, 0.9)), url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 120px 10% 80px;
+            text-align: left;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            max-width: 800px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            font-weight: 300;
+            max-width: 650px;
+            margin-bottom: 30px;
+            color: #d1d1d1;
+        }
+
+        /* Strategic Section (The "Why") */
+        .strategic-intro {
+            padding: 80px 10%;
+            background-color: var(--light-bg);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .strategic-content h2 {
+            font-size: 2.2rem;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+        }
+
+        .strategic-content p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: var(--accent-blue);
+        }
+
+        /* Value Pillars */
+        .value-pillars {
+            padding: 80px 10%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .pillar-card {
+            padding: 40px;
+            border: 1px solid #eee;
+            transition: all 0.3s ease;
+            background: var(--white);
+        }
+
+        .pillar-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transform: translateY(-5px);
+            border-bottom: 4px solid var(--cta-orange);
+        }
+
+        .pillar-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+        }
+
+        /* LDM Global Introduction (The "How") */
+        .ldm-advantage {
+            padding: 100px 10%;
+            background-color: var(--primary-dark);
+            color: var(--white);
+        }
+
+        .section-tag {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            color: var(--cta-orange);
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .ldm-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            margin-top: 40px;
+        }
+
+        .advantage-item {
+            margin-bottom: 40px;
+        }
+
+        .advantage-item h4 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--white);
+        }
+
+        .advantage-item p {
+            color: #b0b8c1;
+        }
+
+        /* CTA Section */
+        .cta-box {
+            margin: 80px 10%;
+            padding: 60px;
+            background: var(--cta-gradient);
+            border-radius: 4px;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .cta-box h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 18px 40px;
+            background-color: var(--primary-dark);
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 2px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: opacity 0.3s;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        footer {
+            padding: 40px 10%;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--neutral-grey);
+            border-top: 1px solid #eee;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .strategic-intro, .ldm-grid, .value-pillars { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <img src="https://i.ibb.co/mF939qL/LDM-Global-Logo.png" alt="LDM Global Logo" class="logo">
+    <!-- Navigation items would go here -->
+</nav>
+
+<section class="hero">
+    <h1>Strategic Oversight in Document-Intensive Litigation.</h1>
+    <p>For legal and compliance leaders, the challenge isn't just reviewing data—it's mitigating risk, controlling cost, and ensuring defensibility in an increasingly complex regulatory landscape.</p>
+</section>
+
+<section class="strategic-intro">
+    <div class="strategic-content">
+        <span class="section-tag">Executive Perspective</span>
+        <h2>Beyond Review: Intelligence for Decision Makers.</h2>
+        <p>In high-stakes litigation and investigations, the document review phase is often the most significant cost driver and the area of highest operational risk. General Counsels and Tech Heads require more than a vendor; they require a partner who understands the bridge between raw data and legal strategy.</p>
+        <p>We provide the analytical rigor and technological infrastructure to ensure that your legal teams can focus on the merits of the case, while we handle the complexity of the review.</p>
+    </div>
+    <div class="strategic-visual">
+        <!-- Abstract professional imagery or placeholder -->
+        <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80" alt="Professional Strategy" style="width: 100%; border-radius: 4px; box-shadow: 20px 20px 0px var(--accent-blue);">
+    </div>
+</section>
+
+<section class="value-pillars">
+    <div class="pillar-card">
+        <h3>Risk Mitigation</h3>
+        <p>Ensure a defensible process with rigorous quality control protocols that stand up to judicial and regulatory scrutiny.</p>
+    </div>
+    <div class="pillar-card">
+        <h3>Cost Predictability</h3>
+        <p>Eliminate the volatility of review spend with transparent pricing models and high-efficiency workflows powered by AI.</p>
+    </div>
+    <div class="pillar-card">
+        <h3>Operational Speed</h3>
+        <p>Scale global teams instantly to meet aggressive production deadlines without compromising on accuracy or detail.</p>
+    </div>
+</section>
+
+<section class="ldm-advantage">
+    <span class="section-tag">Our Partnership Model</span>
+    <h2>The LDM Global Managed Review</h2>
+    
+    <div class="ldm-grid">
+        <div class="advantage-item">
+            <h4>Global Reach, Local Expertise</h4>
+            <p>With a footprint that spans continents, we provide follow-the-sun review capabilities and specialized expertise in cross-border data privacy and multi-jurisdictional compliance.</p>
+        </div>
+        <div class="advantage-item">
+            <h4>Technology-First Methodology</h4>
+            <p>We integrate advanced TAR (Technology Assisted Review) and Brainspace analytics into the heart of our workflow to find the "smoking gun" faster and reduce the total volume of manual review.</p>
+        </div>
+        <div class="advantage-item">
+            <h4>Subject Matter Integration</h4>
+            <p>Our reviewers aren't just staff; they are legal professionals trained specifically in the nuances of your industry—from finance and tech to healthcare and IP.</p>
+        </div>
+        <div class="advantage-item">
+            <h4>Seamless Communication</h4>
+            <p>We act as a seamless extension of your internal legal department, providing real-time reporting and strategic insights that inform your trial or settlement strategy.</p>
+        </div>
+    </div>
+</section>
+
+<section class="cta-box">
+    <h2>Elevate Your Review Strategy.</h2>
+    <p style="margin-bottom: 30px; font-size: 1.2rem;">Connect with our strategic advisors to discuss how we can bring clarity to your next complex matter.</p>
+    <a href="#" class="btn-primary">Consult with an Expert</a>
+</section>
+
+<footer>
+    <p>&copy; 2024 LDM Global. Powered by EXOedge. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
