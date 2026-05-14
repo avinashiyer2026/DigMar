@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TraSee — by LDM Global</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0E1117;--ink2:#3D4250;--ink3:#717685;--ink4:#A8AEBB;
+  --paper:#F8F7F4;--surface:#FFFFFF;--surface2:#F2F1EE;--surface3:#E8E6E1;
+  --border:rgba(14,17,23,0.09);--border2:rgba(14,17,23,0.16);
+  --green:#0A6640;--green-bg:#EBF5EE;--green-mid:#1A8A50;
+  --red:#8B1A1A;--red-bg:#FCEAEA;
+  --amber:#7A4A00;--amber-bg:#FDF3E0;
+  --orange:#C44E00;--orange-bg:#FEF0E6;
+  --blue:#163A6B;--blue-bg:#E8EEF8;
+  --ldm:#152148;--ldm2:#446280;--ldm-accent:#FF9425;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'IBM Plex Sans',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+  --r:8px;--r-sm:5px;
+  --sh:0 1px 3px rgba(0,0,0,0.07),0 1px 2px rgba(0,0,0,0.05);
+  --sh-md:0 4px 20px rgba(0,0,0,0.09),0 2px 6px rgba(0,0,0,0.05);
+  --sh-lg:0 20px 60px rgba(0,0,0,0.13),0 8px 24px rgba(0,0,0,0.07);
+}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+
+/* ══════════════════════════════════════
+   SETUP SCREEN
+══════════════════════════════════════ */
+#setup-screen{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(160deg,#0e1a38 0%,#152148 50%,#1a2d5a 100%);
+  padding:24px;
+}
+/* SETUP CARD */
+.setup-card{
+  background:var(--surface);border-radius:20px;width:520px;max-width:100%;
+  box-shadow:var(--sh-lg);overflow:hidden;
+  animation:fadeUp 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+@keyframes fadeUp{from{transform:translateY(24px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+/* HERO */
+.setup-hero{
+  background:linear-gradient(145deg,#0e1a38 0%,#152148 60%,#1c3060 100%);
+  padding:44px 40px 40px;
+  border-bottom:3px solid var(--ldm-accent);
+  position:relative;overflow:hidden;
+}
+.setup-hero::before{
+  content:'';position:absolute;top:-60px;right:-60px;
+  width:220px;height:220px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,148,37,0.12) 0%,transparent 70%);
+  pointer-events:none;
+}
+.setup-hero::after{
+  content:'';position:absolute;bottom:-40px;left:-40px;
+  width:160px;height:160px;border-radius:50%;
+  background:radial-gradient(circle,rgba(68,98,128,0.25) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-brand{display:flex;align-items:center;gap:0;margin-bottom:28px}
+.hero-name{font-family:var(--serif);font-size:28px;color:#fff;font-style:italic;letter-spacing:-0.01em;display:flex;align-items:center}
+.hero-sep{width:1px;height:20px;background:rgba(255,255,255,0.2);margin:0 14px}
+.hero-ldm{font-size:10px;font-weight:600;color:rgba(255,255,255,0.45);letter-spacing:0.15em;text-transform:uppercase}
+.hero-ldm span{color:var(--ldm-accent)}
+.hero-headline{
+  font-family:var(--serif);font-size:22px;font-weight:400;
+  color:#fff;line-height:1.35;margin-bottom:12px;
+  font-style:italic;
+}
+.hero-headline strong{font-style:normal;color:var(--ldm-accent);font-weight:600}
+.hero-sub{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.7;max-width:380px}
+.hero-pills{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;
+  margin-top:24px;max-width:380px;
+}
+.hero-pill{
+  font-size:10.5px;font-weight:500;padding:7px 12px;border-radius:20px;
+  background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.65);
+  border:1px solid rgba(255,255,255,0.12);letter-spacing:0.02em;
+  text-align:center;
+}
+
+/* CONNECT SECTION */
+.setup-connect{padding:32px 40px}
+.connect-label{
+  font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--ink4);margin-bottom:8px;
+}
+.connect-desc{font-size:12px;color:var(--ink3);line-height:1.6;margin-bottom:14px}
+.connect-url{
+  font-family:var(--mono);font-size:11px;color:var(--ink3);
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--r-sm);padding:7px 12px;margin-bottom:12px;
+  display:block;
+}
+.connect-url strong{color:var(--ldm);font-weight:600}
+.setup-input{
+  width:100%;background:var(--surface2);border:1px solid var(--border2);
+  border-radius:var(--r-sm);padding:11px 14px;font-family:var(--mono);font-size:13px;
+  color:var(--ink);outline:none;transition:all 0.15s;
+}
+.setup-input:focus{border-color:var(--ldm);box-shadow:0 0 0 3px rgba(21,33,72,0.1);background:var(--surface)}
+.setup-input::placeholder{color:var(--ink4);font-family:var(--sans);font-size:12px}
+.setup-actions{display:flex;gap:10px;margin-top:14px}
+.btn-setup{
+  flex:1;font-family:var(--sans);font-size:13px;font-weight:600;
+  padding:11px 24px;border-radius:var(--r-sm);border:none;
+  background:var(--ldm-accent);color:#fff;cursor:pointer;
+  transition:all 0.15s;letter-spacing:0.01em;
+}
+.btn-setup:hover{background:#e8841a;transform:translateY(-1px);box-shadow:0 4px 14px rgba(255,148,37,0.4)}
+.btn-demo{
+  font-family:var(--sans);font-size:12px;font-weight:500;
+  padding:11px 18px;border-radius:var(--r-sm);border:1px solid var(--border2);
+  background:var(--surface);color:var(--ink2);cursor:pointer;
+  transition:all 0.13s;white-space:nowrap;
+}
+.btn-demo:hover{background:var(--surface3)}
+.setup-privacy{
+  font-size:11px;color:var(--ink4);margin-top:14px;
+  display:flex;align-items:center;gap:6px;
+}
+.setup-privacy svg{flex-shrink:0;color:var(--green)}
+.setup-error{
+  font-size:12px;color:var(--red);background:var(--red-bg);
+  border:1px solid rgba(139,26,26,0.2);border-radius:var(--r-sm);
+  padding:8px 12px;margin-top:8px;display:none;
+}
+
+/* ══════════════════════════════════════
+   LOADING SCREEN
+══════════════════════════════════════ */
+#loading-screen{
+  display:none;min-height:100vh;align-items:center;justify-content:center;
+  background:linear-gradient(160deg,#0e1a38 0%,#152148 50%,#1a2d5a 100%);
+  flex-direction:column;gap:16px;
+}
+.load-spinner{
+  width:36px;height:36px;border:3px solid rgba(255,255,255,0.15);
+  border-top-color:var(--ldm-accent);border-radius:50%;
+  animation:spin 0.8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.load-text{font-size:13px;color:rgba(255,255,255,0.5);font-family:var(--mono)}
+
+/* ══════════════════════════════════════
+   DASHBOARD
+══════════════════════════════════════ */
+#dashboard{display:none}
+
+/* TOPBAR */
+.topbar{
+  background:var(--ldm);padding:0 28px;height:56px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:50;border-bottom:2px solid var(--ldm-accent);
+}
+.logo{display:flex;align-items:center}
+.logo-ct{font-family:var(--serif);font-size:18px;color:#fff;font-style:italic}
+.logo-sep{width:1px;height:18px;background:rgba(255,255,255,0.25);margin:0 14px}
+.logo-ldm{font-size:11px;font-weight:500;color:rgba(255,255,255,0.5);letter-spacing:0.12em;text-transform:uppercase}
+.logo-ldm span{color:var(--ldm-accent)}
+.topbar-center{flex:1;max-width:340px;margin:0 32px}
+.search-wrap{position:relative}
+.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.35)}
+.search-input{
+  width:100%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);
+  border-radius:var(--r-sm);padding:7px 11px 7px 32px;
+  font-family:var(--sans);font-size:13px;color:#fff;outline:none;transition:all 0.15s;
+}
+.search-input::placeholder{color:rgba(255,255,255,0.3)}
+.search-input:focus{background:rgba(255,255,255,0.16);border-color:rgba(255,255,255,0.4)}
+.topbar-right{display:flex;align-items:center;gap:8px}
+.tb-btn{
+  font-family:var(--sans);font-size:12px;font-weight:500;padding:6px 13px;
+  border-radius:var(--r-sm);border:1px solid rgba(255,255,255,0.2);
+  background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.8);cursor:pointer;
+  transition:all 0.14s;white-space:nowrap;
+}
+.tb-btn:hover{background:rgba(255,255,255,0.16);color:#fff}
+.tb-btn.accent{background:var(--ldm-accent);border-color:var(--ldm-accent);color:#fff}
+.tb-btn.accent:hover{background:#e8841a}
+.tb-btn.ghost{background:transparent;border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);font-size:11px}
+.tb-btn.ghost:hover{color:rgba(255,255,255,0.8)}
+
+/* SOURCE BAR */
+.source-bar{
+  background:var(--surface);border-bottom:1px solid var(--border);
+  padding:7px 28px;display:flex;align-items:center;gap:10px;font-size:11px;
+}
+.src-dot{width:6px;height:6px;border-radius:50%;background:var(--green-mid);flex-shrink:0;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.src-text{color:var(--ink3)}
+.src-id{font-family:var(--mono);color:var(--ink4);font-size:10.5px}
+.src-refresh{
+  margin-left:auto;font-size:11px;color:var(--ldm2);cursor:pointer;
+  font-weight:500;border:none;background:transparent;font-family:var(--sans);
+  padding:3px 8px;border-radius:var(--r-sm);transition:all 0.12s;
+}
+.src-refresh:hover{background:var(--surface2)}
+.src-time{font-size:10px;color:var(--ink4);font-family:var(--mono)}
+
+/* KPI BAR */
+.kpi-bar{
+  background:var(--surface);border-bottom:1px solid var(--border);
+  display:grid;grid-template-columns:repeat(5,1fr);margin-top:0;
+}
+.kpi{padding:14px 20px;border-right:1px solid var(--border);cursor:pointer;transition:background 0.12s}
+.kpi:last-child{border-right:none}
+.kpi:hover,.kpi.active{background:var(--surface2)}
+.kpi.active{border-bottom:2px solid var(--ldm)}
+.kpi-label{font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:4px}
+.kpi-num{font-family:var(--serif);font-size:28px;line-height:1;font-weight:600}
+.kpi-num.danger{color:var(--red)}
+.kpi-num.orange{color:var(--orange)}
+.kpi-num.warn{color:#9A6000}
+.kpi-num.ok{color:var(--green)}
+.kpi-num.neutral{color:var(--ink2)}
+.kpi-sub{font-size:10px;color:var(--ink4);margin-top:3px}
+
+/* LAYOUT */
+.layout{display:flex;min-height:calc(100vh - 116px)}
+
+/* SIDEBAR */
+.sidebar{
+  width:206px;background:var(--surface);border-right:1px solid var(--border);
+  padding:18px 0;flex-shrink:0;position:sticky;top:56px;
+  height:calc(100vh - 56px);overflow-y:auto;
+}
+.sb-head{font-size:8.5px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink4);padding:0 16px;margin-bottom:4px}
+.nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:7px 16px;font-size:12.5px;color:var(--ink3);cursor:pointer;
+  border-left:2px solid transparent;transition:all 0.12s;user-select:none;
+}
+.nav:hover{background:var(--surface2);color:var(--ink)}
+.nav.active{background:var(--surface2);color:var(--ink);border-left-color:var(--ldm);font-weight:500}
+.nav-ct{font-size:10px;padding:1px 6px;border-radius:10px;background:var(--surface3);color:var(--ink3)}
+.nav-ct.danger{background:var(--red-bg);color:var(--red)}
+.nav-ct.orange{background:var(--orange-bg);color:var(--orange)}
+.sb-div{height:1px;background:var(--border);margin:12px 0}
+.sb-promo{
+  margin:14px 10px 0;padding:13px;border-radius:var(--r);
+  background:linear-gradient(135deg,var(--ldm) 0%,#1e3470 100%);
+  border:1px solid rgba(255,255,255,0.06);
+}
+.sp-badge{font-size:8px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--ldm-accent);margin-bottom:4px}
+.sp-text{font-size:11px;color:rgba(255,255,255,0.7);line-height:1.5;margin-bottom:9px}
+.sp-cta{
+  font-size:10px;font-weight:600;color:#fff;padding:5px 10px;
+  background:var(--ldm-accent);border-radius:var(--r-sm);cursor:pointer;
+  display:inline-block;border:none;font-family:var(--sans);transition:background 0.14s;
+}
+.sp-cta:hover{background:#e8841a}
+
+/* CONTENT */
+.content{flex:1;padding:22px 28px;overflow:hidden}
+.content-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.content-title{font-family:var(--serif);font-size:20px;color:var(--ink);font-weight:400}
+.content-title em{font-size:13px;color:var(--ink4);font-style:normal;margin-left:7px;font-family:var(--sans)}
+.actions{display:flex;gap:6px;align-items:center}
+.btn{font-family:var(--sans);font-size:12px;font-weight:500;padding:6px 13px;border-radius:var(--r-sm);border:1px solid var(--border2);background:var(--surface);color:var(--ink2);cursor:pointer;transition:all 0.13s;white-space:nowrap}
+.btn:hover{background:var(--surface2)}
+.btn.primary{background:var(--ldm);color:#fff;border-color:var(--ldm)}
+.btn.primary:hover{background:#0f1a38}
+.btn.warn-btn{background:var(--red-bg);color:var(--red);border-color:rgba(139,26,26,0.18)}
+.btn.warn-btn:hover{background:#fad5d5}
+.btn-sm{padding:5px 10px;font-size:11px}
+.sort-tabs{display:flex;gap:2px;background:var(--surface2);border-radius:var(--r-sm);padding:2px}
+.st{font-size:11.5px;font-weight:500;padding:4px 12px;border-radius:4px;cursor:pointer;color:var(--ink3);border:none;background:transparent;font-family:var(--sans);transition:all 0.12s}
+.st.active{background:var(--surface);color:var(--ink);box-shadow:var(--sh)}
+
+/* TABLE */
+.table-wrap{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);overflow:hidden;box-shadow:var(--sh)}
+table{width:100%;border-collapse:collapse}
+thead th{padding:10px 15px;text-align:left;font-size:9.5px;font-weight:600;color:var(--ink4);text-transform:uppercase;letter-spacing:0.08em;background:var(--surface2);border-bottom:1px solid var(--border);white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.1s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#FAFAF8}
+tbody tr.sel{background:#EBF0F8}
+tbody td{padding:11px 15px;vertical-align:middle}
+.client-cell{display:flex;align-items:center;gap:10px}
+.av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
+.cname{font-size:13px;font-weight:500;color:var(--ink)}
+.mtype{font-size:10px;color:var(--ink4);margin-top:1px}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:10px;padding:3px 9px;border-radius:20px;white-space:nowrap;font-weight:500}
+.dot{width:4px;height:4px;border-radius:50%;flex-shrink:0}
+.p-overdue{background:var(--red-bg);color:var(--red)}.p-overdue .dot{background:var(--red)}
+.p-urgent{background:var(--orange-bg);color:var(--orange)}.p-urgent .dot{background:var(--orange)}
+.p-pending{background:var(--amber-bg);color:var(--amber)}.p-pending .dot{background:var(--amber)}
+.p-complete{background:var(--green-bg);color:var(--green)}.p-complete .dot{background:var(--green)}
+.p-new{background:var(--blue-bg);color:var(--blue)}.p-new .dot{background:var(--blue)}
+.chips{display:flex;flex-wrap:wrap;gap:3px;max-width:240px}
+.chip{font-size:9.5px;padding:2px 7px;border-radius:4px;border:1px solid var(--border);color:var(--ink3);white-space:nowrap;font-family:var(--mono)}
+.chip.miss{border-color:#F9A8A8;background:var(--red-bg);color:var(--red)}
+.chip.recv{border-color:#86EFBC;background:var(--green-bg);color:var(--green)}
+.dl{font-size:13px;font-weight:500}
+.dl.over{color:var(--red)}.dl.imm{color:var(--orange)}.dl.soon{color:#9A6000}.dl.ok{color:var(--green)}
+.dl-date{font-size:10px;color:var(--ink4);margin-top:1px}
+.pbar-wrap{background:var(--surface3);border-radius:4px;height:5px;overflow:hidden;width:72px}
+.pbar-fill{height:100%;background:var(--green-mid);border-radius:4px;transition:width 0.3s}
+.row-acts{display:flex;gap:5px;opacity:0;transition:opacity 0.1s}
+tbody tr:hover .row-acts{opacity:1}
+.act{font-family:var(--sans);font-size:11px;font-weight:500;padding:4px 10px;border-radius:var(--r-sm);border:1px solid var(--border2);background:var(--surface);color:var(--ink2);cursor:pointer;transition:all 0.12s;white-space:nowrap}
+.act:hover{background:var(--surface2)}
+.act.draft{border-color:#93C5FD;color:var(--blue);background:var(--blue-bg)}
+.act.draft:hover{background:#d0e4f8}
+.empty{padding:52px 24px;text-align:center;color:var(--ink4);font-family:var(--serif);font-size:15px;font-style:italic}
+
+/* SIDE PANEL */
+.overlay{position:fixed;inset:0;background:rgba(14,17,23,0.45);z-index:100;opacity:0;pointer-events:none;transition:opacity 0.2s;backdrop-filter:blur(2px)}
+.overlay.open{opacity:1;pointer-events:all}
+.panel{position:fixed;top:0;right:0;bottom:0;width:440px;background:var(--surface);border-left:1px solid var(--border);z-index:101;transform:translateX(100%);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column;box-shadow:var(--sh-lg)}
+.panel.open{transform:translateX(0)}
+.panel-top{padding:18px 20px 14px;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:1}
+.p-toprow{display:flex;align-items:flex-start;justify-content:space-between}
+.p-name{font-family:var(--serif);font-size:20px;line-height:1.2}
+.p-matter{font-size:11px;color:var(--ink4);margin-top:3px}
+.xbtn{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);width:26px;height:26px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px;color:var(--ink3);flex-shrink:0;transition:all 0.12s}
+.xbtn:hover{background:var(--surface3)}
+.panel-body{overflow-y:auto;flex:1}
+.p-sec{padding:15px 20px;border-bottom:1px solid var(--border)}
+.p-sec-title{font-size:8.5px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink4);margin-bottom:10px}
+.cgrid{display:grid;grid-template-columns:74px 1fr;gap:5px 10px;font-size:12.5px}
+.cl{color:var(--ink4)}.cv{color:var(--ink)}
+.cv a{color:var(--blue);text-decoration:none}.cv a:hover{text-decoration:underline}
+.doc-rows{display:flex;flex-direction:column;gap:6px}
+.doc-r{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--border);border-radius:var(--r-sm);transition:all 0.12s}
+.doc-r.miss{border-color:#F9A8A8;background:#FFF5F5}
+.doc-r.recv{border-color:#86EFBC;background:#F0FDF4}
+.doc-name{font-size:12.5px}.doc-sub{font-size:10px;color:var(--ink4);margin-top:1px}
+.hist-list{display:flex;flex-direction:column}
+.hist-item{display:flex;gap:12px;padding:7px 0;border-bottom:1px solid var(--border);font-size:11.5px}
+.hist-item:last-child{border-bottom:none}
+.hist-d{color:var(--ink4);white-space:nowrap;min-width:64px;font-family:var(--mono);font-size:10.5px}
+.hist-t{color:var(--ink2)}
+.panel-foot{padding:13px 20px;border-top:1px solid var(--border);display:flex;gap:7px;flex-wrap:wrap;background:var(--surface)}
+.sheet-note{font-size:10.5px;color:var(--ink4);background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:8px 12px;margin-top:6px;line-height:1.6}
+.sheet-note strong{color:var(--ldm);font-weight:600}
+
+/* MODALS */
+.modal-bg{position:fixed;inset:0;background:rgba(14,17,23,0.55);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.modal-bg.open{display:flex}
+.modal{background:var(--surface);border-radius:12px;border:1px solid var(--border);width:560px;max-width:100%;box-shadow:var(--sh-lg);overflow:hidden;animation:slideUp 0.22s cubic-bezier(0.4,0,0.2,1)}
+.modal-wide{width:660px}
+@keyframes slideUp{from{transform:translateY(12px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-head{padding:18px 22px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-title{font-family:var(--serif);font-size:17px;font-weight:400}
+.modal-body{padding:18px 22px}
+.modal-foot{padding:12px 22px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:7px}
+.field{margin-bottom:13px}
+.field label{display:block;font-size:10.5px;color:var(--ink4);margin-bottom:4px;letter-spacing:0.04em;font-weight:500}
+.field input,.field textarea,.field select{width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r-sm);padding:8px 11px;font-family:var(--sans);font-size:13px;color:var(--ink);outline:none;transition:border-color 0.15s,box-shadow 0.15s}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--ldm);box-shadow:0 0 0 3px rgba(21,33,72,0.1);background:var(--surface)}
+.field textarea{min-height:165px;resize:vertical;line-height:1.6}
+.field input[readonly]{opacity:0.6;cursor:default}
+.field input[readonly]:focus{border-color:var(--border2);box-shadow:none}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.loading-row{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--ink4);padding:8px 0}
+.spinner{width:15px;height:15px;border:2px solid var(--border2);border-top-color:var(--ldm);border-radius:50%;animation:spin 0.75s linear infinite;flex-shrink:0}
+.ai-tag{display:inline-flex;align-items:center;gap:5px;font-size:10px;padding:3px 9px;border-radius:20px;background:linear-gradient(135deg,#E8EEF8,#EBF5EE);color:var(--blue);border:1px solid #93C5FD;font-weight:500}
+
+/* REPORT */
+.rpt-sec{padding:13px 20px;border-bottom:1px solid var(--border)}
+.rpt-sec:last-child{border-bottom:none}
+.rpt-sec h4{font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:0.09em;color:var(--ink4);margin-bottom:8px}
+.rpt-row{display:flex;justify-content:space-between;font-size:11.5px;padding:5px 0;border-bottom:1px solid var(--border);color:var(--ink2)}
+.rpt-row:last-child{border-bottom:none}
+.rpt-name{color:var(--ink)}.rpt-right{color:var(--ink4);text-align:right}
+
+/* TOAST */
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;padding:9px 18px;border-radius:24px;font-size:13px;z-index:400;transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);white-space:nowrap;box-shadow:var(--sh-md);pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* STATUS LEGEND */
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink3)}
+.leg-dot{width:7px;height:7px;border-radius:50%}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     SETUP SCREEN
+══════════════════════════════════════════ -->
+<div id="setup-screen">
+  <div class="setup-card">
+
+    <!-- HERO -->
+    <div class="setup-hero">
+      <div class="hero-brand">
+        <span class="hero-name">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-right:8px;margin-bottom:3px;flex-shrink:0">
+            <!-- magnifying glass circle -->
+            <circle cx="9" cy="9" r="7" stroke="rgba(255,255,255,0.35)" stroke-width="1.8" fill="none"/>
+            <!-- lens highlight over "See" — orange filled circle -->
+            <circle cx="9" cy="9" r="4.5" fill="rgba(255,148,37,0.18)" stroke="#FF9425" stroke-width="1.2"/>
+            <!-- handle -->
+            <line x1="14.2" y1="14.2" x2="20" y2="20" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round"/>
+            <!-- tiny eye dot in centre of lens -->
+            <circle cx="9" cy="9" r="1.4" fill="#FF9425"/>
+          </svg>Tra<span style="color:#FF9425;font-style:italic">See</span>
+        </span>
+        <div class="hero-sep"></div>
+        <span class="hero-ldm">BY <span>LDM GLOBAL</span></span>
+      </div>
+      <div class="hero-headline">Know exactly <strong>what's missing</strong><br>from every client file.</div>
+      <div class="hero-sub">A document visibility dashboard for your law firm. Track every client's outstanding documents, deadlines, and status — all in one place.</div>
+      <div class="hero-pills">
+        <span class="hero-pill">⚡ AI reminder emails</span>
+        <span class="hero-pill">📋 Live document tracking</span>
+        <span class="hero-pill">📊 Deadline visibility</span>
+        <span class="hero-pill">🔒 Your data stays with you</span>
+      </div>
+    </div>
+
+    <!-- CONNECT -->
+    <div class="setup-connect">
+      <div class="connect-label">Connect your Google Sheet</div>
+      <div class="connect-desc">Paste your Google Sheet ID below. Find it in your Sheet URL between <code style="background:var(--surface2);padding:1px 5px;border-radius:3px;font-family:var(--mono);font-size:11px">/d/</code> and <code style="background:var(--surface2);padding:1px 5px;border-radius:3px;font-family:var(--mono);font-size:11px">/edit</code>.</div>
+      <input class="setup-input" id="sheet-id-input" placeholder="Paste your Sheet ID here…" />
+      <div class="setup-error" id="setup-error">Could not load data. Check your Sheet ID and make sure sharing is set to "Anyone with the link can view."</div>
+      <div class="setup-actions">
+        <button class="btn-setup" onclick="connectSheet()">Connect My Sheet →</button>
+        <button class="btn-demo" onclick="loadDemo()">View Demo</button>
+      </div>
+      <div class="setup-privacy">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Your data stays in your Google account. LDM Global never sees or stores your client information.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     LOADING SCREEN
+══════════════════════════════════════════ -->
+<div id="loading-screen">
+  <div class="load-spinner"></div>
+  <div class="load-text">Loading your matters into TraSee…</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     DASHBOARD
+══════════════════════════════════════════ -->
+<div id="dashboard">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+        <div class="logo">
+      <span class="logo-ct">TraSee</span>
+      <div class="logo-sep"></div>
+      <span class="logo-ldm">BY <span>LDM GLOBAL</span></span>
+    </div>
+    <div class="topbar-center">
+      <div class="search-wrap">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input class="search-input" id="search" placeholder="Search client or matter…" oninput="renderTable()">
+      </div>
+    </div>
+    <div class="topbar-right">
+      <button class="tb-btn ghost" onclick="resetSetup()">⇄ Change Sheet</button>
+      <button class="tb-btn" onclick="openReport()">Status Report</button>
+      <button class="tb-btn accent" onclick="openAddNote()">+ Add Matter</button>
+    </div>
+  </div>
+
+  <!-- SOURCE BAR -->
+  <div class="source-bar">
+    <div class="src-dot"></div>
+    <span class="src-text">Live data from Google Sheet</span>
+    <span class="src-id" id="src-id-display"></span>
+    <button class="src-refresh" onclick="refreshData()">↻ Refresh</button>
+    <span class="src-time" id="src-time"></span>
+  </div>
+
+  <!-- KPI BAR -->
+  <div class="kpi-bar" id="kpi-bar"></div>
+
+  <!-- LAYOUT -->
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div style="margin-bottom:14px">
+        <div class="sb-head">Filter by Status</div>
+        <div class="nav active" onclick="setFilter('all',this)">All Matters <span class="nav-ct" id="ct-all">0</span></div>
+        <div class="nav" onclick="setFilter('overdue',this)">Overdue <span class="nav-ct danger" id="ct-overdue">0</span></div>
+        <div class="nav" onclick="setFilter('urgent',this)">Urgent (≤7 days) <span class="nav-ct orange" id="ct-urgent">0</span></div>
+        <div class="nav" onclick="setFilter('pending',this)">Awaiting Docs <span class="nav-ct" id="ct-pending">0</span></div>
+        <div class="nav" onclick="setFilter('new',this)">New Clients <span class="nav-ct" id="ct-new">0</span></div>
+        <div class="nav" onclick="setFilter('complete',this)">Complete <span class="nav-ct" id="ct-complete">0</span></div>
+      </div>
+      <div class="sb-div"></div>
+      <div style="margin-bottom:14px">
+        <div class="sb-head">Matter Type</div>
+        <div class="nav active" id="mt-all" onclick="setMatter('all',this)">All Types</div>
+        <div class="nav" id="mt-Immigration" onclick="setMatter('Immigration',this)">Immigration</div>
+        <div class="nav" id="mt-Family Law" onclick="setMatter('Family Law',this)">Family Law</div>
+        <div class="nav" id="mt-Personal Injury" onclick="setMatter('Personal Injury',this)">Personal Injury</div>
+        <div class="nav" id="mt-Estate Planning" onclick="setMatter('Estate Planning',this)">Estate Planning</div>
+        <div class="nav" id="mt-Criminal Defense" onclick="setMatter('Criminal Defense',this)">Criminal Defense</div>
+        <div class="nav" id="mt-Business Law" onclick="setMatter('Business Law',this)">Business Law</div>
+      </div>
+      <div class="sb-div"></div>
+      <div class="sb-promo">
+        <div class="sp-badge">From LDM Global</div>
+        <div class="sp-text">Need paralegal support, document review, or overflow processing? LDM's US-focused legal team is ready.</div>
+        <button class="sp-cta" onclick="showToast('Connecting you to LDM Global…')">Talk to LDM →</button>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+      <!-- HOW IT WORKS BANNER (first load) -->
+      <div id="how-it-works" style="display:none;background:var(--blue-bg);border:1px solid rgba(22,58,107,0.18);border-radius:var(--r);padding:14px 18px;margin-bottom:16px;font-size:12px;color:var(--blue);display:none">
+        <strong>How TraSee reads your data:</strong> This dashboard is connected to your Google Sheet. To update a client's document status, open your Sheet and change the status column from <code style="background:rgba(22,58,107,0.1);padding:1px 5px;border-radius:3px">Missing</code> to <code style="background:rgba(22,58,107,0.1);padding:1px 5px;border-radius:3px">Received</code>. Click Refresh above to see changes here instantly.
+        <span style="float:right;cursor:pointer;opacity:0.6" onclick="this.parentElement.style.display='none'">✕</span>
+      </div>
+
+      <div class="content-header">
+        <div class="content-title" id="view-title">All Matters <em id="view-count"></em></div>
+        <div class="actions">
+          <div class="sort-tabs">
+            <button class="st active" onclick="setSort('deadline',this)">By Deadline</button>
+            <button class="st" onclick="setSort('status',this)">By Status</button>
+            <button class="st" onclick="setSort('name',this)">A–Z</button>
+          </div>
+          <button class="btn warn-btn btn-sm" onclick="bulkRemind()">⚡ Remind Overdue</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Client / Matter</th>
+              <th>Status</th>
+              <th>Documents</th>
+              <th>Progress</th>
+              <th>Deadline</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+        <div class="empty" id="empty-state" style="display:none">No matters match this filter.</div>
+      </div>
+
+      <!-- SHEET INSTRUCTIONS FOOTER -->
+      <div style="margin-top:16px;font-size:11px;color:var(--ink4);display:flex;align-items:center;gap:6px">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        To add or update clients, edit your Google Sheet directly. Changes appear here after clicking Refresh.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OVERLAY + PANEL -->
+<div class="overlay" id="overlay" onclick="closePanel()"></div>
+<div class="panel" id="side-panel">
+  <div class="panel-top">
+    <div class="p-toprow">
+      <div><div class="p-name" id="p-name"></div><div class="p-matter" id="p-matter"></div></div>
+      <div class="xbtn" onclick="closePanel()">✕</div>
+    </div>
+    <div id="p-progress-area" style="margin-top:11px"></div>
+  </div>
+  <div class="panel-body">
+    <div class="p-sec">
+      <div class="p-sec-title">Contact & Matter Details</div>
+      <div class="cgrid" id="p-contact"></div>
+    </div>
+    <div class="p-sec">
+      <div class="p-sec-title">Document Checklist</div>
+      <div class="doc-rows" id="p-docs"></div>
+      <div class="sheet-note" style="margin-top:10px">
+        <strong>To update document status:</strong> Open your Google Sheet and change the status cell for this client from <code>Missing</code> to <code>Received</code>, then click Refresh in the toolbar.
+      </div>
+    </div>
+    <div class="p-sec">
+      <div class="p-sec-title">Activity Log</div>
+      <div class="hist-list" id="p-history"></div>
+    </div>
+  </div>
+  <div class="panel-foot">
+    <button class="btn primary btn-sm" onclick="openDraftFromPanel()">✦ Draft Reminder Email</button>
+    <button class="btn btn-sm" onclick="closePanel()">Close</button>
+  </div>
+</div>
+
+<!-- EMAIL MODAL -->
+<div class="modal-bg" id="email-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title">AI-Drafted Reminder Email</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="ai-tag">✦ AI-drafted</span>
+        <div class="xbtn" onclick="closeModal('email-modal')">✕</div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="loading-row" id="email-loading" style="display:none">
+        <div class="spinner"></div>
+        <span>Drafting professional reminder via Claude AI…</span>
+      </div>
+      <div id="email-form-wrap">
+        <div class="field"><label>To</label><input id="e-to" readonly/></div>
+        <div class="field"><label>Subject</label><input id="e-subject"/></div>
+        <div class="field"><label>Message</label><textarea id="e-body"></textarea></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-sm" onclick="copyEmail()">Copy to Clipboard</button>
+      <button class="btn primary btn-sm" onclick="openGmail()">Open in Gmail →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD MATTER NOTE MODAL -->
+<div class="modal-bg" id="add-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title">Add Matter via Google Sheet</span>
+      <div class="xbtn" onclick="closeModal('add-modal')">✕</div>
+    </div>
+    <div class="modal-body">
+      <div style="font-size:13px;color:var(--ink2);line-height:1.7;margin-bottom:16px">
+        In TraSee, all client data lives in your Google Sheet — so to add a new matter, you add a row there directly.
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:16px;font-size:12px;color:var(--ink2);line-height:1.8">
+        <strong style="color:var(--ink)">How to add a new client:</strong><br>
+        1. Open your Google Sheet (link in setup)<br>
+        2. Add a new row with: Client Name, Matter Type, Email, Phone, Deadline, Attorney, Notes<br>
+        3. Add document names in columns H, J, L, N, P, R<br>
+        4. Set their status in columns I, K, M, O, Q, S as <code style="background:var(--surface3);padding:1px 5px;border-radius:3px">Missing</code> or <code style="background:var(--surface3);padding:1px 5px;border-radius:3px">Received</code><br>
+        5. Click <strong>Refresh</strong> in TraSee
+      </div>
+      <div style="margin-top:14px;font-size:11.5px;color:var(--ink4)">
+        The next version of TraSee will include an in-app form that writes directly to your Sheet.
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-sm" onclick="closeModal('add-modal')">Got it</button>
+      <button class="btn primary btn-sm" onclick="openSheet()">Open My Sheet →</button>
+    </div>
+  </div>
+</div>
+
+<!-- REPORT MODAL -->
+<div class="modal-bg" id="report-modal">
+  <div class="modal modal-wide">
+    <div class="modal-head">
+      <span class="modal-title">Matter Status Report</span>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn btn-sm" onclick="copyReport()">Copy Plain Text</button>
+        <div class="xbtn" onclick="closeModal('report-modal')">✕</div>
+      </div>
+    </div>
+    <div class="modal-body" style="padding:0;max-height:70vh;overflow-y:auto">
+      <div id="report-body"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════════
+
+// YOUR GOOGLE SHEETS API KEY (free, see setup guide)
+// For the demo, we use embedded dummy data.
+// When connecting a real Sheet, replace this key with your own.
+const SHEETS_API_KEY = 'AIzaSyCkJoqrnuXGnhZ1ilz0qYPrDqXvRylYRvE';
+
+// Range: Row 1 = headers. Data starts row 2. Cols A through S.
+const SHEET_RANGE = 'Sheet1!A2:S';
+
+// ══════════════════════════════════════════
+// DEMO DATA — Rich, mixed-bag dummy clients
+// ══════════════════════════════════════════
+const DEMO_DATA = [
+  // [Name, MatterType, Email, Phone, Deadline, Attorney, Notes, D1Name, D1Status, D2Name, D2Status, D3Name, D3Status, D4Name, D4Status, D5Name, D5Status, D6Name, D6Status]
+  ['Maria Rodriguez','Immigration','m.rodriguez@gmail.com','(212) 555-0182','2026-05-10','J. Patterson, Esq.','Green card renewal — priority processing','Passport Copy','Received','I-94 Form','Missing','Birth Certificate','Missing','Tax Returns (2yrs)','Missing','Employment Letter','Received','Medical Exam Results','Missing'],
+  ['Roberto Vasquez','Criminal Defense','r.vasquez@email.com','(347) 555-0781','2026-05-12','M. Okafor, Esq.','DUI case — arraignment May 25. Bail bond outstanding.','Arrest Record','Received','Bail Bond Papers','Missing','Character References','Missing','Financial Affidavit','Missing','','','',''],
+  ['Linda Okafor','Immigration','l.okafor@proton.me','(718) 555-0034','2026-05-15','J. Patterson, Esq.','H-4 dependent visa — spouse H-1B already approved','Passport Copy','Received','I-94 Entry Record','Received','Marriage Certificate','Received','Spouse H-1B Approval','Missing','Passport Photos','Received','',''],
+  ['James Thornton','Family Law','j.thornton@outlook.com','(646) 555-0341','2026-05-19','S. Kim, Esq.','Divorce — contested custody. Asset declaration delayed by CPA.','Marriage Certificate','Received','Asset Declaration','Missing','Bank Statements (6mo)','Missing','Property Deed','Received','','','',''],
+  ['Kevin Park','Personal Injury','kpark.legal@gmail.com','(929) 555-0229','2026-05-21','M. Okafor, Esq.','Slip and fall — grocery store, Jan 2026. Liability disputed.','Medical Records','Received','Incident Report','Received','Witness Statements','Missing','Insurance Correspondence','Missing','Photo Evidence','Received','Lost Wages Affidavit','Missing'],
+  ['Priya Nair','Personal Injury','p.nair@yahoo.com','(917) 555-0029','2026-06-08','S. Kim, Esq.','Auto accident — rear-ended on I-95. Insurance claim dispute.','Medical Records','Received','Police Report','Received','Insurance Policy Docs','Missing','Wage Loss Statement','Missing','Vehicle Damage Photos','Received','',''],
+  ['Angela Foster','Business Law','afoster@fosterventures.co','(415) 555-0322','2026-06-20','J. Patterson, Esq.','LLC formation — 3-member tech startup. Operating agreement in review.','Articles of Incorporation','Received','Operating Agreement Draft','Missing','EIN Documentation','Received','Member ID Copies','Missing','Registered Agent Form','Received','',''],
+  ['David Osei','Immigration','d.osei@gmail.com','(718) 555-0447','2026-06-30','','H-1B transfer — new employer petition pending. Added yesterday.','Current Visa Copy','Missing','Employer Petition (I-129)','Missing','Degree Certificate','Missing','Pay Stubs (6mo)','Missing','Specialty Occupation Letter','Missing','',''],
+  ['Sarah Chen','Estate Planning','sarah.chen@firm.com','(212) 555-0993','2026-07-15','J. Patterson, Esq.','Will and trust — complete. Model client.','Government ID','Received','Asset Inventory','Received','Property Documents','Received','Beneficiary Designations','Received','Trust Agreement','Received','',''],
+];
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let clients = [];
+let sheetId = '';
+let filter = 'all';
+let matterFilter = 'all';
+let sortMode = 'deadline';
+let selectedId = null;
+let panelClient = null;
+let emailClient = null;
+let lastRefresh = null;
+
+// ══════════════════════════════════════════
+// SETUP & CONNECTION
+// ══════════════════════════════════════════
+function init() {
+  const saved = localStorage.getItem('ct_sheet_id');
+  if (saved) {
+    sheetId = saved;
+    // Try to load from sheet; fall back to demo if no real API key
+    if (SHEETS_API_KEY === 'YOUR_GOOGLE_SHEETS_API_KEY') {
+      // No real key — load demo but show dashboard
+      showDashboard(true);
+    } else {
+      fetchSheet(saved);
+    }
+  } else {
+    document.getElementById('setup-screen').style.display = 'flex';
+  }
+}
+
+function connectSheet() {
+  const val = document.getElementById('sheet-id-input').value.trim();
+  if (!val) { showSetupError('Please paste your Sheet ID.'); return; }
+  // Extract ID if full URL was pasted
+  const match = val.match(/\/d\/([a-zA-Z0-9-_]+)/);
+  const id = match ? match[1] : val;
+  sheetId = id;
+  localStorage.setItem('ct_sheet_id', id);
+  document.getElementById('setup-error').style.display = 'none';
+  if (SHEETS_API_KEY === 'YOUR_GOOGLE_SHEETS_API_KEY') {
+    showDashboard(true);
+  } else {
+    fetchSheet(id);
+  }
+}
+
+function loadDemo() {
+  sheetId = 'DEMO';
+  localStorage.setItem('ct_sheet_id', 'DEMO');
+  showDashboard(true);
+}
+
+function fetchSheet(id) {
+  document.getElementById('setup-screen').style.display = 'none';
+  document.getElementById('loading-screen').style.display = 'flex';
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${id}/values/${SHEET_RANGE}?key=${SHEETS_API_KEY}`;
+  fetch(url)
+    .then(r => { if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(data => {
+      clients = parseSheetRows(data.values || []);
+      showDashboard(false);
+    })
+    .catch(err => {
+      document.getElementById('loading-screen').style.display = 'none';
+      document.getElementById('setup-screen').style.display = 'flex';
+      showSetupError('Could not load data. Check Sheet ID and sharing settings.');
+      console.error(err);
+    });
+}
+
+function refreshData() {
+  if (sheetId === 'DEMO' || SHEETS_API_KEY === 'YOUR_GOOGLE_SHEETS_API_KEY') {
+    showToast('Demo mode — data refreshed from built-in dataset');
+    lastRefresh = new Date();
+    updateRefreshTime();
+    return;
+  }
+  fetchSheet(sheetId);
+}
+
+function parseSheetRows(rows) {
+  return rows.filter(r => r[0]).map((r, i) => {
+    const docs = [];
+    for (let d = 0; d < 6; d++) {
+      const nameIdx = 7 + d*2;
+      const statIdx = 8 + d*2;
+      if (r[nameIdx] && r[nameIdx].trim()) {
+        docs.push({ n: r[nameIdx].trim(), s: (r[statIdx]||'').trim().toLowerCase() === 'received' ? 'recv' : 'miss' });
+      }
+    }
+    return {
+      id: i + 1,
+      name: r[0]||'',
+      matter: r[1]||'',
+      email: r[2]||'',
+      phone: r[3]||'',
+      deadline: r[4]||'',
+      attorney: r[5]||'',
+      notes: r[6]||'',
+      docs,
+      history: []
+    };
+  });
+}
+
+function showDashboard(useDemo) {
+  if (useDemo) {
+    clients = DEMO_DATA.map((r, i) => parseSheetRows([r])[0] || {id:i+1,name:r[0],matter:r[1],email:r[2],phone:r[3],deadline:r[4],attorney:r[5],notes:r[6],docs:[],history:[]});
+    // Re-parse properly
+    clients = DEMO_DATA.map((r, i) => {
+      const docs = [];
+      for (let d = 0; d < 6; d++) {
+        const ni = 7 + d*2, si = 8 + d*2;
+        if (r[ni] && r[ni].trim()) {
+          docs.push({ n: r[ni].trim(), s: r[si] === 'Received' ? 'recv' : 'miss' });
+        }
+      }
+      return { id:i+1, name:r[0], matter:r[1], email:r[2], phone:r[3], deadline:r[4], attorney:r[5], notes:r[6], docs, history:[] };
+    });
+  }
+
+  document.getElementById('setup-screen').style.display = 'none';
+  document.getElementById('loading-screen').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+
+  const dispId = sheetId === 'DEMO' ? 'Demo Dataset' : sheetId.substring(0,16)+'…';
+  document.getElementById('src-id-display').textContent = dispId;
+  lastRefresh = new Date();
+  updateRefreshTime();
+
+  if (sheetId === 'DEMO') {
+    document.getElementById('how-it-works').style.display = 'block';
+  }
+
+  renderTable();
+}
+
+function updateRefreshTime() {
+  if (!lastRefresh) return;
+  document.getElementById('src-time').textContent = 'Last refreshed ' + lastRefresh.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+}
+
+function resetSetup() {
+  localStorage.removeItem('ct_sheet_id');
+  sheetId = '';
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('setup-screen').style.display = 'flex';
+  document.getElementById('sheet-id-input').value = '';
+}
+
+function showSetupError(msg) {
+  const el = document.getElementById('setup-error');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+function openSheet() {
+  if (sheetId && sheetId !== 'DEMO') {
+    window.open(`https://docs.google.com/spreadsheets/d/${sheetId}/edit`, '_blank');
+  }
+  closeModal('add-modal');
+}
+
+// ══════════════════════════════════════════
+// STATUS CALCULATION
+// ══════════════════════════════════════════
+function computeStatus(c) {
+  const allRecv = c.docs.length > 0 && c.docs.every(d => d.s === 'recv');
+  if (allRecv) return 'complete';
+  const days = daysFrom(c.deadline);
+  if (days < 0) return 'overdue';
+  if (days <= 7) return 'urgent';
+  if (c.docs.some(d => d.s === 'miss')) {
+    // If no docs received at all, it's "new"
+    const anyRecv = c.docs.some(d => d.s === 'recv');
+    if (!anyRecv && days > 7) return 'new';
+    return 'pending';
+  }
+  return 'pending';
+}
+
+function statusLabel(s) {
+  return {overdue:'Overdue',urgent:'Urgent — Due Soon',pending:'Awaiting Docs',new:'New Client',complete:'Complete'}[s]||s;
+}
+function pillClass(s) {
+  return {overdue:'p-overdue',urgent:'p-urgent',pending:'p-pending',new:'p-new',complete:'p-complete'}[s]||'p-pending';
+}
+
+// ══════════════════════════════════════════
+// DATES
+// ══════════════════════════════════════════
+function daysFrom(d) {
+  if (!d) return 999;
+  const t = new Date(d); t.setHours(12);
+  return Math.round((t - new Date()) / 86400000);
+}
+function fmtDate(d) {
+  if (!d) return '—';
+  return new Date(d).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+}
+function nowStr() { return new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'}); }
+
+// ══════════════════════════════════════════
+// AVATAR
+// ══════════════════════════════════════════
+const AV = [['#E8EEF8','#163A6B'],['#EBF5EE','#0A6640'],['#FDF3E0','#7A4A00'],['#FCEAEA','#8B1A1A'],['#F0EBF8','#4A1A7A'],['#E8F4F8','#1A4A6B']];
+function avC(id){return AV[id%AV.length]}
+function initials(n){return n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}
+
+// ══════════════════════════════════════════
+// FILTER / SORT
+// ══════════════════════════════════════════
+function setFilter(f, el) {
+  filter = f;
+  document.querySelectorAll('.nav').forEach(n => { if(n.dataset.mt===undefined && n.id===undefined) n.classList.remove('active') });
+  // simpler: just track by onclick attribute
+  document.querySelectorAll('[onclick^="setFilter"]').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+  const labels = {all:'All Matters',overdue:'Overdue Matters',urgent:'Urgent — Due Soon',pending:'Awaiting Documents',new:'New Clients',complete:'Complete'};
+  document.getElementById('view-title').childNodes[0].textContent = (labels[f]||'Matters') + ' ';
+  renderTable();
+}
+function setMatter(m, el) {
+  matterFilter = m;
+  document.querySelectorAll('[onclick^="setMatter"]').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+  renderTable();
+}
+function setSort(s, el) {
+  sortMode = s;
+  document.querySelectorAll('.st').forEach(v => v.classList.remove('active'));
+  el.classList.add('active');
+  renderTable();
+}
+function filtered() {
+  let arr = clients.map(c => ({...c, _status: computeStatus(c)}));
+  if (filter !== 'all') arr = arr.filter(c => c._status === filter);
+  if (matterFilter !== 'all') arr = arr.filter(c => c.matter === matterFilter);
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  if (q) arr = arr.filter(c => c.name.toLowerCase().includes(q) || c.matter.toLowerCase().includes(q) || (c.attorney||'').toLowerCase().includes(q));
+  const ord = {overdue:0,urgent:1,pending:2,new:3,complete:4};
+  if (sortMode === 'status') arr.sort((a,b)=>ord[a._status]-ord[b._status]);
+  else if (sortMode === 'name') arr.sort((a,b)=>a.name.localeCompare(b.name));
+  else arr.sort((a,b)=>daysFrom(a.deadline)-daysFrom(b.deadline));
+  return arr;
+}
+
+// ══════════════════════════════════════════
+// KPI BAR
+// ══════════════════════════════════════════
+function renderKPI() {
+  const all = clients.map(c=>({...c,_s:computeStatus(c)}));
+  const cnt = s => all.filter(c=>c._s===s).length;
+  const overdue=cnt('overdue'), urgent=cnt('urgent'), pending=cnt('pending'), nw=cnt('new'), complete=cnt('complete');
+  const missingDocs = clients.reduce((s,c)=>s+c.docs.filter(d=>d.s==='miss').length,0);
+  document.getElementById('kpi-bar').innerHTML = `
+    <div class="kpi" onclick="setFilter('overdue',this)"><div class="kpi-label">Overdue</div><div class="kpi-num ${overdue>0?'danger':'ok'}">${overdue}</div><div class="kpi-sub">${overdue>0?'Past deadline':'None'}</div></div>
+    <div class="kpi" onclick="setFilter('urgent',this)"><div class="kpi-label">Urgent</div><div class="kpi-num ${urgent>0?'orange':'ok'}">${urgent}</div><div class="kpi-sub">Due within 7 days</div></div>
+    <div class="kpi" onclick="setFilter('pending',this)"><div class="kpi-label">Awaiting Docs</div><div class="kpi-num ${pending>0?'warn':'ok'}">${pending}</div><div class="kpi-sub">${missingDocs} docs outstanding</div></div>
+    <div class="kpi" onclick="setFilter('new',this)"><div class="kpi-label">New Clients</div><div class="kpi-num neutral">${nw}</div><div class="kpi-sub">Not yet contacted</div></div>
+    <div class="kpi" onclick="setFilter('complete',this)"><div class="kpi-label">Complete</div><div class="kpi-num ok">${complete}</div><div class="kpi-sub">of ${clients.length} total</div></div>`;
+  ['all','overdue','urgent','pending','new','complete'].forEach(s=>{
+    const el=document.getElementById('ct-'+s);
+    if(el) el.textContent = s==='all'?clients.length:cnt(s);
+  });
+}
+
+// ══════════════════════════════════════════
+// TABLE
+// ══════════════════════════════════════════
+function renderTable() {
+  renderKPI();
+  const arr = filtered();
+  document.getElementById('view-count').textContent = arr.length ? `(${arr.length})` : '';
+  const tbody = document.getElementById('tbody');
+  if (!arr.length) { tbody.innerHTML=''; document.getElementById('empty-state').style.display='block'; return; }
+  document.getElementById('empty-state').style.display='none';
+  tbody.innerHTML = arr.map(c => {
+    const [bg,fg] = avC(c.id);
+    const recv = c.docs.filter(d=>d.s==='recv').length, total = c.docs.length;
+    const pct = total ? Math.round(recv/total*100) : 0;
+    const days = daysFrom(c.deadline);
+    const dlCls = days<0?'over':days<=3?'imm':days<=7?'soon':'ok';
+    const dlStr = days<0?`${Math.abs(days)}d overdue`:days===0?'Due today':days===1?'Due tomorrow':`${days}d left`;
+    const chips = c.docs.map(d=>`<span class="chip ${d.s}">${d.n}</span>`).join('');
+    const st = c._status || computeStatus(c);
+    return `<tr class="${selectedId===c.id?'sel':''}" onclick="openPanel(${c.id})">
+      <td><div class="client-cell">
+        <div class="av" style="background:${bg};color:${fg}">${initials(c.name)}</div>
+        <div><div class="cname">${c.name}</div><div class="mtype">${c.matter}${c.attorney?' · '+c.attorney:''}</div></div>
+      </div></td>
+      <td><span class="pill ${pillClass(st)}"><span class="dot"></span>${statusLabel(st)}</span></td>
+      <td><div class="chips">${chips||'<span style="font-size:11px;color:var(--ink4)">No documents listed</span>'}</div></td>
+      <td>
+        <div style="display:flex;align-items:center;gap:7px">
+          <div class="pbar-wrap"><div class="pbar-fill" style="width:${pct}%"></div></div>
+          <span style="font-size:10.5px;color:var(--ink4);font-family:var(--mono)">${pct}%</span>
+        </div>
+        <div style="font-size:10px;color:var(--ink4);margin-top:2px">${recv}/${total} received</div>
+      </td>
+      <td><div class="dl ${dlCls}">${dlStr}</div><div class="dl-date">${fmtDate(c.deadline)}</div></td>
+      <td onclick="event.stopPropagation()"><div class="row-acts">
+        ${st!=='complete'?`<button class="act draft" onclick="openDraft(${c.id})">✦ Remind</button>`:''}
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════
+// SIDE PANEL
+// ══════════════════════════════════════════
+function openPanel(id) {
+  selectedId = id;
+  const c = clients.find(x=>x.id===id);
+  panelClient = c;
+  const st = computeStatus(c);
+  document.getElementById('p-name').textContent = c.name;
+  document.getElementById('p-matter').textContent = `${c.matter} · ${statusLabel(st)}`;
+  const recv=c.docs.filter(d=>d.s==='recv').length, total=c.docs.length;
+  const pct = total ? Math.round(recv/total*100) : 0;
+  document.getElementById('p-progress-area').innerHTML = `
+    <div>
+      <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--ink4);margin-bottom:5px">
+        <span>${recv} of ${total} documents received</span>
+        <span style="font-family:var(--mono)">${pct}%</span>
+      </div>
+      <div class="pbar-wrap" style="width:100%;height:7px">
+        <div class="pbar-fill" style="width:${pct}%"></div>
+      </div>
+    </div>`;
+  document.getElementById('p-contact').innerHTML = `
+    <span class="cl">Email</span><span class="cv"><a href="mailto:${c.email}">${c.email||'—'}</a></span>
+    <span class="cl">Phone</span><span class="cv">${c.phone||'—'}</span>
+    <span class="cl">Deadline</span><span class="cv">${fmtDate(c.deadline)}</span>
+    ${c.attorney?`<span class="cl">Attorney</span><span class="cv">${c.attorney}</span>`:''}
+    ${c.notes?`<span class="cl">Notes</span><span class="cv" style="color:var(--ink2)">${c.notes}</span>`:''}`;
+  document.getElementById('p-docs').innerHTML = c.docs.length
+    ? c.docs.map(d=>`
+      <div class="doc-r ${d.s}">
+        <div>
+          <div class="doc-name">${d.n}</div>
+          <div class="doc-sub">${d.s==='recv'?'Received — on file':'Not yet submitted'}</div>
+        </div>
+        <span class="pill ${d.s==='recv'?'p-complete':'p-overdue'}" style="font-size:9.5px;padding:2px 8px">
+          <span class="dot"></span>${d.s==='recv'?'Received':'Missing'}
+        </span>
+      </div>`).join('')
+    : '<div style="font-size:12px;color:var(--ink4);font-style:italic">No documents tracked for this matter.</div>';
+  const days = daysFrom(c.deadline);
+  const missing = c.docs.filter(d=>d.s==='miss').map(d=>d.n);
+  document.getElementById('p-history').innerHTML = `
+    <div class="hist-item"><span class="hist-d">Today</span><span class="hist-t">Viewed in TraSee · ${missing.length} doc${missing.length!==1?'s':''} outstanding</span></div>
+    <div class="hist-item"><span class="hist-d">${fmtDate(c.deadline)}</span><span class="hist-t">Matter deadline</span></div>
+    ${days<0?`<div class="hist-item"><span class="hist-d" style="color:var(--red)">OVERDUE</span><span class="hist-t" style="color:var(--red)">Deadline passed ${Math.abs(days)} day${Math.abs(days)!==1?'s':''} ago</span></div>`:''}
+    ${c.notes?`<div class="hist-item"><span class="hist-d">Note</span><span class="hist-t">${c.notes}</span></div>`:''}`;
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('side-panel').classList.add('open');
+  renderTable();
+}
+function closePanel() {
+  selectedId=null; panelClient=null;
+  document.getElementById('overlay').classList.remove('open');
+  document.getElementById('side-panel').classList.remove('open');
+  renderTable();
+}
+function openDraftFromPanel() { if(panelClient) openDraft(panelClient.id); }
+
+// ══════════════════════════════════════════
+// BULK REMIND
+// ══════════════════════════════════════════
+function bulkRemind() {
+  const ov = clients.filter(c=>computeStatus(c)==='overdue');
+  if(!ov.length){showToast('No overdue matters');return;}
+  openDraft(ov[0].id);
+}
+
+// ══════════════════════════════════════════
+// EMAIL DRAFT (AI)
+// ══════════════════════════════════════════
+async function openDraft(id) {
+  const c = clients.find(x=>x.id===id);
+  emailClient = c;
+  const missing = c.docs.filter(d=>d.s==='miss').map(d=>d.n);
+  if(!missing.length){showToast('All documents received for this client');return;}
+  document.getElementById('e-to').value = c.email||'';
+  document.getElementById('e-subject').value = '';
+  document.getElementById('e-body').value = '';
+  document.getElementById('email-loading').style.display = 'flex';
+  document.getElementById('email-form-wrap').style.opacity = '0.3';
+  document.getElementById('email-modal').classList.add('open');
+  const prompt = `You are drafting a professional reminder email on behalf of a US attorney's office. Client: ${c.name}. Matter type: ${c.matter}. Deadline: ${fmtDate(c.deadline)}. ${c.attorney?'Attorney: '+c.attorney+'.':''} Missing documents that the client has not yet submitted: ${missing.join(', ')}. Write a warm but firm reminder. Exactly 3 short paragraphs. Sign off as "The Office of ${c.attorney||'Your Attorney'}". Return ONLY valid JSON with keys "subject" and "body". No markdown, no backticks, no preamble.`;
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    const data = await res.json();
+    const raw = data.content.map(i=>i.text||'').join('').replace(/```json|```/g,'').trim();
+    const parsed = JSON.parse(raw);
+    document.getElementById('e-subject').value = parsed.subject;
+    document.getElementById('e-body').value = parsed.body;
+  } catch(err) {
+    document.getElementById('e-subject').value = `Action Required: Outstanding Documents — ${c.matter} Matter`;
+    document.getElementById('e-body').value = `Dear ${c.name},\n\nI hope this message finds you well. I'm writing to follow up on the outstanding documents for your ${c.matter} matter. Our records show the following items have not yet been received:\n\n${missing.map(d=>'  • '+d).join('\n')}\n\nPlease submit these at your earliest convenience. Our deadline is ${fmtDate(c.deadline)}, and prompt submission ensures your matter can proceed without delay. If you have any questions, please don't hesitate to reach out.\n\nWarm regards,\nThe Office of ${c.attorney||'Your Attorney'}`;
+  }
+  document.getElementById('email-loading').style.display = 'none';
+  document.getElementById('email-form-wrap').style.opacity = '1';
+}
+function openGmail() {
+  const to=encodeURIComponent(document.getElementById('e-to').value);
+  const sub=encodeURIComponent(document.getElementById('e-subject').value);
+  const body=encodeURIComponent(document.getElementById('e-body').value);
+  window.open(`https://mail.google.com/mail/?view=cm&to=${to}&su=${sub}&body=${body}`,'_blank');
+}
+function copyEmail() {
+  const text=`To: ${document.getElementById('e-to').value}\nSubject: ${document.getElementById('e-subject').value}\n\n${document.getElementById('e-body').value}`;
+  navigator.clipboard.writeText(text).then(()=>showToast('Email copied'));
+  closeModal('email-modal');
+}
+
+// ══════════════════════════════════════════
+// REPORT
+// ══════════════════════════════════════════
+function openReport() {
+  const groups=[
+    {label:'Overdue',s:'overdue'},
+    {label:'Urgent — Due Within 7 Days',s:'urgent'},
+    {label:'Awaiting Documents',s:'pending'},
+    {label:'New — Not Yet Contacted',s:'new'},
+    {label:'Complete',s:'complete'},
+  ];
+  document.getElementById('report-body').innerHTML = groups.map(g=>{
+    const items=clients.filter(c=>computeStatus(c)===g.s);
+    if(!items.length) return '';
+    return `<div class="rpt-sec">
+      <h4>${g.label} (${items.length})</h4>
+      ${items.map(c=>{
+        const m=c.docs.filter(d=>d.s==='miss').length;
+        const days=daysFrom(c.deadline);
+        const dStr=days<0?`${Math.abs(days)}d overdue`:days===0?'Due today':`${days}d remaining`;
+        return `<div class="rpt-row">
+          <div><span class="rpt-name">${c.name}</span>
+          <span style="font-size:10.5px;color:var(--ink4);margin-left:8px">${c.matter}${c.attorney?' · '+c.attorney:''}</span></div>
+          <div class="rpt-right">${m} doc${m!==1?'s':''} missing &nbsp;·&nbsp; ${dStr}</div>
+        </div>`;
+      }).join('')}
+    </div>`;
+  }).join('');
+  document.getElementById('report-modal').classList.add('open');
+}
+function copyReport() {
+  const d=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  const lines=[`MATTER STATUS SUMMARY — ${d}`,'═'.repeat(50),''];
+  [{s:'overdue',l:'OVERDUE'},{s:'urgent',l:'URGENT'},{s:'pending',l:'AWAITING DOCUMENTS'},{s:'new',l:'NEW'},{s:'complete',l:'COMPLETE'}].forEach(({s,l})=>{
+    const arr=clients.filter(c=>computeStatus(c)===s); if(!arr.length) return;
+    lines.push(`${l} (${arr.length})`);
+    arr.forEach(c=>{
+      const m=c.docs.filter(d=>d.s==='miss').length;
+      const days=daysFrom(c.deadline);
+      const dStr=days<0?`${Math.abs(days)}d overdue`:days===0?'Due today':`${days}d remaining`;
+      lines.push(`  • ${c.name} (${c.matter}) — ${m} docs missing — ${dStr}`);
+    });
+    lines.push('');
+  });
+  navigator.clipboard.writeText(lines.join('\n')).then(()=>showToast('Report copied'));
+  closeModal('report-modal');
+}
+
+// ══════════════════════════════════════════
+// MISC
+// ══════════════════════════════════════════
+function openAddNote() { document.getElementById('add-modal').classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// ══════════════════════════════════════════
+// BOOT
+// ══════════════════════════════════════════
+init();
+</script>
+</body>
+</html>
