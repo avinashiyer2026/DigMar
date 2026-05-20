@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LDM Global — Legal Operations Toolkit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#152148;--blue:#446280;--orange:#FF9425;--green:#1a9e5c;--red:#dc2626;
+  --bg:#f0f3f8;--card:#fff;--text:#0f1e3c;--muted:#64748b;--border:#e2e8f0;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+button,input,select,textarea{font-family:'DM Sans',sans-serif}
+
+/* ── Animations ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes barGrow{from{width:0}to{width:var(--w)}}
+.fade-up{animation:fadeUp .4s ease both}
+.fade-up-1{animation:fadeUp .45s .05s ease both;opacity:0}
+.fade-up-2{animation:fadeUp .45s .1s ease both;opacity:0}
+.fade-up-3{animation:fadeUp .45s .15s ease both;opacity:0}
+.fade-up-4{animation:fadeUp .45s .2s ease both;opacity:0}
+.fade-up-5{animation:fadeUp .45s .25s ease both;opacity:0}
+.fade-up-6{animation:fadeUp .45s .3s ease both;opacity:0}
+
+/* ── Header ── */
+.hdr{background:var(--navy);border-bottom:3px solid var(--orange);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.2)}
+.logo{font-family:'DM Serif Display',serif;font-size:22px;color:#fff;letter-spacing:.3px}
+.logo span{color:var(--orange)}
+.logo-sub{font-size:9px;color:var(--blue);letter-spacing:2.5px;text-transform:uppercase;margin-top:2px}
+.hdr-right{display:flex;align-items:center;gap:12px}
+.badge{font-size:10px;color:var(--orange);border:1px solid var(--orange);border-radius:12px;padding:2px 10px;letter-spacing:1px;text-transform:uppercase}
+.btn-back{background:transparent;color:var(--muted);border:1.5px solid var(--border);border-radius:8px;padding:8px 16px;font-size:13px;cursor:pointer;transition:all .15s}
+.btn-back:hover{border-color:var(--orange);color:var(--orange)}
+
+/* ── Layout ── */
+.wrap{max-width:1100px;margin:0 auto;padding:40px 24px 80px}
+.screen{display:none}.screen.active{display:block}
+
+/* ── Cards ── */
+.card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:26px;margin-bottom:16px;box-shadow:0 2px 12px rgba(21,33,72,.06)}
+.card-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);margin-bottom:14px;display:block}
+.field-label{display:block;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+input,select{width:100%;background:#f8fafc;border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-size:14px;color:var(--text);outline:none;transition:border-color .2s}
+input:focus,select:focus{border-color:var(--orange)}
+select option{background:#fff;color:var(--text)}
+
+/* ── Buttons ── */
+.btn-primary{background:var(--navy);color:#fff;border:none;border-radius:9px;padding:13px 28px;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .15s,transform .1s;letter-spacing:.2px}
+.btn-primary:hover{opacity:.85}
+.btn-primary:disabled{opacity:.35;cursor:not-allowed}
+.btn-orange{background:var(--orange);color:#fff;border:none;border-radius:9px;padding:13px 28px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(255,148,37,.3)}
+.btn-orange:hover{opacity:.9}
+.btn-sec{background:transparent;color:var(--muted);border:1.5px solid var(--border);border-radius:8px;padding:10px 18px;font-size:13px;cursor:pointer;transition:all .15s}
+.btn-sec:hover{border-color:var(--navy);color:var(--navy)}
+.chip{display:inline-block;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange);border:1.5px solid var(--orange);border-radius:14px;padding:3px 12px;margin-bottom:16px}
+
+/* ── Progress bar ── */
+.prog-track{background:#e2e8f0;border-radius:4px;height:5px;overflow:hidden;margin:10px 0}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--orange));border-radius:4px;transition:width .4s ease}
+
+/* ── Tab nav ── */
+.tab-nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.tab-btn{display:flex;align-items:center;gap:6px;padding:9px 14px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;background:transparent;border:1.5px solid transparent;color:var(--muted);white-space:nowrap;transition:all .15s}
+.tab-btn:hover{border-color:var(--border);color:var(--text)}
+.tab-btn.active{background:rgba(255,148,37,.1);border-color:var(--orange);color:var(--orange)}
+
+/* ── Q cards ── */
+.q-card{background:#f8fafc;border:1.5px solid var(--border);border-radius:10px;padding:18px;margin-bottom:12px;transition:border-color .2s}
+.q-card.yes{border-color:rgba(26,158,92,.45)}
+.q-card.no{border-color:rgba(220,38,38,.35)}
+.q-text{font-size:14px;line-height:1.65;color:var(--text);margin-bottom:14px}
+.ans-row{display:flex;gap:10px}
+.ans-btn{flex:1;padding:10px 0;border-radius:8px;border:2px solid var(--border);background:#fff;color:var(--muted);font-size:13px;font-weight:700;cursor:pointer;transition:all .15s}
+.ans-btn.yes-sel{border-color:var(--green);background:rgba(26,158,92,.08);color:var(--green)}
+.ans-btn.no-sel{border-color:var(--red);background:rgba(220,38,38,.07);color:var(--red)}
+.risk-note{margin-top:12px;background:rgba(220,111,26,.06);border:1px solid rgba(220,111,26,.2);border-radius:6px;padding:10px 13px;font-size:12px;color:#78350f;line-height:1.6;display:none}
+.risk-note.show{display:block}
+
+/* ── Section nav ── */
+.sec-nav{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.sec-btn{padding:8px 12px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;background:transparent;border:1.5px solid var(--border);color:var(--muted);transition:all .15s;display:flex;align-items:center;gap:5px}
+.sec-btn:hover{border-color:var(--navy);color:var(--navy)}
+.sec-btn.active{background:rgba(255,148,37,.1);border-color:var(--orange);color:var(--orange)}
+.sec-btn.done{border-color:var(--green);color:var(--green)}
+
+/* ── Score dial ── */
+.score-hero{display:flex;align-items:center;gap:24px;flex-wrap:wrap;margin-bottom:24px}
+.score-dial{width:110px;height:110px;border-radius:50%;border:6px solid #ccc;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
+.score-num{font-size:36px;font-weight:800;line-height:1}
+.score-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.verdict-badge{display:inline-flex;align-items:center;gap:8px;border-radius:8px;padding:7px 16px;font-size:15px;font-weight:700;margin-bottom:10px;border:2px solid}
+.bar-row{display:flex;align-items:center;gap:12px;margin-bottom:13px}
+.bar-label{width:180px;font-size:13px;font-weight:600;color:var(--text);flex-shrink:0}
+.bar-track{flex:1;height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;transition:width .8s ease}
+.bar-pct{width:36px;text-align:right;font-size:13px;font-weight:700}
+.gap-item{border-radius:8px;padding:13px 15px;margin-bottom:10px;border:1px solid}
+.gap-pri{font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;border-radius:12px;padding:2px 8px;display:inline-block;margin-bottom:5px}
+
+/* ── HUB ── */
+.hub-hero{text-align:center;margin-bottom:48px}
+.hub-title{font-family:'DM Serif Display',serif;font-size:48px;font-weight:400;color:var(--navy);line-height:1.1;margin-bottom:16px}
+.hub-title em{color:var(--orange);font-style:italic}
+.hub-sub{font-size:16px;color:var(--muted);max-width:520px;margin:0 auto;line-height:1.75}
+.tools-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
+.tool-card{background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:24px;cursor:pointer;text-align:left;transition:all .2s;box-shadow:0 2px 12px rgba(21,33,72,.05);display:flex;flex-direction:column;gap:12px}
+.tool-card:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(21,33,72,.1);border-color:var(--orange)}
+.tool-icon-wrap{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px}
+.tool-tag{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:20px;padding:3px 10px}
+.tool-title{font-family:'DM Serif Display',serif;font-size:19px;font-weight:400;color:var(--navy);margin-bottom:5px}
+.tool-sub{font-size:13px;color:var(--muted);line-height:1.6}
+.tool-cta{font-size:12px;color:var(--orange);font-weight:600;margin-top:4px}
+.cta-banner{background:var(--navy);border-radius:16px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+
+/* ── COST ESTIMATOR ── */
+.estimator-layout{display:flex;min-height:calc(100vh - 64px);flex-wrap:wrap}
+.est-left{width:320px;flex-shrink:0;background:#fff;border-right:1.5px solid var(--border);padding:24px 20px;overflow-y:auto}
+.est-right{flex:1;padding:24px 24px 60px;overflow-y:auto;min-width:300px}
+.slider-wrap{margin-bottom:22px}
+.slider-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.slider-label{font-size:13px;font-weight:600;color:var(--text)}
+.slider-sub{font-size:11px;color:var(--muted);margin-top:1px}
+.slider-val{font-size:20px;font-weight:800;color:var(--orange)}
+.slider-track{position:relative;height:6px}
+.slider-bg{position:absolute;inset:0;background:#e2e8f0;border-radius:3px}
+.slider-prog{position:absolute;top:0;left:0;height:100%;background:linear-gradient(90deg,var(--blue),var(--orange));border-radius:3px;pointer-events:none;transition:width .15s}
+.slider-input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;margin:0}
+.slider-thumb{position:absolute;top:50%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:var(--orange);border:2px solid #fff;pointer-events:none;box-shadow:0 0 6px rgba(255,148,37,.5);transition:left .15s}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:11px 13px;border-radius:8px;cursor:pointer;border:1.5px solid var(--border);margin-bottom:9px;transition:all .15s;background:#f8fafc}
+.toggle-row:hover{border-color:var(--orange)}
+.toggle-row.on{background:rgba(255,148,37,.06);border-color:var(--orange)}
+.toggle-sw{width:34px;height:18px;border-radius:9px;background:#cbd5e1;position:relative;transition:background .2s;flex-shrink:0}
+.toggle-sw.on{background:var(--orange)}
+.toggle-knob{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle-sw.on .toggle-knob{left:18px}
+.radio-btn{display:flex;align-items:center;gap:9px;padding:9px 13px;border-radius:8px;cursor:pointer;background:#f8fafc;border:1.5px solid var(--border);color:var(--muted);font-size:13px;font-weight:400;margin-bottom:7px;transition:all .15s}
+.radio-btn.active{background:rgba(255,148,37,.08);border-color:var(--orange);color:var(--text);font-weight:600}
+.radio-dot{width:10px;height:10px;border-radius:50%;border:2px solid #cbd5e1;flex-shrink:0;transition:all .15s}
+.radio-btn.active .radio-dot{background:var(--orange);border-color:var(--orange)}
+.cost-hero{background:var(--navy);border-radius:14px;padding:24px;margin-bottom:16px;border:1px solid rgba(255,148,37,.3)}
+.cost-range{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.cost-num{font-size:38px;font-weight:800;color:#fff;line-height:1;font-variant-numeric:tabular-nums}
+.cost-dash{font-size:24px;color:#334155}
+.ctx-chips{display:flex;gap:8px;flex-wrap:wrap}
+.ctx-chip{font-size:11px;color:#64748b;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:3px 10px}
+.vol-grid{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.vol-box{flex:1;min-width:90px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:13px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.vol-val{font-size:17px;font-weight:800;color:var(--navy)}
+.vol-label{font-size:11px;color:var(--navy);font-weight:600;margin-top:2px}
+.vol-sub{font-size:10px;color:var(--muted);margin-top:1px}
+.phase-row{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:9px;box-shadow:0 1px 4px rgba(0,0,0,.04);transition:border-color .2s}
+.phase-row.highlight{background:rgba(255,148,37,.04);border-color:rgba(255,148,37,.25)}
+.phase-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:9px;flex-wrap:wrap;gap:8px}
+.phase-name{font-size:13px;font-weight:700;color:var(--navy)}
+.phase-desc{font-size:11px;color:var(--muted);margin-top:2px}
+.phase-lo{font-size:13px;color:var(--muted)}
+.phase-hi{font-size:14px;font-weight:700;color:var(--navy)}
+.phase-bar{height:4px;background:#e2e8f0;border-radius:2px;overflow:hidden}
+.phase-bar-fill{height:100%;border-radius:2px;transition:width .4s ease}
+.ai-nudge{background:rgba(255,148,37,.06);border:1px solid rgba(255,148,37,.2);border-radius:10px;padding:14px 16px;margin:12px 0}
+.cta-dark{background:var(--navy);border-radius:12px;padding:22px;border:2px solid var(--orange);margin-top:16px}
+.est-panel-label{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--orange);margin-bottom:20px}
+.divider{height:1px;background:var(--border);margin:18px 0}
+
+/* ── Screen-only elements (hidden in print via class) ── */
+.screen-only{display:block}
+/* Gap panel: hidden on screen until tab activated, always visible in print */
+.tab-panel-gaps{display:none}
+
+/* ── Print styles ── */
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;
+    box-sizing:border-box!important}
+  body{background:#fff!important;font-size:11px;margin:0!important;padding:0!important}
+
+  /* Hide everything by default */
+  body > *{display:none!important}
+
+  /* Show only the active tool's results */
+  body.printing-breach #screen-breach{display:block!important}
+  body.printing-breach #screen-breach > *{display:none!important}
+  body.printing-breach #screen-breach #breach-results{display:block!important}
+  body.printing-hold #screen-hold{display:block!important}
+  body.printing-hold #screen-hold > *{display:none!important}
+  body.printing-hold #screen-hold #hold-results{display:block!important}
+  body.printing-cost #screen-cost{display:block!important}
+  body.printing-cost #screen-cost .estimator-layout{display:block!important}
+  body.printing-cost #screen-cost .est-left{display:none!important}
+  body.printing-cost #screen-cost #est-right{display:block!important;width:100%!important}
+
+  /* Zero out ALL spacing on every wrapper */
+  *{margin:0!important;padding:0!important}
+
+  /* Restore only what we need */
+  .print-header{display:flex!important;align-items:center!important;justify-content:space-between!important;
+    background:#152148!important;color:#fff!important;
+    padding:10px 16px!important;margin-bottom:10px!important;
+    border-radius:6px!important;page-break-after:avoid!important}
+  .print-logo{font-family:'DM Serif Display',serif;font-size:16px!important;color:#fff!important;font-weight:400!important}
+  .print-logo span{color:#FF9425!important}
+  .print-title{font-size:10px!important;color:#94a3b8!important;margin-top:2px!important}
+  .print-meta{text-align:right!important;font-size:10px!important;color:#94a3b8!important}
+  .print-date{font-size:9px!important;color:#64748b!important;margin-top:1px!important}
+
+  /* Score hero */
+  .score-hero{display:flex!important;align-items:center!important;gap:14px!important;
+    margin-bottom:10px!important;flex-wrap:nowrap!important}
+  .score-dial{width:72px!important;height:72px!important;border-radius:50%!important;
+    border-width:5px!important;display:flex!important;flex-direction:column!important;
+    align-items:center!important;justify-content:center!important;flex-shrink:0!important}
+  .score-num{font-size:24px!important;font-weight:800!important;line-height:1!important}
+  .score-sub{font-size:10px!important;color:#64748b!important;margin-top:1px!important}
+  .verdict-badge{display:inline-flex!important;align-items:center!important;
+    border-radius:6px!important;padding:4px 10px!important;font-size:12px!important;
+    font-weight:700!important;margin-bottom:6px!important;border-width:2px!important}
+  p{margin-bottom:6px!important;line-height:1.5!important}
+
+  /* Bar rows */
+  .bar-row{display:flex!important;align-items:center!important;gap:10px!important;
+    margin-bottom:5px!important}
+  .bar-label{width:140px!important;font-size:11px!important;font-weight:600!important;flex-shrink:0!important}
+  .bar-track{flex:1!important;height:5px!important;background:#e2e8f0!important;
+    border-radius:3px!important;overflow:hidden!important}
+  .bar-fill{height:100%!important;border-radius:3px!important}
+  .bar-pct{width:32px!important;text-align:right!important;font-size:11px!important;font-weight:700!important}
+
+  /* Gap section separator */
+  .tab-panel-gaps{display:block!important;margin-top:12px!important;
+    border-top:1.5px solid #e2e8f0!important;padding-top:10px!important}
+
+  /* Gap intro text */
+  .tab-panel-gaps > p{font-size:11px!important;color:#64748b!important;
+    margin-bottom:8px!important;line-height:1.5!important}
+
+  /* Gap items — allow page breaks between them, not within */
+  .tab-panel-gaps > div{break-inside:avoid!important;
+    border-radius:6px!important;padding:8px 10px!important;
+    margin-bottom:6px!important;border-width:1px!important;border-style:solid!important}
+
+  /* Hide everything not needed */
+  .screen-only{display:none!important}
+  .tab-btn{display:none!important}
+  .hdr,.btn-back,.btn-primary,.btn-orange,.btn-sec,.no-print,
+  .tab-nav,.sec-nav,.prog-track{display:none!important}
+  #breach-result-meta,#hold-result-meta{display:none!important}
+  #breach-results .card[style*="navy"],
+  #hold-results .card[style*="navy"]{display:none!important}
+
+  /* Result card: no box, no padding, allow flow */
+  .card{box-shadow:none!important;border:none!important}
+  #breach-result-card,#hold-result-card{break-inside:auto!important}
+
+  /* Cost estimator print styles */
+  body.printing-cost .cost-hero{background:#152148!important;border-radius:6px!important;padding:14px 16px!important;margin-bottom:10px!important}
+  body.printing-cost .cost-num{font-size:28px!important}
+  body.printing-cost .vol-grid{margin-bottom:10px!important}
+  body.printing-cost .vol-box{padding:8px 10px!important}
+  body.printing-cost .vol-val{font-size:14px!important}
+  body.printing-cost .phase-row{padding:8px 10px!important;margin-bottom:5px!important}
+  body.printing-cost .ai-nudge{display:none!important}
+  body.printing-cost .cta-dark{display:none!important}
+  body.printing-cost #cost-print-hdr{display:flex!important}
+
+  @page{margin:12mm 14mm;size:A4}
+}
+
+/* ── Responsive ── */
+@media(max-width:768px){
+  /* Hub tools grid: 3 col → 1 col */
+  .tools-grid{grid-template-columns:1fr}
+
+  /* Hub hero title */
+  .hub-title{font-size:32px}
+  h1[style*="52px"]{font-size:32px!important}
+
+  /* Data Breach intro: 2-col grid → single column */
+  .breach-intro-grid{
+    grid-template-columns:1fr!important;
+    gap:32px!important;
+  }
+  /* Breach intro heading */
+  #breach-intro h1{font-size:32px!important}
+
+  /* Breach intro 2×2 stat grid → 2 col on mobile */
+  #breach-intro div[style*="grid-template-columns:1fr 1fr"]:not([style*="gap:60px"]){
+    grid-template-columns:1fr 1fr!important;
+  }
+
+  /* Cost estimator: side panel goes on top */
+  .estimator-layout{flex-direction:column}
+  .est-left{width:100%;border-right:none;border-bottom:1.5px solid var(--border)}
+
+  /* Hold intro org/role 2-col → 1 col */
+  #hold-intro .card > div[style*="grid-template-columns:1fr 1fr"]{
+    grid-template-columns:1fr!important;
+  }
+
+  /* Section nav wraps tightly */
+  .sec-nav{gap:4px}
+  .sec-btn{font-size:11px;padding:6px 10px}
+
+  /* CTA banner stacks */
+  .cta-banner{flex-direction:column;text-align:center}
+
+  /* Score hero stacks */
+  .score-hero{flex-direction:column;align-items:flex-start}
+
+  /* Bar label narrower */
+  .bar-label{width:130px}
+
+  /* Wrap padding on small screens */
+  .wrap{padding:24px 16px 60px}
+
+  /* Header logo sub on small screens */
+  .logo-sub{display:none}
+}
+
+@media(max-width:480px){
+  #breach-intro{padding:40px 16px 60px!important}
+  #breach-intro h1{font-size:28px!important}
+  #breach-intro div[style*="gap:60px"]{gap:24px!important}
+  .hub-title, h1[style*="52px"]{font-size:26px!important}
+  .cost-num{font-size:28px!important}
+  .bar-label{width:100px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div>
+    <div class="logo">LDM <span>Global</span></div>
+    <div class="logo-sub">Legal Operations Toolkit</div>
+  </div>
+  <div class="hdr-right">
+    <button class="btn-back" id="btn-back" style="display:none" onclick="goBack()">← All Tools</button>
+    <span class="badge">Free Tools</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     HUB
+══════════════════════════════════════════════════════════════ -->
+<div id="screen-hub" class="screen active">
+<div class="wrap">
+  <div class="hub-hero fade-up">
+    <div style="display:inline-flex;align-items:center;gap:10px;margin-bottom:24px">
+      <div style="width:1px;height:32px;background:var(--orange)"></div>
+      <span style="font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--blue)">LDM Global · Legal Operations</span>
+      <div style="width:1px;height:32px;background:var(--orange)"></div>
+    </div>
+    <h1 style="font-family:'DM Serif Display',serif;font-size:52px;font-weight:400;color:var(--navy);line-height:1.08;margin-bottom:20px;letter-spacing:-.5px">Precision tools for<br><em style="color:var(--orange);font-style:italic">legal operations leaders.</em></h1>
+    <p style="font-size:17px;color:var(--muted);max-width:580px;margin:0 auto 16px;line-height:1.8;font-weight:300">Complex matters demand rigorous preparation. These diagnostic instruments help General Counsels and their teams assess readiness, evaluate defensibility, and model cost — with the precision that AmLaw 50 and Magic Circle engagements require.</p>
+    <p style="font-size:13px;color:var(--blue);letter-spacing:.5px">Complimentary access · No login required · Built by LDM Global</p>
+  </div>
+  <div class="tools-grid">
+    <div class="tool-card fade-up-1" onclick="openTool('breach')">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between">
+        <div class="tool-icon-wrap" style="background:rgba(192,57,43,.1)">🛡️</div>
+        <span class="tool-tag" style="color:#c0392b;background:rgba(192,57,43,.1);border:1px solid rgba(192,57,43,.2)">Assessment</span>
+      </div>
+      <div><div class="tool-title">Data Breach Readiness</div><div class="tool-sub">Score your breach response capability across 5 dimensions — governance, detection, response, preservation, and regulatory compliance.</div></div>
+      <div class="tool-cta">Launch assessment → <span style="font-size:11px;color:var(--muted);font-weight:400">20 questions · ~5 min</span></div>
+    </div>
+    <div class="tool-card fade-up-2" onclick="openTool('hold')">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between">
+        <div class="tool-icon-wrap" style="background:rgba(26,110,60,.1)">⚖️</div>
+        <span class="tool-tag" style="color:#1a6e3c;background:rgba(26,110,60,.1);border:1px solid rgba(26,110,60,.2)">Assessment</span>
+      </div>
+      <div><div class="tool-title">Litigation Hold Checker</div><div class="tool-sub">Evaluate whether your litigation hold process is legally defensible — trigger protocols, custodian management, scope, monitoring, and documentation.</div></div>
+      <div class="tool-cta">Launch assessment → <span style="font-size:11px;color:var(--muted);font-weight:400">19 questions · ~6 min</span></div>
+    </div>
+    <div class="tool-card fade-up-3" onclick="openTool('cost')">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between">
+        <div class="tool-icon-wrap" style="background:rgba(26,74,138,.1)">📊</div>
+        <span class="tool-tag" style="color:#1a4a8a;background:rgba(26,74,138,.1);border:1px solid rgba(26,74,138,.2)">Calculator</span>
+      </div>
+      <div><div class="tool-title">eDiscovery Cost Estimator</div><div class="tool-sub">Estimate total eDiscovery cost across all phases — collection, processing, hosting, review, and production — updated in real time as you adjust parameters.</div></div>
+      <div class="tool-cta">Launch calculator → <span style="font-size:11px;color:var(--muted);font-weight:400">Live estimates</span></div>
+    </div>
+  </div>
+  <div class="cta-banner fade-up-4">
+    <div>
+      <div style="font-size:13px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:6px">About LDM Global</div>
+      <div style="font-size:15px;color:#fff;font-weight:600;margin-bottom:4px">Legal Process Outsourcing · eDiscovery · Incident Management</div>
+      <div style="font-size:13px;color:#94a3b8;line-height:1.6">Serving AmLaw 50 and Magic Circle firms across the US market.</div>
+    </div>
+    <a href="mailto:sales@ldmglobal.com" style="display:inline-block;background:var(--orange);color:#fff;border:none;border-radius:9px;padding:13px 28px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(255,148,37,.3);text-decoration:none">Schedule a Consultation →</a>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     BREACH READINESS
+══════════════════════════════════════════════════════════════ -->
+<div id="screen-breach" class="screen">
+  <div id="breach-intro" style="background:linear-gradient(160deg,#0d1929 0%,#152148 60%,#1a2d5a 100%);min-height:100vh;padding:60px 24px 80px">
+    <div style="max-width:900px;margin:0 auto">
+      <div class="fade-up" style="display:flex;align-items:center;gap:10px;margin-bottom:36px">
+        <div style="width:32px;height:2px;background:var(--orange)"></div>
+        <span style="font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--blue)">LDM Global · Diagnostic Assessment</span>
+      </div>
+      <div class="breach-intro-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;flex-wrap:wrap">
+        <div>
+          <h1 class="fade-up-1" style="font-family:'DM Serif Display',serif;font-size:46px;font-weight:400;color:#fff;margin-bottom:18px;line-height:1.1">Data Breach<br><span style="color:var(--orange);font-style:italic">Readiness Assessment</span></h1>
+          <p class="fade-up-2" style="font-size:16px;color:#94a3b8;line-height:1.8;margin-bottom:28px">A data breach is no longer a question of if — only when. This assessment evaluates your organization across five critical dimensions to determine how prepared you truly are: not aspirationally, but operationally.</p>
+          <div class="fade-up-3" style="border-left:3px solid var(--orange);padding-left:18px;margin-bottom:32px">
+            <p style="font-size:14px;color:#cbd5e1;line-height:1.75;font-style:italic">"Organizations that conduct regular breach readiness assessments reduce mean time to detect and contain incidents by 40% compared to those that do not."</p>
+            <p style="font-size:11px;color:var(--blue);margin-top:8px;letter-spacing:1px;text-transform:uppercase">Industry Research · IBM Cost of a Data Breach Report</p>
+          </div>
+          <div class="fade-up-4" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px 16px">
+              <div style="font-size:26px;font-weight:800;color:var(--orange);line-height:1">20</div>
+              <div style="font-size:11px;color:#94a3b8;margin-top:3px">Diagnostic questions</div>
+            </div>
+            <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px 16px">
+              <div style="font-size:26px;font-weight:800;color:var(--orange);line-height:1">5</div>
+              <div style="font-size:11px;color:#94a3b8;margin-top:3px">Critical dimensions</div>
+            </div>
+            <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px 16px">
+              <div style="font-size:26px;font-weight:800;color:var(--orange);line-height:1">~5</div>
+              <div style="font-size:11px;color:#94a3b8;margin-top:3px">Minutes to complete</div>
+            </div>
+            <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px 16px">
+              <div style="font-size:26px;font-weight:800;color:var(--orange);line-height:1">PDF</div>
+              <div style="font-size:11px;color:#94a3b8;margin-top:3px">Printable report</div>
+            </div>
+          </div>
+        </div>
+        <div class="fade-up-3">
+          <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:32px">
+            <div style="font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:20px">Begin Your Assessment</div>
+            <div style="margin-bottom:16px"><label style="display:block;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#94a3b8;margin-bottom:7px">Organization Name</label>
+              <input id="breach-org" placeholder="Your organization" style="background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.15);border-radius:8px;padding:11px 13px;font-size:14px;color:#fff;width:100%;outline:none" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='rgba(255,255,255,.15)'">
+            </div>
+            <div style="margin-bottom:24px"><label style="display:block;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#94a3b8;margin-bottom:7px">Industry</label>
+              <select id="breach-industry" style="background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.15);border-radius:8px;padding:11px 13px;font-size:14px;color:#fff;width:100%;outline:none">
+                <option value="" style="background:#1e3a5f">Select industry</option>
+                <option style="background:#1e3a5f">Insurance</option><option style="background:#1e3a5f">Financial Services</option>
+                <option style="background:#1e3a5f">Healthcare</option><option style="background:#1e3a5f">Legal</option>
+                <option style="background:#1e3a5f">Technology</option><option style="background:#1e3a5f">Retail</option><option style="background:#1e3a5f">Other</option>
+              </select>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:28px">
+              <div style="font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#94a3b8;margin-bottom:4px">Assessment covers</div>
+              <div style="display:flex;gap:10px;flex-wrap:wrap">
+                <span style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:5px 12px;font-size:12px;color:#cbd5e1">⚖️ Governance</span>
+                <span style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:5px 12px;font-size:12px;color:#cbd5e1">🔍 Detection</span>
+                <span style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:5px 12px;font-size:12px;color:#cbd5e1">🚨 Response</span>
+                <span style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:5px 12px;font-size:12px;color:#cbd5e1">🗂️ Preservation</span>
+                <span style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:5px 12px;font-size:12px;color:#cbd5e1">📋 Regulatory</span>
+              </div>
+            </div>
+            <button class="btn-orange" style="width:100%;padding:15px;font-size:15px" onclick="startBreach()">Begin Assessment →</button>
+            <p style="font-size:11px;color:#475569;text-align:center;margin-top:12px">Your responses are not stored or transmitted</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="breach-questions" style="display:none">
+    <div class="wrap">
+      <div id="breach-prog-bar"><div class="prog-track"><div class="prog-fill" id="breach-prog" style="width:0%"></div></div></div>
+      <div class="sec-nav" id="breach-sec-nav"></div>
+      <div class="card" style="margin-top:16px" id="breach-q-container"></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px" id="breach-nav-btns"></div>
+    </div>
+  </div>
+  <div id="breach-results" style="display:none">
+    <div class="wrap">
+      <div class="print-header" style="display:none" id="breach-print-hdr">
+        <div><div class="print-logo">LDM <span>Global</span></div><div class="print-title">Data Breach Readiness Assessment Report</div></div>
+        <div class="print-meta"><div id="breach-print-org"></div><div class="print-date" id="breach-print-date"></div></div>
+      </div>
+      <div id="breach-result-meta" style="font-size:12px;color:var(--muted);margin-bottom:8px;letter-spacing:1px;text-transform:uppercase"></div>
+      <div class="card" id="breach-result-card"></div>
+      <div class="card" style="background:var(--navy);border:none">
+        <div style="font-size:11px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px">Next Step</div>
+        <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:8px">Speak with an LDM Incident Management Expert</div>
+        <div style="font-size:13px;color:#94a3b8;line-height:1.7;margin-bottom:18px">LDM's incident management and eDiscovery teams help build defensible breach response programs — from litigation hold automation to regulatory notification support.</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a href="mailto:sales@ldmglobal.com" style="display:inline-block;background:var(--orange);color:#fff;border:none;border-radius:9px;padding:13px 28px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(255,148,37,.3);text-decoration:none">Schedule a Consultation →</a>
+          <button class="btn-sec no-print" style="color:#94a3b8;border-color:rgba(255,255,255,.15)" onclick="printReport('breach')">🖨 Print Report</button>
+          <button class="btn-sec no-print" style="color:#94a3b8;border-color:rgba(255,255,255,.15)" onclick="resetBreach()">Retake</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     LITIGATION HOLD
+══════════════════════════════════════════════════════════════ -->
+<div id="screen-hold" class="screen">
+  <div id="hold-intro" style="background:linear-gradient(160deg,#0d1929 0%,#152148 60%,#1a2d5a 100%);min-height:100vh;padding:60px 24px 80px">
+    <div style="max-width:900px;margin:0 auto">
+      <div class="fade-up" style="display:flex;align-items:center;gap:10px;margin-bottom:36px">
+        <div style="width:32px;height:2px;background:var(--orange)"></div>
+        <span style="font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--blue)">LDM Global · Diagnostic Assessment</span>
+      </div>
+      <div class="breach-intro-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start">
+        <div>
+          <h1 class="fade-up-1" style="font-family:'DM Serif Display',serif;font-size:46px;font-weight:400;color:#fff;margin-bottom:18px;line-height:1.1">Litigation Hold<br><span style="color:var(--orange);font-style:italic">Compliance Checker</span></h1>
+          <p class="fade-up-2" style="font-size:16px;color:#94a3b8;line-height:1.8;margin-bottom:28px">A litigation hold that cannot survive judicial scrutiny is worse than no hold at all. This assessment evaluates your process across six critical dimensions to determine whether your holds are truly defensible — not aspirationally, but operationally.</p>
+          <div class="fade-up-3" style="border-left:3px solid var(--orange);padding-left:18px;margin-bottom:32px">
+            <p style="font-size:14px;color:#cbd5e1;line-height:1.75;font-style:italic">"Spoliation sanctions — including adverse inference instructions — are among the most damaging outcomes in litigation. A defensible hold process is your primary protection."</p>
+            <p style="font-size:11px;color:var(--blue);margin-top:8px;letter-spacing:1px;text-transform:uppercase">LDM Global · eDiscovery Practice</p>
+          </div>
+          <div class="fade-up-4" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px 16px">
+              <div style="font-size:26px;font-weight:800;color:var(--orange);line-height:1">19</div>
+              <div style="font-size:11px;color:#94a3b8;margin-top:3px">Diagnostic questions</div>
+            </div>
+            <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px 16px">
+              <div style="font-size:26px;font-weight:800;color:var(--orange);line-height:1">6</div>
+              <div style="font-size:11px;color:#94a3b8;margin-top:3px">Critical dimensions</div>
+            </div>
+            <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px 16px">
+              <div style="font-size:26px;font-weight:800;color:var(--orange);line-height:1">~6</div>
+              <div style="font-size:11px;color:#94a3b8;margin-top:3px">Minutes to complete</div>
+            </div>
+            <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:14px 16px">
+              <div style="font-size:26px;font-weight:800;color:var(--orange);line-height:1">PDF</div>
+              <div style="font-size:11px;color:#94a3b8;margin-top:3px">Printable report</div>
+            </div>
+          </div>
+        </div>
+        <div class="fade-up-3">
+          <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:32px">
+            <div style="font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:20px">Begin Your Assessment</div>
+            <div style="margin-bottom:16px">
+              <label style="display:block;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#94a3b8;margin-bottom:7px">Organization Name</label>
+              <input id="hold-org" placeholder="Your organization" style="background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.15);border-radius:8px;padding:11px 13px;font-size:14px;color:#fff;width:100%;outline:none" onfocus="this.style.borderColor='var(--orange)'" onblur="this.style.borderColor='rgba(255,255,255,.15)'">
+            </div>
+            <div style="margin-bottom:24px">
+              <label style="display:block;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#94a3b8;margin-bottom:7px">Your Role</label>
+              <select id="hold-role" style="background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.15);border-radius:8px;padding:11px 13px;font-size:14px;color:#fff;width:100%;outline:none">
+                <option value="" style="background:#1e3a5f">Select role</option>
+                <option style="background:#1e3a5f">General Counsel</option>
+                <option style="background:#1e3a5f">Associate GC</option>
+                <option style="background:#1e3a5f">Litigation Director</option>
+                <option style="background:#1e3a5f">Legal Operations Manager</option>
+                <option style="background:#1e3a5f">Head of eDiscovery</option>
+                <option style="background:#1e3a5f">Chief Compliance Officer</option>
+                <option style="background:#1e3a5f">Other</option>
+              </select>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:28px">
+              <div style="font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#94a3b8;margin-bottom:4px">Assessment covers</div>
+              <div style="display:flex;gap:10px;flex-wrap:wrap">
+                <span style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:5px 12px;font-size:12px;color:#cbd5e1">⚡ Trigger &amp; Initiation</span>
+                <span style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:5px 12px;font-size:12px;color:#cbd5e1">👥 Custodians</span>
+                <span style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:5px 12px;font-size:12px;color:#cbd5e1">🗃️ Scope</span>
+                <span style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:5px 12px;font-size:12px;color:#cbd5e1">📡 Monitoring</span>
+                <span style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:5px 12px;font-size:12px;color:#cbd5e1">📁 Documentation</span>
+                <span style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:5px 12px;font-size:12px;color:#cbd5e1">⚙️ Technology</span>
+              </div>
+            </div>
+            <button class="btn-orange" style="width:100%;padding:15px;font-size:15px" onclick="startHold()">Begin Assessment →</button>
+            <p style="font-size:11px;color:#475569;text-align:center;margin-top:12px">Your responses are not stored or transmitted</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="hold-questions" style="display:none">
+    <div class="wrap">
+      <div class="prog-track"><div class="prog-fill" id="hold-prog" style="width:0%"></div></div>
+      <div class="sec-nav" id="hold-sec-nav"></div>
+      <div class="card" style="margin-top:16px" id="hold-q-container"></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px" id="hold-nav-btns"></div>
+    </div>
+  </div>
+  <div id="hold-results" style="display:none">
+    <div class="wrap">
+      <div class="print-header" style="display:none" id="hold-print-hdr">
+        <div><div class="print-logo">LDM <span>Global</span></div><div class="print-title">Litigation Hold Compliance Assessment Report</div></div>
+        <div class="print-meta"><div id="hold-print-org"></div><div class="print-date" id="hold-print-date"></div></div>
+      </div>
+      <div id="hold-result-meta" style="font-size:12px;color:var(--muted);margin-bottom:8px;letter-spacing:1px;text-transform:uppercase"></div>
+      <div class="card" id="hold-result-card"></div>
+      <div class="card" style="background:var(--navy);border:none">
+        <div style="font-size:11px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px">Next Step</div>
+        <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:8px">Build a Defensible Hold Process with LDM Global</div>
+        <div style="font-size:13px;color:#94a3b8;line-height:1.7;margin-bottom:18px">LDM's eDiscovery and legal operations team helps organizations design, implement, and manage litigation hold programs that withstand judicial scrutiny.</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <a href="mailto:sales@ldmglobal.com" style="display:inline-block;background:var(--orange);color:#fff;border:none;border-radius:9px;padding:13px 28px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(255,148,37,.3);text-decoration:none">Schedule a Consultation →</a>
+          <button class="btn-sec no-print" style="color:#94a3b8;border-color:rgba(255,255,255,.15)" onclick="printReport('hold')">🖨 Print Report</button>
+          <button class="btn-sec no-print" style="color:#94a3b8;border-color:rgba(255,255,255,.15)" onclick="resetHold()">Retake</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     COST ESTIMATOR
+══════════════════════════════════════════════════════════════ -->
+<div id="screen-cost" class="screen">
+  <!-- Cost print header (hidden on screen) -->
+  <div class="print-header" style="display:none" id="cost-print-hdr">
+    <div><div class="print-logo">LDM <span>Global</span></div><div class="print-title">eDiscovery Cost Estimate Report</div></div>
+    <div class="print-meta"><div id="cost-print-meta"></div><div class="print-date" id="cost-print-date"></div></div>
+  </div>
+  <div class="estimator-layout" id="est-layout">
+    <div class="est-left">
+      <div class="est-panel-label">Matter Parameters</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px">
+        <div><label class="field-label" style="font-size:10px">Matter Type</label>
+          <select id="est-matter" style="font-size:12px" onchange="calcEst()">
+            <option value="">Select</option>
+            <option>Commercial Litigation</option><option>Employment</option><option>Regulatory</option>
+            <option>IP Dispute</option><option>M&A</option><option>Insurance</option><option>Other</option>
+          </select>
+        </div>
+        <div><label class="field-label" style="font-size:10px">Jurisdiction</label>
+          <select id="est-juris" style="font-size:12px" onchange="calcEst()">
+            <option value="">Select</option>
+            <option>US Federal</option><option>US State</option><option>UK</option>
+            <option>EU (GDPR)</option><option>Multi-jurisdictional</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div id="slider-custodians"></div>
+      <div id="slider-daterange"></div>
+      <div id="slider-duration"></div>
+      <div class="divider"></div>
+      <label class="field-label">Data Sources</label>
+      <div id="data-type-btns" style="margin-bottom:18px"></div>
+      <label class="field-label">Review Approach</label>
+      <div id="review-type-btns" style="margin-bottom:18px"></div>
+      <div class="divider"></div>
+      <label class="field-label" style="margin-bottom:8px">Additional Factors</label>
+      <div class="toggle-row" id="tog-remote" onclick="toggleEst('remote')">
+        <span style="font-size:13px;color:var(--muted)" id="tog-remote-label">Remote collection required</span>
+        <div class="toggle-sw" id="tog-remote-sw"><div class="toggle-knob"></div></div>
+      </div>
+      <div class="toggle-row" id="tog-mobile" onclick="toggleEst('mobile')">
+        <span style="font-size:13px;color:var(--muted)" id="tog-mobile-label">Mobile / messaging data in scope</span>
+        <div class="toggle-sw" id="tog-mobile-sw"><div class="toggle-knob"></div></div>
+      </div>
+    </div>
+    <div class="est-right" id="est-right">
+      <div style="text-align:center;padding:60px 20px;color:var(--muted)">
+        <div style="font-size:36px;margin-bottom:12px">📊</div>
+        <div style="font-size:14px">Adjust parameters to generate your estimate.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════
+// DATA
+// ════════════════════════════════════════════════════════
+const BREACH_SECS=[
+  {id:"gov",title:"Governance & Policy",icon:"⚖️",qs:[
+    {id:"g1",text:"Do you have a documented Incident Response plan covering data breaches?",w:3},
+    {id:"g2",text:"Is your IR plan reviewed and updated at least annually?",w:2},
+    {id:"g3",text:"Have you designated a Data Protection Officer or equivalent role?",w:2},
+    {id:"g4",text:"Do you have a clear data classification policy covering PII, PHI, and confidential data?",w:2},
+  ]},
+  {id:"det",title:"Detection & Monitoring",icon:"🔍",qs:[
+    {id:"d1",text:"Do you have automated systems to detect unauthorized access or data exfiltration?",w:3},
+    {id:"d2",text:"Are your logs centralized and monitored in real-time via SIEM or equivalent?",w:3},
+    {id:"d3",text:"Can you detect a breach within 24 hours of occurrence?",w:3},
+    {id:"d4",text:"Do you conduct regular vulnerability assessments or penetration testing?",w:2},
+  ]},
+  {id:"res",title:"Response Capability",icon:"🚨",qs:[
+    {id:"r1",text:"Do you have a defined, tested escalation process when a breach is suspected?",w:3},
+    {id:"r2",text:"Is your legal or outside counsel pre-engaged and briefed on breach response protocols?",w:3},
+    {id:"r3",text:"Do you have pre-approved communication templates for regulators, clients, and affected individuals?",w:2},
+    {id:"r4",text:"Have you conducted a tabletop exercise or breach simulation in the last 12 months?",w:3},
+  ]},
+  {id:"pres",title:"Evidence & Preservation",icon:"🗂️",qs:[
+    {id:"p1",text:"Can you trigger a litigation hold within hours of a breach?",w:3},
+    {id:"p2",text:"Can you forensically preserve affected systems without destroying evidence?",w:3},
+    {id:"p3",text:"Do you maintain chain-of-custody documentation for digital evidence?",w:2},
+    {id:"p4",text:"Is your data mapped well enough to identify all affected custodians within 48 hours?",w:2},
+  ]},
+  {id:"comp",title:"Regulatory & Notification",icon:"📋",qs:[
+    {id:"c1",text:"Do you know the specific regulatory notification deadlines for your industry (e.g. GDPR 72hr, HIPAA 60-day)?",w:3},
+    {id:"c2",text:"Do you have a process to assess breach severity and determine notification obligations?",w:3},
+    {id:"c3",text:"Have you mapped all applicable privacy regulations across jurisdictions you operate in?",w:2},
+    {id:"c4",text:"Do you maintain records of past incidents, near-misses, and remediation actions?",w:2},
+  ]},
+];
+
+const HOLD_SECS=[
+  {id:"trig",title:"Trigger & Initiation",icon:"⚡",qs:[
+    {id:"t1",text:"Do you have a written policy defining what events trigger a litigation hold?",w:3,risk:"Without a defined trigger, holds are issued ad hoc — often too late to prevent spoliation claims."},
+    {id:"t2",text:"When litigation is reasonably anticipated, can your team issue a hold notice within 24–48 hours?",w:3,risk:"Courts have found spoliation where holds were delayed even days after trigger events."},
+    {id:"t3",text:"Is the decision to issue a hold documented and approved by legal counsel?",w:2,risk:"Undocumented hold decisions create credibility risk if challenged in discovery disputes."},
+  ]},
+  {id:"cust",title:"Custodian Management",icon:"👥",qs:[
+    {id:"c1",text:"Do you maintain an up-to-date data map identifying key custodians and data sources they control?",w:3,risk:"Without custodian mapping, you risk missing critical data sources and facing adverse inference instructions."},
+    {id:"c2",text:"Do hold notices clearly instruct custodians on what data to preserve across all systems?",w:3,risk:"Vague hold notices are frequently challenged. Courts expect specific, actionable preservation instructions."},
+    {id:"c3",text:"Do custodians acknowledge receipt of hold notices in writing?",w:2,risk:"Lack of acknowledgement weakens your ability to demonstrate reasonable steps were taken."},
+    {id:"c4",text:"When custodians leave the organization, is there a process to preserve their data?",w:2,risk:"Departing custodian data is a common spoliation gap."},
+  ]},
+  {id:"scope",title:"Scope & Data Sources",icon:"🗃️",qs:[
+    {id:"s1",text:"Does your hold process cover non-email sources: cloud storage, Teams/Slack, and collaboration tools?",w:3,risk:"Holds limited to email are routinely found deficient. Modern litigation involves extensive non-email ESI."},
+    {id:"s2",text:"Do you suspend automated deletion and retention policies for in-scope data once a hold is issued?",w:3,risk:"Failure to suspend auto-delete routines is one of the most common causes of spoliation sanctions."},
+    {id:"s3",text:"Is there a process to identify and preserve data held by third parties relevant to a hold?",w:2,risk:"Third-party data obligations are frequently overlooked and create significant discovery gaps."},
+    {id:"s4",text:"Can you preserve mobile device data (SMS, WhatsApp, device backups) when relevant?",w:2,risk:"Mobile data is a growing area of discovery disputes and increasingly scrutinized."},
+  ]},
+  {id:"mon",title:"Monitoring & Compliance",icon:"📡",qs:[
+    {id:"m1",text:"Do you re-issue or refresh hold notices for long-running matters at least annually?",w:3,risk:"Stale holds are frequently challenged. Courts expect ongoing diligence for multi-year matters."},
+    {id:"m2",text:"Do you track which custodians are under active holds across all open matters?",w:2,risk:"Without centralized tracking, missed custodians and early releases are common errors."},
+    {id:"m3",text:"Is there a process to verify custodians are actually complying with hold instructions?",w:2,risk:"Issuing a hold without verification is insufficient — courts expect reasonable steps to confirm compliance."},
+  ]},
+  {id:"rel",title:"Release & Documentation",icon:"📁",qs:[
+    {id:"r1",text:"Do you have a formal process to release holds when matters conclude, with documented approval?",w:2,risk:"Informal releases, if challenged, can raise questions about the integrity of the overall process."},
+    {id:"r2",text:"Do you maintain a complete audit trail for each hold — from trigger through notices to release?",w:3,risk:"An auditable hold record is your primary defence in a spoliation motion."},
+    {id:"r3",text:"Are your hold records retained long enough to defend the process if challenged years after closure?",w:2,risk:"Hold documentation disputes can arise well after a matter closes."},
+  ]},
+  {id:"tech",title:"Technology & Automation",icon:"⚙️",qs:[
+    {id:"tech1",text:"Do you use a dedicated legal hold management tool rather than manual email or spreadsheet tracking?",w:2,risk:"Manual hold management at scale introduces systematic error risk and is difficult to audit."},
+    {id:"tech2",text:"Can your hold system integrate with HR to automatically flag custodian departures?",w:2,risk:"HR-eDiscovery integration eliminates a common and costly spoliation gap."},
+  ]},
+];
+
+// ════════════════════════════════════════════════════════
+// NAVIGATION
+// ════════════════════════════════════════════════════════
+let currentTool=null;
+function openTool(id){
+  currentTool=id;
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+id).classList.add('active');
+  document.getElementById('btn-back').style.display='flex';
+  window.scrollTo(0,0);
+  if(id==='cost') initCost();
+}
+function goBack(){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-hub').classList.add('active');
+  document.getElementById('btn-back').style.display='none';
+  currentTool=null;
+  window.scrollTo(0,0);
+}
+
+// ════════════════════════════════════════════════════════
+// SHARED ASSESSMENT ENGINE
+// ════════════════════════════════════════════════════════
+function buildAssessment(prefix, sections, totalWeight){
+  const answers={};
+  let currentSec=0;
+
+  function totalAnswered(){return Object.keys(answers).length;}
+  function totalQs(){return sections.reduce((s,sec)=>s+sec.qs.length,0);}
+  function secDone(i){return sections[i].qs.every(q=>answers[q.id]!==undefined);}
+  function allDone(){return sections.every((_,i)=>secDone(i));}
+  function secScore(i){
+    const sec=sections[i];
+    const e=sec.qs.reduce((s,q)=>s+(answers[q.id]==='yes'?q.w:0),0);
+    const m=sec.qs.reduce((s,q)=>s+q.w,0);
+    return Math.round(e/m*100);
+  }
+  function totalScore(){
+    const e=sections.reduce((s,sec)=>s+sec.qs.reduce((a,q)=>a+(answers[q.id]==='yes'?q.w:0),0),0);
+    return Math.round(e/totalWeight*100);
+  }
+
+  function renderSecNav(){
+    const el=document.getElementById(prefix+'-sec-nav');
+    el.innerHTML='';
+    sections.forEach((sec,i)=>{
+      const btn=document.createElement('button');
+      const done=secDone(i);
+      btn.className='sec-btn'+(i===currentSec?' active':done?' done':'');
+      btn.innerHTML=(done&&i!==currentSec?'✓ ':'')+sec.icon+' '+sec.title;
+      btn.onclick=()=>{currentSec=i;renderQuestions();};
+      el.appendChild(btn);
+    });
+  }
+
+  function renderQuestions(){
+    const sec=sections[currentSec];
+    const prog=totalAnswered()/totalQs()*100;
+    document.getElementById(prefix+'-prog').style.width=prog+'%';
+    renderSecNav();
+
+    const cont=document.getElementById(prefix+'-q-container');
+    cont.innerHTML='<span class="card-label">'+sec.icon+' '+sec.title+'</span>';
+    sec.qs.forEach(q=>{
+      const a=answers[q.id];
+      const div=document.createElement('div');
+      div.className='q-card'+(a==='yes'?' yes':a==='no'?' no':'');
+      div.id='qc-'+q.id;
+      let riskHtml='';
+      if(q.risk) riskHtml='<div class="risk-note'+(a==='no'?' show':'')+'" id="risk-'+q.id+'"><span style="font-weight:700;color:#dc6f1a">⚠ Risk: </span>'+q.risk+'</div>';
+      div.innerHTML='<p class="q-text">'+q.text+'</p><div class="ans-row"><button class="ans-btn'+(a==='yes'?' yes-sel':'')+'" onclick="setAns(\''+prefix+'\',\''+q.id+'\',\'yes\')">✓ Yes</button><button class="ans-btn'+(a==='no'?' no-sel':'')+'" onclick="setAns(\''+prefix+'\',\''+q.id+'\',\'no\')">✗ No'+(prefix==='hold'?' / Partial':'')+'</button></div>'+riskHtml;
+      cont.appendChild(div);
+    });
+
+    const nav=document.getElementById(prefix+'-nav-btns');
+    nav.innerHTML='';
+    if(currentSec>0){
+      const bp=document.createElement('button');
+      bp.className='btn-sec';bp.textContent='← Previous';
+      bp.onclick=()=>{currentSec--;renderQuestions();};
+      nav.appendChild(bp);
+    }
+    if(currentSec<sections.length-1){
+      const bn=document.createElement('button');
+      bn.className='btn-primary';bn.textContent='Next Section →';
+      bn.disabled=!secDone(currentSec);bn.style.opacity=secDone(currentSec)?'1':'.35';
+      bn.onclick=()=>{currentSec++;renderQuestions();};
+      nav.appendChild(bn);
+    } else {
+      const bv=document.createElement('button');
+      bv.className='btn-orange';bv.textContent='View Results →';
+      bv.disabled=!allDone();bv.style.opacity=allDone()?'1':'.35';
+      bv.onclick=()=>showResults(prefix,sections,totalWeight,secScore,totalScore);
+      nav.appendChild(bv);
+    }
+  }
+
+  window['setAns'+(prefix==='breach'?'Breach':'Hold')]=function(p,qid,val){
+    if(p!==prefix)return;
+    answers[qid]=val;
+    renderQuestions();
+  };
+
+  return {renderQuestions, answers, totalScore, secScore};
+}
+
+// Expose setAns globally
+function setAns(prefix,qid,val){
+  if(prefix==='breach') setAnsBreachFn(prefix,qid,val);
+  else if(prefix==='hold') setAnsHoldFn(prefix,qid,val);
+}
+
+// ════════════════════════════════════════════════════════
+// BREACH
+// ════════════════════════════════════════════════════════
+const BREACH_TOTAL=BREACH_SECS.reduce((s,sec)=>s+sec.qs.reduce((a,q)=>a+q.w,0),0);
+let breachEngine;
+function setAnsBreachFn(p,qid,val){if(breachEngine)breachEngine.setA(qid,val);}
+
+function startBreach(){
+  const breachAnswers={};
+  let bSec=0;
+  function totalAnswered(){return Object.keys(breachAnswers).length;}
+  function totalQs(){return BREACH_SECS.reduce((s,sec)=>s+sec.qs.length,0);}
+  function secDone(i){return BREACH_SECS[i].qs.every(q=>breachAnswers[q.id]!==undefined);}
+  function allDone(){return BREACH_SECS.every((_,i)=>secDone(i));}
+  function secScore(i){const sec=BREACH_SECS[i];const e=sec.qs.reduce((s,q)=>s+(breachAnswers[q.id]==='yes'?q.w:0),0);const m=sec.qs.reduce((s,q)=>s+q.w,0);return Math.round(e/m*100);}
+  function totalScore(){const e=BREACH_SECS.reduce((s,sec)=>s+sec.qs.reduce((a,q)=>a+(breachAnswers[q.id]==='yes'?q.w:0),0),0);return Math.round(e/BREACH_TOTAL*100);}
+
+  breachEngine={
+    setA(qid,val){breachAnswers[qid]=val;render();},
+    goSec(i){bSec=i;render();},
+    next(){bSec++;render();},
+    prev(){bSec--;render();},
+    finish(){showBreachResults(totalScore,secScore,()=>BREACH_SECS.flatMap(sec=>sec.qs.filter(q=>breachAnswers[q.id]==='no').map(q=>({...q,secTitle:sec.title}))).sort((a,b)=>b.w-a.w));}
+  };
+
+  document.getElementById('breach-intro').style.display='none';
+  document.getElementById('breach-questions').style.display='block';
+
+  function render(){
+    const sec=BREACH_SECS[bSec];
+    const prog=totalAnswered()/totalQs()*100;
+    document.getElementById('breach-prog').style.width=prog+'%';
+
+    // Nav
+    const navEl=document.getElementById('breach-sec-nav');
+    navEl.innerHTML='';
+    BREACH_SECS.forEach((s,i)=>{
+      const btn=document.createElement('button');
+      const done=secDone(i);
+      btn.className='sec-btn'+(i===bSec?' active':done?' done':'');
+      btn.innerHTML=(done&&i!==bSec?'✓ ':'')+s.icon+' '+s.title;
+      btn.onclick=()=>{bSec=i;render();};
+      navEl.appendChild(btn);
+    });
+
+    // Questions
+    const cont=document.getElementById('breach-q-container');
+    cont.innerHTML='<span class="card-label">'+sec.icon+' '+sec.title+'</span>';
+    sec.qs.forEach(q=>{
+      const a=breachAnswers[q.id];
+      const div=document.createElement('div');
+      div.className='q-card'+(a==='yes'?' yes':a==='no'?' no':'');
+      div.innerHTML='<p class="q-text">'+q.text+'</p><div class="ans-row">'
+        +'<button class="ans-btn'+(a==='yes'?' yes-sel':'')+'" onclick="breachEngine.setA(\''+q.id+'\',\'yes\')">✓ Yes</button>'
+        +'<button class="ans-btn'+(a==='no'?' no-sel':'')+'" onclick="breachEngine.setA(\''+q.id+'\',\'no\')">✗ No</button>'
+        +'</div>';
+      cont.appendChild(div);
+    });
+
+    // Footer btns
+    const nav2=document.getElementById('breach-nav-btns');
+    nav2.innerHTML='';
+    if(bSec>0){const b=document.createElement('button');b.className='btn-sec';b.textContent='← Previous';b.onclick=()=>{bSec--;render();};nav2.appendChild(b);}
+    if(bSec<BREACH_SECS.length-1){
+      const b=document.createElement('button');b.className='btn-primary';b.textContent='Next Section →';b.disabled=!secDone(bSec);b.style.opacity=secDone(bSec)?'1':'.35';b.onclick=()=>{bSec++;render();};nav2.appendChild(b);
+    } else {
+      const b=document.createElement('button');b.className='btn-orange';b.textContent='View Results →';b.disabled=!allDone();b.style.opacity=allDone()?'1':'.35';b.onclick=()=>showBreachResults(totalScore,secScore,()=>BREACH_SECS.flatMap(sec=>sec.qs.filter(q=>breachAnswers[q.id]==='no').map(q=>({...q,secTitle:sec.title}))).sort((a,b)=>b.w-a.w));nav2.appendChild(b);
+    }
+  }
+  render();
+}
+
+function breachBand(p){
+  if(p>=80)return{label:'Well Prepared',color:'#1a9e5c',advice:'Strong foundation across all dimensions. Focus on continuous testing, tabletop exercises, and keeping pace with evolving regulations.'};
+  if(p>=60)return{label:'Partially Prepared',color:'#d97706',advice:'Meaningful gaps exist. A breach today risks delayed detection, evidence handling failures, or missed notification deadlines.'};
+  if(p>=40)return{label:'At Risk',color:'#e67e22',advice:'Critical controls are absent or untested. A breach could result in regulatory penalties and significant remediation cost.'};
+  return{label:'Critically Exposed',color:'#dc2626',advice:'Significant exposure across multiple dimensions. Immediate remediation required to avoid regulatory and litigation risk.'};
+}
+
+// ── Category insight copy ─────────────────────────────────────────────────────
+const BREACH_INSIGHTS={
+  gov:{
+    hi:'Your governance framework is mature. Documented IR plans and defined roles mean your organization can act with authority rather than improvise when an incident occurs.',
+    mid:'Governance gaps leave room for confusion at the moment it matters most. Formalising your IR plan and designating ownership will significantly reduce response time.',
+    lo:'Without foundational governance — documented plans, assigned roles, data classification — your organization is responding to breaches reactively. This is the highest-priority remediation area.'
+  },
+  det:{
+    hi:'Strong detection posture. Real-time monitoring and regular testing mean you are likely to catch an intrusion before it escalates into a reportable breach.',
+    mid:'Detection capability is partially in place, but gaps in real-time monitoring or testing leave windows that attackers routinely exploit. Mean time to detect remains elevated.',
+    lo:'Limited detection capability significantly increases breach exposure time — the primary driver of breach cost. Investment in SIEM, automated alerting, and vulnerability testing is urgent.'
+  },
+  res:{
+    hi:'Response capability is well-structured. Pre-engaged counsel, tested escalation paths, and communication templates mean your team can execute rather than deliberate under pressure.',
+    mid:'Response controls exist but have not been fully stress-tested. Tabletop exercises and pre-drafting communication templates are low-cost, high-impact improvements.',
+    lo:'Absent response structure means that when a breach occurs, your team will be making critical decisions — legal, communications, technical — without a playbook. The cost of this gap compounds every hour.'
+  },
+  pres:{
+    hi:'Evidence preservation protocols are strong. Your ability to issue holds quickly and maintain forensic integrity protects you in both regulatory and litigation contexts.',
+    mid:'Preservation gaps create spoliation risk. The inability to rapidly issue litigation holds or maintain chain-of-custody documentation is increasingly scrutinised by regulators and opposing counsel.',
+    lo:'Without defined preservation protocols, evidence critical to your defence may be lost before counsel is even engaged. This is a direct litigation liability.'
+  },
+  comp:{
+    hi:'Regulatory compliance posture is well-managed. You understand your notification obligations and have the processes to meet them — a material advantage when regulators assess your response.',
+    mid:'Partial regulatory readiness creates missed-deadline risk. GDPR 72-hour and HIPAA 60-day windows are unforgiving; process gaps here translate directly into enforcement exposure.',
+    lo:'Limited regulatory mapping means you may not know what you owe, to whom, and by when. Regulatory penalties for notification failures frequently exceed the cost of the underlying breach.'
+  }
+};
+const SEC_IDS=['gov','det','res','pres','comp'];
+function getInsight(id,p){const i=BREACH_INSIGHTS[id];if(!i)return '';return p>=75?i.hi:p>=50?i.mid:i.lo;}
+
+function showBreachResults(totalScore,secScore,gapsArrFn){
+  document.getElementById('breach-questions').style.display='none';
+  document.getElementById('breach-results').style.display='block';
+  const sc=totalScore();
+  const band=breachBand(sc);
+  const org=document.getElementById('breach-org').value;
+  const ind=document.getElementById('breach-industry').value;
+  if(org||ind) document.getElementById('breach-result-meta').textContent=(org||'')+(org&&ind?' · ':'')+ind;
+
+  const gaps=gapsArrFn?gapsArrFn():[];
+
+  // ── Score hero ────────────────────────────────────────────────────────────
+  let html='<div class="score-hero">'
+    +'<div class="score-dial" style="border-color:'+band.color+';background:'+band.color+'0d">'
+    +'<div class="score-num" style="color:'+band.color+'">'+sc+'</div>'
+    +'<div class="score-sub">/ 100</div></div>'
+    +'<div><div class="verdict-badge" style="color:'+band.color+';background:'+band.color+'18;border-color:'+band.color+'55">'+band.label+'</div>'
+    +'<p style="font-size:14px;color:var(--muted);line-height:1.7;max-width:480px">'+band.advice+'</p></div></div>';
+
+  // ── Tab nav (screen only) ─────────────────────────────────────────────────
+  html+='<div class="tab-nav screen-only"><button class="tab-btn active" id="btab-overview" onclick="switchBTab(\'overview\')">Overview</button><button class="tab-btn" id="btab-gaps" onclick="switchBTab(\'gaps\')">Gap Analysis</button></div>';
+
+  // ── Overview section (bars) ───────────────────────────────────────────────
+  html+='<div id="btab-content-overview">';
+  BREACH_SECS.forEach((sec,i)=>{
+    const p=secScore(i);const col=p>=75?'#1a9e5c':p>=50?'#d97706':'#dc2626';
+    html+='<div class="bar-row"><span style="font-size:16px;width:22px">'+sec.icon+'</span>'
+      +'<span class="bar-label">'+sec.title+'</span>'
+      +'<div class="bar-track"><div class="bar-fill" style="width:'+p+'%;background:'+col+'"></div></div>'
+      +'<span class="bar-pct" style="color:'+col+'">'+p+'%</span></div>';
+  });
+  // Dimension analysis (screen only)
+  html+='<div class="screen-only" style="border-top:1.5px solid var(--border);margin-top:20px;padding-top:20px">';
+  html+='<div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:14px">Dimension Analysis</div>';
+  BREACH_SECS.forEach((sec,i)=>{
+    const p=secScore(i);
+    const col=p>=75?'#1a9e5c':p>=50?'#d97706':'#dc2626';
+    const bg=p>=75?'rgba(26,158,92,.04)':p>=50?'rgba(217,119,6,.04)':'rgba(220,38,38,.03)';
+    const bc=p>=75?'rgba(26,158,92,.15)':p>=50?'rgba(217,119,6,.15)':'rgba(220,38,38,.12)';
+    html+='<div style="display:flex;gap:13px;align-items:flex-start;margin-bottom:10px;padding:13px 15px;background:'+bg+';border:1px solid '+bc+';border-radius:8px">'
+      +'<span style="font-size:15px;flex-shrink:0;margin-top:2px">'+sec.icon+'</span>'
+      +'<div style="flex:1"><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">'
+      +'<span style="font-size:13px;font-weight:700;color:var(--text)">'+sec.title+'</span>'
+      +'<span style="font-size:11px;font-weight:800;color:'+col+'">'+p+'%</span></div>'
+      +'<p style="font-size:12px;color:var(--muted);line-height:1.65;margin:0">'+getInsight(SEC_IDS[i],p)+'</p>'
+      +'</div></div>';
+  });
+  html+='</div>';
+  html+='</div>'; // end btab-content-overview
+
+  // ── Gap Analysis — NO inline display:none, use class instead ─────────────
+  html+='<div id="btab-content-gaps" class="tab-panel-gaps">';
+  if(gaps.length===0){
+    html+='<div style="background:rgba(26,158,92,.06);border:1px solid rgba(26,158,92,.2);border-radius:10px;padding:20px 22px">'
+      +'<div style="font-size:15px;font-weight:700;color:var(--green);margin-bottom:8px">✓ No gaps identified</div>'
+      +'<p style="font-size:13px;color:var(--muted);line-height:1.65">Your organization answered Yes across all 20 questions. The focus now is on maintaining these controls through regular testing, annual plan reviews, and keeping pace with the evolving regulatory landscape.</p>'
+      +'</div>';
+  } else {
+    html+='<p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:16px">The items below represent gaps identified in your assessment, ranked by legal and operational exposure. <strong style="color:var(--text)">Critical items represent direct regulatory, litigation, or breach escalation risk</strong> and should be remediated within 30 days. Important items should be addressed within 90 days.</p>';
+    gaps.slice(0,8).forEach(g=>{
+      const col=g.w===3?'#dc2626':'#d97706';
+      const bg=g.w===3?'rgba(220,38,38,.04)':'rgba(217,119,6,.03)';
+      const bc=g.w===3?'rgba(220,38,38,.15)':'rgba(217,119,6,.18)';
+      const why=g.w===3
+        ?'This is a critical control gap. Regulators and opposing counsel will look for this specifically when evaluating the adequacy of your breach response programme.'
+        :'This gap represents a process improvement that, left unaddressed, could undermine otherwise strong controls elsewhere in your programme.';
+      html+='<div style="background:'+bg+';border:1px solid '+bc+';border-radius:8px;padding:13px 15px;margin-bottom:10px;break-inside:avoid">'
+        +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">'
+        +'<span style="font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:'+col+';background:'+col+'18;border:1px solid '+col+'44;border-radius:12px;padding:2px 8px">'+(g.w===3?'Critical':'Important')+'</span>'
+        +'<span style="font-size:11px;color:var(--muted)">'+g.secTitle+'</span></div>'
+        +'<div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.5">'+g.text+'</div>'
+        +'<div style="font-size:12px;color:var(--muted);line-height:1.6;padding-top:8px;border-top:1px solid var(--border)">'+why+'</div>'
+        +'</div>';
+    });
+    if(gaps.length>8) html+='<p style="font-size:12px;color:var(--muted);margin-top:6px;font-style:italic">+'+(gaps.length-8)+' additional items. Full remediation roadmap available via LDM Global consultation.</p>';
+  }
+  html+='</div>'; // end btab-content-gaps
+
+  document.getElementById('breach-result-card').innerHTML=html;
+
+  // Gaps tab hidden on screen by default (toggled by switchBTab)
+  document.getElementById('btab-content-gaps').style.display='none';
+
+  // Populate print header
+  const phdr=document.getElementById('breach-print-hdr');
+  if(phdr){
+    phdr.style.display='flex';
+    document.getElementById('breach-print-org').textContent=(org||'Organization')+(ind?' · '+ind:'');
+    document.getElementById('breach-print-date').textContent='Assessment date: '+new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  }
+  window.scrollTo(0,0);
+}
+
+// ════════════════════════════════════════════════════════
+// BREACH — RESET & TAB SWITCHING
+// ════════════════════════════════════════════════════════
+function resetBreach(){
+  document.getElementById('breach-results').style.display='none';
+  document.getElementById('breach-intro').style.display='block';
+  document.getElementById('breach-org').value='';
+  document.getElementById('breach-industry').value='';
+  breachEngine=null;
+  window.scrollTo(0,0);
+}
+
+function switchBTab(tab){
+  const ov=document.getElementById('btab-content-overview');
+  const gp=document.getElementById('btab-content-gaps');
+  if(ov) ov.style.display = tab==='overview'?'block':'none';
+  if(gp) gp.style.display = tab==='gaps'?'block':'none';
+  const bo=document.getElementById('btab-overview');
+  const bg=document.getElementById('btab-gaps');
+  if(bo) bo.classList.toggle('active', tab==='overview');
+  if(bg) bg.classList.toggle('active', tab==='gaps');
+}
+
+// ════════════════════════════════════════════════════════
+// HOLD TOOL
+// ════════════════════════════════════════════════════════
+const HOLD_TOTAL = HOLD_SECS.reduce((s,sec)=>s+sec.qs.reduce((a,q)=>a+q.w,0),0);
+let holdEngine=null;
+
+function startHold(){
+  const holdAnswers={};
+  let hSec=0;
+
+  function totalAnswered(){return Object.keys(holdAnswers).length;}
+  function totalQs(){return HOLD_SECS.reduce((s,sec)=>s+sec.qs.length,0);}
+  function secDone(i){return HOLD_SECS[i].qs.every(q=>holdAnswers[q.id]!==undefined);}
+  function allDone(){return HOLD_SECS.every((_,i)=>secDone(i));}
+  function secScore(i){
+    const sec=HOLD_SECS[i];
+    const e=sec.qs.reduce((s,q)=>s+(holdAnswers[q.id]==='yes'?q.w:0),0);
+    const m=sec.qs.reduce((s,q)=>s+q.w,0);
+    return Math.round(e/m*100);
+  }
+  function totalScore(){
+    const e=HOLD_SECS.reduce((s,sec)=>s+sec.qs.reduce((a,q)=>a+(holdAnswers[q.id]==='yes'?q.w:0),0),0);
+    return Math.round(e/HOLD_TOTAL*100);
+  }
+
+  holdEngine={
+    setA(qid,val){holdAnswers[qid]=val;render();},
+    goSec(i){hSec=i;render();},
+    next(){hSec++;render();},
+    prev(){hSec--;render();},
+    finish(){showHoldResults(totalScore,secScore,()=>HOLD_SECS.flatMap(sec=>sec.qs.filter(q=>holdAnswers[q.id]==='no').map(q=>({...q,secTitle:sec.title}))).sort((a,b)=>b.w-a.w));}
+  };
+
+  document.getElementById('hold-intro').style.display='none';
+  document.getElementById('hold-questions').style.display='block';
+
+  function render(){
+    const sec=HOLD_SECS[hSec];
+    const prog=totalAnswered()/totalQs()*100;
+    document.getElementById('hold-prog').style.width=prog+'%';
+
+    // Section nav
+    const navEl=document.getElementById('hold-sec-nav');
+    navEl.innerHTML='';
+    HOLD_SECS.forEach((s,i)=>{
+      const btn=document.createElement('button');
+      const done=secDone(i);
+      btn.className='sec-btn'+(i===hSec?' active':done?' done':'');
+      btn.innerHTML=(done&&i!==hSec?'✓ ':'')+s.icon+' '+s.title;
+      btn.onclick=()=>{hSec=i;render();};
+      navEl.appendChild(btn);
+    });
+
+    // Questions
+    const cont=document.getElementById('hold-q-container');
+    cont.innerHTML='<span class="card-label">'+sec.icon+' '+sec.title+'</span>';
+    sec.qs.forEach(q=>{
+      const a=holdAnswers[q.id];
+      const div=document.createElement('div');
+      div.className='q-card'+(a==='yes'?' yes':a==='no'?' no':'');
+      div.innerHTML='<p class="q-text">'+q.text+'</p>'
+        +'<div class="ans-row">'
+        +'<button class="ans-btn'+(a==='yes'?' yes-sel':'')+'" onclick="holdEngine.setA(\''+q.id+'\',\'yes\')">✓ Yes</button>'
+        +'<button class="ans-btn'+(a==='no'?' no-sel':'')+'" onclick="holdEngine.setA(\''+q.id+'\',\'no\')">✗ No</button>'
+        +'</div>'
+        +(q.risk?'<div class="risk-note'+(a==='no'?' show':'')+'" style="margin-top:10px;background:rgba(220,111,26,.06);border:1px solid rgba(220,111,26,.2);border-radius:6px;padding:10px 13px;font-size:12px;color:#78350f;line-height:1.6"><span style="font-weight:700;color:#dc6f1a">⚠ Risk: </span>'+q.risk+'</div>':'');
+      cont.appendChild(div);
+    });
+
+    // Footer nav buttons
+    const nav2=document.getElementById('hold-nav-btns');
+    nav2.innerHTML='';
+    if(hSec>0){
+      const b=document.createElement('button');b.className='btn-sec';b.textContent='← Previous';
+      b.onclick=()=>{hSec--;render();};nav2.appendChild(b);
+    }
+    if(hSec<HOLD_SECS.length-1){
+      const b=document.createElement('button');b.className='btn-primary';b.textContent='Next Section →';
+      b.disabled=!secDone(hSec);b.style.opacity=secDone(hSec)?'1':'.35';
+      b.onclick=()=>{hSec++;render();};nav2.appendChild(b);
+    } else {
+      const b=document.createElement('button');b.className='btn-orange';b.textContent='View Results →';
+      b.disabled=!allDone();b.style.opacity=allDone()?'1':'.35';
+      b.onclick=()=>holdEngine.finish();nav2.appendChild(b);
+    }
+  }
+  render();
+}
+
+function holdBand(p){
+  if(p>=80)return{label:'Legally Defensible',color:'#1a9e5c',advice:'Your litigation hold process is well-structured and documented. Focus on maintaining consistency and keeping pace with evolving case law.'};
+  if(p>=60)return{label:'Partially Defensible',color:'#d97706',advice:'Core processes exist but gaps remain. Unaddressed weaknesses could undermine otherwise sound controls in a contested discovery dispute.'};
+  if(p>=40)return{label:'Defensibility Risk',color:'#e67e22',advice:'Material gaps create real spoliation exposure. A challenged hold under current conditions would likely face judicial scrutiny.'};
+  return{label:'High Spoliation Risk',color:'#dc2626',advice:'Significant structural weaknesses across multiple dimensions. Immediate remediation is required to avoid sanctions and adverse inference.'};
+}
+
+function showHoldResults(totalScore,secScore,gapsArrFn){
+  document.getElementById('hold-questions').style.display='none';
+  document.getElementById('hold-results').style.display='block';
+  const sc=totalScore();
+  const band=holdBand(sc);
+  const org=document.getElementById('hold-org').value;
+  const role=document.getElementById('hold-role').value;
+  if(org||role) document.getElementById('hold-result-meta').textContent=(org||'')+(org&&role?' · ':'')+role;
+
+  const gaps=gapsArrFn?gapsArrFn():[];
+
+  // ── Score hero ────────────────────────────────────────────────────────────
+  let html='<div class="score-hero">'
+    +'<div class="score-dial" style="border-color:'+band.color+';background:'+band.color+'0d">'
+    +'<div class="score-num" style="color:'+band.color+'">'+sc+'</div>'
+    +'<div class="score-sub">/ 100</div></div>'
+    +'<div><div class="verdict-badge" style="color:'+band.color+';background:'+band.color+'18;border-color:'+band.color+'55">'+band.label+'</div>'
+    +'<p style="font-size:14px;color:var(--muted);line-height:1.7;max-width:480px">'+band.advice+'</p></div></div>';
+
+  // ── Tab nav (screen only) ─────────────────────────────────────────────────
+  html+='<div class="tab-nav screen-only"><button class="tab-btn active" id="htab-overview" onclick="switchHTab(\'overview\')">Overview</button><button class="tab-btn" id="htab-gaps" onclick="switchHTab(\'gaps\')">Gap Analysis</button></div>';
+
+  // ── Overview section (bars) ───────────────────────────────────────────────
+  html+='<div id="htab-content-overview">';
+  HOLD_SECS.forEach((sec,i)=>{
+    const p=secScore(i);const col=p>=75?'#1a9e5c':p>=50?'#d97706':'#dc2626';
+    html+='<div class="bar-row"><span style="font-size:16px;width:22px">'+sec.icon+'</span>'
+      +'<span class="bar-label">'+sec.title+'</span>'
+      +'<div class="bar-track"><div class="bar-fill" style="width:'+p+'%;background:'+col+'"></div></div>'
+      +'<span class="bar-pct" style="color:'+col+'">'+p+'%</span></div>';
+  });
+  html+='</div>'; // end htab-content-overview
+
+  // ── Gap Analysis — NO inline display:none ────────────────────────────────
+  html+='<div id="htab-content-gaps" class="tab-panel-gaps">';
+  if(gaps.length===0){
+    html+='<div style="background:rgba(26,158,92,.06);border:1px solid rgba(26,158,92,.2);border-radius:10px;padding:20px 22px">'
+      +'<div style="font-size:15px;font-weight:700;color:var(--green);margin-bottom:8px">✓ No gaps identified</div>'
+      +'<p style="font-size:13px;color:var(--muted);line-height:1.65">Your organization answered Yes across all 19 questions. The focus now is on sustaining these controls and stress-testing them through regular audits and matter reviews.</p>'
+      +'</div>';
+  } else {
+    html+='<p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:16px">Gaps ranked by legal exposure. <strong style="color:var(--text)">Critical items carry direct spoliation or sanctions risk</strong> and should be remediated within 30 days.</p>';
+    gaps.slice(0,8).forEach(g=>{
+      const col=g.w===3?'#dc2626':'#d97706';
+      const bg=g.w===3?'rgba(220,38,38,.04)':'rgba(217,119,6,.03)';
+      const bc=g.w===3?'rgba(220,38,38,.15)':'rgba(217,119,6,.18)';
+      html+='<div style="background:'+bg+';border:1px solid '+bc+';border-radius:8px;padding:13px 15px;margin-bottom:10px;break-inside:avoid">'
+        +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">'
+        +'<span style="font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:'+col+';background:'+col+'18;border:1px solid '+col+'44;border-radius:12px;padding:2px 8px">'+(g.w===3?'Critical':'Important')+'</span>'
+        +'<span style="font-size:11px;color:var(--muted)">'+g.secTitle+'</span></div>'
+        +'<div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.5">'+g.text+'</div>'
+        +(g.risk?'<div style="font-size:12px;color:var(--muted);line-height:1.6;padding-top:8px;border-top:1px solid var(--border)">'+g.risk+'</div>':'')
+        +'</div>';
+    });
+    if(gaps.length>8) html+='<p style="font-size:12px;color:var(--muted);margin-top:6px;font-style:italic">+'+(gaps.length-8)+' additional items.</p>';
+  }
+  html+='</div>'; // end htab-content-gaps
+
+  document.getElementById('hold-result-card').innerHTML=html;
+
+  // Gaps tab hidden on screen by default
+  document.getElementById('htab-content-gaps').style.display='none';
+
+  const phdr=document.getElementById('hold-print-hdr');
+  if(phdr){
+    phdr.style.display='flex';
+    document.getElementById('hold-print-org').textContent=(org||'Organization')+(role?' · '+role:'');
+    document.getElementById('hold-print-date').textContent='Assessment date: '+new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  }
+  window.scrollTo(0,0);
+}
+
+function switchHTab(tab){
+  const ov=document.getElementById('htab-content-overview');
+  const gp=document.getElementById('htab-content-gaps');
+  if(ov) ov.style.display = tab==='overview'?'block':'none';
+  if(gp) gp.style.display = tab==='gaps'?'block':'none';
+  const bo=document.getElementById('htab-overview');
+  const bg=document.getElementById('htab-gaps');
+  if(bo) bo.classList.toggle('active', tab==='overview');
+  if(bg) bg.classList.toggle('active', tab==='gaps');
+}
+
+function resetHold(){
+  document.getElementById('hold-results').style.display='none';
+  document.getElementById('hold-questions').style.display='none';
+  document.getElementById('hold-intro').style.display='block';
+  document.getElementById('hold-org').value='';
+  document.getElementById('hold-role').value='';
+  holdEngine=null;
+  window.scrollTo(0,0);
+}
+
+// ════════════════════════════════════════════════════════
+// COST ESTIMATOR
+// ════════════════════════════════════════════════════════
+const EST_STATE={
+  custodians:15, daterange:3, duration:12,
+  dataTypes:['email'],
+  reviewType:'standard',
+  remote:false, mobile:false
+};
+
+const DATA_TYPES=[
+  {id:'email',label:'Email & Calendar'},
+  {id:'files',label:'Files & Docs'},
+  {id:'cloud',label:'Cloud Storage'},
+  {id:'slack',label:'Teams / Slack'},
+  {id:'mobile',label:'Mobile / SMS'},
+  {id:'db',label:'Databases'},
+];
+const REVIEW_TYPES=[
+  {id:'standard',label:'Linear Review'},
+  {id:'tac',label:'TAR / AI-Assisted'},
+  {id:'privilege',label:'Privilege Review'},
+];
+
+function initCost(){
+  // Sliders
+  renderSlider('slider-custodians','Custodians',1,100,EST_STATE.custodians,'custodians','','People whose data is in scope');
+  renderSlider('slider-daterange','Date Range',1,10,EST_STATE.daterange,'daterange',' yrs','Years of data in scope');
+  renderSlider('slider-duration','Matter Duration',1,36,EST_STATE.duration,'duration',' mo','Estimated litigation timeline');
+
+  // Data type buttons
+  const dtEl=document.getElementById('data-type-btns');
+  dtEl.innerHTML='';
+  DATA_TYPES.forEach(dt=>{
+    const b=document.createElement('button');
+    b.className='radio-btn'+(EST_STATE.dataTypes.includes(dt.id)?' active':'');
+    b.innerHTML='<div class="radio-dot"></div>'+dt.label;
+    b.style.marginBottom='6px';
+    b.onclick=()=>{
+      if(EST_STATE.dataTypes.includes(dt.id)){
+        if(EST_STATE.dataTypes.length>1) EST_STATE.dataTypes=EST_STATE.dataTypes.filter(x=>x!==dt.id);
+      } else {
+        EST_STATE.dataTypes.push(dt.id);
+      }
+      initCost();calcEst();
+    };
+    dtEl.appendChild(b);
+  });
+
+  // Review type buttons
+  const rtEl=document.getElementById('review-type-btns');
+  rtEl.innerHTML='';
+  REVIEW_TYPES.forEach(rt=>{
+    const b=document.createElement('button');
+    b.className='radio-btn'+(EST_STATE.reviewType===rt.id?' active':'');
+    b.innerHTML='<div class="radio-dot"></div>'+rt.label;
+    b.style.marginBottom='6px';
+    b.onclick=()=>{EST_STATE.reviewType=rt.id;initCost();calcEst();};
+    rtEl.appendChild(b);
+  });
+
+  calcEst();
+}
+
+function renderSlider(containerId,label,min,max,val,key,unit,sub){
+  const el=document.getElementById(containerId);
+  const pct=((val-min)/(max-min)*100);
+  el.innerHTML=`
+    <div class="slider-wrap">
+      <div class="slider-header">
+        <div><div class="slider-label">${label}</div><div class="slider-sub">${sub}</div></div>
+        <div class="slider-val" id="sv-${key}">${val}${unit}</div>
+      </div>
+      <div class="slider-track">
+        <div class="slider-bg"></div>
+        <div class="slider-prog" id="sp-${key}" style="width:${pct}%"></div>
+        <input type="range" class="slider-input" min="${min}" max="${max}" value="${val}"
+          oninput="updateSlider('${key}','${unit}',this.value,${min},${max})" onchange="calcEst()">
+        <div class="slider-thumb" id="st-${key}" style="left:${pct}%"></div>
+      </div>
+    </div>`;
+}
+
+function updateSlider(key,unit,val,min,max){
+  EST_STATE[key]=parseInt(val);
+  const pct=((val-min)/(max-min)*100);
+  const sv=document.getElementById('sv-'+key);
+  const sp=document.getElementById('sp-'+key);
+  const st=document.getElementById('st-'+key);
+  if(sv) sv.textContent=val+unit;
+  if(sp) sp.style.width=pct+'%';
+  if(st) st.style.left=pct+'%';
+  calcEst();
+}
+
+function toggleEst(key){
+  EST_STATE[key]=!EST_STATE[key];
+  const sw=document.getElementById('tog-'+key+'-sw');
+  const row=document.getElementById('tog-'+key);
+  if(sw) sw.classList.toggle('on',EST_STATE[key]);
+  if(row) row.classList.toggle('on',EST_STATE[key]);
+  calcEst();
+}
+
+function calcEst(){
+  const matter=document.getElementById('est-matter').value;
+  const juris=document.getElementById('est-juris').value;
+  const {custodians,daterange,duration,dataTypes,reviewType,remote,mobile}=EST_STATE;
+
+  // Base GB estimate
+  const gbPerCustodianPerYear=4;
+  let totalGB=custodians*daterange*gbPerCustodianPerYear;
+  const dtMult={email:1,files:1.3,cloud:1.2,slack:0.6,mobile:0.8,db:1.5};
+  const dtM=dataTypes.reduce((s,d)=>s+(dtMult[d]||1),0)/dataTypes.length;
+  totalGB=Math.round(totalGB*dtM*(remote?1.15:1)*(mobile?1.12:1));
+
+  // Cost phases (lo/hi per GB with minimums)
+  const reviewMult={standard:1,tac:0.65,privilege:1.4};
+  const jMult={
+    'US Federal':1,'US State':0.9,'UK':1.1,'EU (GDPR)':1.15,
+    'Multi-jurisdictional':1.35,'Other':1
+  };
+  const mMult={
+    'Commercial Litigation':1,'Employment':0.85,'Regulatory':1.1,
+    'IP Dispute':1.2,'M&A':0.9,'Insurance':0.95,'Other':1
+  };
+  const jm=jMult[juris]||1;
+  const mm=mMult[matter]||1;
+  const rm=reviewMult[reviewType]||1;
+
+  const phases=[
+    {name:'Collection',desc:'Forensic collection & processing',lo:800,hi:2200,perGB:12,icon:'📥',highlight:remote},
+    {name:'Processing',desc:'Ingestion, deduplication, indexing',lo:600,hi:1800,perGB:8,icon:'⚙️',highlight:false},
+    {name:'Hosting',desc:'Per-GB/month × matter duration',lo:0,hi:0,perGBmo:3.5,icon:'☁️',highlight:false},
+    {name:'Review',desc:'Attorney review hours',lo:0,hi:0,perGBhr:0.4,hrRate:[225,420],icon:'🔍',highlight:true},
+    {name:'Production',desc:'Formatting, Bates, delivery',lo:500,hi:1400,perGB:5,icon:'📤',highlight:false},
+  ];
+
+  let totalLo=0,totalHi=0;
+  const phaseResults=phases.map(ph=>{
+    let lo,hi;
+    if(ph.name==='Hosting'){
+      lo=Math.round(totalGB*ph.perGBmo*duration*jm);
+      hi=Math.round(totalGB*ph.perGBmo*1.4*duration*jm);
+    } else if(ph.name==='Review'){
+      const hrs=totalGB*ph.perGBhr*rm*mm;
+      lo=Math.round(hrs*ph.hrRate[0]*jm);
+      hi=Math.round(hrs*ph.hrRate[1]*jm);
+    } else {
+      lo=Math.max(ph.lo*mm,Math.round(totalGB*ph.perGB*mm*jm));
+      hi=Math.max(ph.hi*mm,Math.round(totalGB*ph.perGB*1.6*mm*jm));
+    }
+    totalLo+=lo;totalHi+=hi;
+    return {...ph,lo,hi};
+  });
+
+  const fmt=n=>{
+    if(n>=1000000) return '$'+(n/1000000).toFixed(1)+'M';
+    if(n>=1000) return '$'+(n/1000).toFixed(0)+'K';
+    return '$'+n;
+  };
+
+  const estRight=document.getElementById('est-right');
+  if(!matter&&!juris){
+    estRight.innerHTML='<div style="text-align:center;padding:60px 20px;color:var(--muted)"><div style="font-size:36px;margin-bottom:12px">📊</div><div style="font-size:14px">Adjust parameters to generate your estimate.</div></div>';
+    return;
+  }
+
+  const maxCost=totalHi||1;
+  let html='';
+
+  // Cost hero
+  html+='<div class="cost-hero">'
+    +'<div style="font-size:11px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">Estimated Total Cost</div>'
+    +'<div class="cost-range">'
+    +'<div class="cost-num">'+fmt(totalLo)+'</div>'
+    +'<div class="cost-dash">—</div>'
+    +'<div class="cost-num">'+fmt(totalHi)+'</div>'
+    +'</div>'
+    +'<div class="ctx-chips">'
+    +(matter?'<span class="ctx-chip">'+matter+'</span>':'')
+    +(juris?'<span class="ctx-chip">'+juris+'</span>':'')
+    +'<span class="ctx-chip">'+custodians+' custodians</span>'
+    +'<span class="ctx-chip">'+totalGB+' GB est.</span>'
+    +'</div></div>';
+
+  // Volume boxes
+  html+='<div class="vol-grid">'
+    +'<div class="vol-box"><div class="vol-val">'+custodians+'</div><div class="vol-label">Custodians</div></div>'
+    +'<div class="vol-box"><div class="vol-val">'+totalGB+'<span style="font-size:11px;font-weight:400"> GB</span></div><div class="vol-label">Est. Data Volume</div></div>'
+    +'<div class="vol-box"><div class="vol-val">'+duration+'<span style="font-size:11px;font-weight:400"> mo</span></div><div class="vol-label">Matter Duration</div></div>'
+    +'</div>';
+
+  // Phase breakdown
+  html+='<div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Cost by Phase</div>';
+  phaseResults.forEach(ph=>{
+    const barPct=Math.round(ph.hi/maxCost*100);
+    html+='<div class="phase-row'+(ph.highlight?' highlight':'')+'">'
+      +'<div class="phase-top">'
+      +'<div><div class="phase-name">'+ph.icon+' '+ph.name+'</div><div class="phase-desc">'+ph.desc+'</div></div>'
+      +'<div style="text-align:right"><div class="phase-lo">'+fmt(ph.lo)+'</div><div class="phase-hi">— '+fmt(ph.hi)+'</div></div>'
+      +'</div>'
+      +'<div class="phase-bar"><div class="phase-bar-fill" style="width:'+barPct+'%;background:linear-gradient(90deg,var(--blue),var(--orange))"></div></div>'
+      +'</div>';
+  });
+
+  // AI nudge for TAR
+  if(reviewType!=='tac'){
+    html+='<div class="ai-nudge"><strong style="color:var(--navy)">💡 TAR / AI-Assisted Review</strong>'
+      +' could reduce your review cost by up to 35%. Switch to AI-Assisted review above to see the impact.</div>';
+  }
+
+  // CTA
+  // Update cost print header meta
+  const cMeta=document.getElementById('cost-print-meta');
+  const cHdr=document.getElementById('cost-print-hdr');
+  if(cMeta){cMeta.textContent=(matter||'')+(matter&&juris?' · ':'')+juris;}
+  if(cHdr){
+    cHdr.style.display='flex';
+    document.getElementById('cost-print-date').textContent='Estimate date: '+new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  }
+
+  html+='<div class="cta-dark">'
+    +'<div style="font-size:11px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px">Need a precise budget?</div>'
+    +'<div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:6px">Get a scoped estimate from LDM Global</div>'
+    +'<div style="font-size:13px;color:#94a3b8;line-height:1.65;margin-bottom:14px">Our eDiscovery team builds detailed cost models based on your actual matter profile — collections, data types, review strategy, and jurisdiction.</div>'
+    +'<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">'
+    +'<a href="mailto:sales@ldmglobal.com" style="display:inline-block;background:var(--orange);color:#fff;border-radius:9px;padding:11px 22px;font-size:13px;font-weight:700;text-decoration:none">Request a Cost Estimate →</a>'
+    +'<button class="btn-sec no-print" style="color:#94a3b8;border-color:rgba(255,255,255,.15)" onclick="printReport(\'cost\')">🖨 Download Report</button>'
+    +'</div>'
+    +'</div>';
+
+  estRight.innerHTML=html;
+}
+
+// ════════════════════════════════════════════════════════
+// PRINT HANDLER
+// ════════════════════════════════════════════════════════
+function printReport(tool){
+  document.body.classList.remove('printing-breach','printing-hold','printing-cost');
+  document.body.classList.add('printing-'+tool);
+  window.print();
+  setTimeout(()=>document.body.classList.remove('printing-breach','printing-hold','printing-cost'), 2000);
+}
+</script>
