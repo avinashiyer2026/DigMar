@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Value Leakage Assessment — LDM Global</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ── RESET ── */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0C1B4E; --navy-mid:#1B3272; --navy-light:#2D4FA0;
+  --orange:#F05A22; --orange-h:#D44A12; --orange-bg:#FEF0EB;
+  --sky:#EEF4FF; --sky-b:#C5D6FF;
+  --g50:#F7F9FC; --g100:#EEF2F9; --g200:#D8E1F0;
+  --g400:#8A99BB; --g600:#4A5878; --g800:#1E2A45;
+  --green:#16A34A; --green-bg:#F0FDF4; --green-b:#86EFAC;
+  --amber:#D97706; --amber-bg:#FFFBEB; --amber-b:#FDE68A;
+  --r:8px; --rm:14px; --rl:20px;
+  --sh:0 1px 4px rgba(12,27,78,.07);
+  --shm:0 4px 20px rgba(12,27,78,.12);
+  --shl:0 12px 40px rgba(12,27,78,.18);
+  --tr:all .22s cubic-bezier(.4,0,.2,1);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;font-size:14px;color:var(--g800);background:var(--g50);min-height:100vh}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes countUp{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+@keyframes barFill{from{width:0}to{width:var(--w)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(240,90,34,.35)}60%{box-shadow:0 0 0 8px rgba(240,90,34,0)}}
+@keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes revealUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.au{animation:revealUp .5s ease both}
+.au1{animation-delay:.05s}.au2{animation-delay:.12s}.au3{animation-delay:.19s}.au4{animation-delay:.26s}.au5{animation-delay:.33s}
+
+/* ── TOPBAR ── */
+.topbar{
+  position:sticky;top:0;z-index:200;
+  background:#fff;border-bottom:1px solid var(--g200);
+  height:58px;padding:0 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 2px 12px rgba(12,27,78,.08);
+}
+/* LDM Logo SVG inline */
+.logo-svg{height:32px;width:auto;display:block}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.topbar-chip{
+  background:var(--orange-bg);color:var(--orange);
+  border:1px solid rgba(240,90,34,.3);border-radius:20px;
+  padding:4px 12px;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+}
+.topbar-date{font-size:11px;color:var(--g400)}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(140deg,var(--navy) 0%,var(--navy-mid) 55%,#1D4ED8 100%);
+  padding:3rem 2rem 2.5rem;text-align:center;position:relative;overflow:hidden;
+}
+.hero::before{content:'';position:absolute;top:-80px;right:-100px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(240,90,34,.14),transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-60px;left:-80px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.04),transparent 70%);pointer-events:none}
+.hero-inner{max-width:700px;margin:0 auto;position:relative}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(240,90,34,.18);border:1px solid rgba(240,90,34,.35);border-radius:20px;padding:5px 14px;font-size:11px;font-weight:700;color:rgba(255,255,255,.9);text-transform:uppercase;letter-spacing:.06em;margin-bottom:1.1rem}
+.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--orange);animation:pulse 2s infinite}
+.hero h1{font-size:2rem;font-weight:800;color:#fff;line-height:1.2;letter-spacing:-.02em;margin-bottom:.85rem}
+.hero h1 em{font-style:normal;color:var(--orange)}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.7);line-height:1.65;max-width:520px;margin:0 auto 1.75rem}
+.hero-pills{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.hero-pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:5px 14px;font-size:12px;color:rgba(255,255,255,.8);font-weight:500;display:flex;align-items:center;gap:6px}
+.hero-pill .icon{font-size:14px}
+
+/* ── CONTEXT STRIP ── */
+.context-strip{background:#fff;border-bottom:1px solid var(--g200);padding:1.25rem 2rem}
+.cs-inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--g200);border:1px solid var(--g200);border-radius:var(--rm);overflow:hidden}
+.cs-col{background:#fff;padding:1.1rem 1.4rem}
+.cs-col:first-child{border-radius:var(--rm) 0 0 var(--rm)}
+.cs-col:last-child{border-radius:0 var(--rm) var(--rm) 0}
+.cs-head{display:flex;align-items:center;gap:8px;margin-bottom:.5rem}
+.cs-icon{font-size:17px}
+.cs-title{font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.05em}
+.cs-body{font-size:12px;color:var(--g600);line-height:1.6}
+.cs-body strong{color:var(--navy)}
+
+/* ── PAGE LAYOUT ── */
+.page{max-width:1040px;margin:0 auto;padding:2rem 1.5rem 4rem;display:grid;grid-template-columns:320px 1fr;gap:1.75rem;align-items:start}
+
+/* ── SIDEBAR ── */
+.sidebar{position:sticky;top:70px;display:flex;flex-direction:column;gap:1.25rem}
+.sidebar-card{background:#fff;border:1px solid var(--g200);border-radius:var(--rm);padding:1.25rem;box-shadow:var(--sh)}
+.sidebar-title{font-size:11px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.85rem;display:flex;align-items:center;gap:6px}
+.progress-steps{display:flex;flex-direction:column;gap:0}
+.ps-item{display:flex;gap:12px;position:relative;padding-bottom:16px}
+.ps-item:last-child{padding-bottom:0}
+.ps-line{position:absolute;left:11px;top:24px;bottom:0;width:1px;background:var(--g200)}
+.ps-item:last-child .ps-line{display:none}
+.ps-circle{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;transition:var(--tr);z-index:1;position:relative}
+.ps-circle.pending{background:var(--g100);color:var(--g400);border:1.5px solid var(--g200)}
+.ps-circle.active{background:var(--orange);color:#fff;box-shadow:0 0 0 3px rgba(240,90,34,.2)}
+.ps-circle.done{background:var(--navy);color:#fff}
+.ps-info{flex:1;padding-top:3px}
+.ps-name{font-size:12px;font-weight:600;color:var(--navy);margin-bottom:2px}
+.ps-desc{font-size:11px;color:var(--g400);line-height:1.5}
+/* Tip box */
+.tip-box{background:var(--sky);border:1px solid var(--sky-b);border-radius:var(--r);padding:.9rem 1rem;font-size:11px;color:var(--navy-mid);line-height:1.65}
+.tip-box strong{color:var(--navy);display:block;margin-bottom:.3rem;font-size:11px}
+
+/* ── MAIN FORM AREA ── */
+.main-col{display:flex;flex-direction:column;gap:1.25rem}
+.section-card{background:#fff;border:1px solid var(--g200);border-radius:var(--rm);padding:1.5rem;box-shadow:var(--sh)}
+.sc-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--g100)}
+.sc-icon-wrap{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.sc-meta{}
+.sc-tag{font-size:10px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px}
+.sc-title{font-size:15px;font-weight:700;color:var(--navy);letter-spacing:-.01em}
+.sc-sub{font-size:12px;color:var(--g400);margin-top:2px;line-height:1.5}
+
+/* ── FORM ── */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fg-full{grid-column:1/-1}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.fglabel{font-size:11px;font-weight:600;color:var(--g600);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:5px}
+/* tooltip anchor */
+.tt-anchor{display:inline-flex;width:15px;height:15px;border-radius:50%;background:var(--navy);color:#fff;font-size:9px;font-weight:700;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;position:relative}
+.tt-anchor:hover .tt-box,.tt-anchor:focus .tt-box{opacity:1;pointer-events:auto;transform:translateY(0)}
+.tt-box{position:absolute;left:0;top:calc(100% + 6px);width:230px;background:var(--navy);color:#fff;font-size:11px;line-height:1.55;padding:.65rem .9rem;border-radius:var(--r);box-shadow:var(--shl);opacity:0;pointer-events:none;transform:translateY(-6px);transition:opacity .2s,transform .2s;z-index:100;font-weight:400;text-transform:none;letter-spacing:0}
+.tt-box::before{content:'';position:absolute;top:-5px;left:9px;width:10px;height:5px;background:var(--navy);clip-path:polygon(0 100%,50% 0,100% 100%)}
+input[type=number],select{
+  width:100%;padding:9px 12px;border:1.5px solid var(--g200);
+  border-radius:var(--r);font-size:13px;color:var(--g800);
+  background:#fff;outline:none;font-family:inherit;transition:var(--tr);
+}
+input:focus,select:focus{border-color:var(--navy-light);box-shadow:0 0 0 3px rgba(29,82,162,.1)}
+input:hover,select:hover{border-color:var(--g400)}
+.input-pfx{position:relative}
+.input-pfx .pfx{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--g400);pointer-events:none;font-weight:500}
+.input-pfx input{padding-left:22px}
+.hint{font-size:10px;color:var(--g400);line-height:1.5;margin-top:2px}
+.example{font-size:10px;color:var(--navy-light);font-weight:500;margin-top:2px}
+
+/* ── CALCULATE BUTTON AREA ── */
+.calc-bar{
+  background:#fff;border:1px solid var(--g200);border-radius:var(--rm);
+  padding:1.25rem 1.5rem;box-shadow:var(--sh);
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+}
+.calc-bar-text{font-size:13px;color:var(--g600);line-height:1.5}
+.calc-bar-text strong{color:var(--navy);display:block;font-size:14px;margin-bottom:2px}
+.btn-calc{
+  background:linear-gradient(135deg,var(--orange),var(--orange-h));
+  color:#fff;border:none;padding:13px 32px;border-radius:var(--r);
+  font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;
+  display:inline-flex;align-items:center;gap:8px;
+  box-shadow:0 4px 16px rgba(240,90,34,.35);transition:var(--tr);
+  white-space:nowrap;
+}
+.btn-calc:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(240,90,34,.45)}
+.btn-calc:active{transform:none}
+
+/* ── RESULTS SECTION ── */
+#results-section{display:none}
+#results-section.visible{display:block;animation:revealUp .55s ease both}
+
+/* ── RESULTS HEADER ROW ── */
+.results-toprow{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:1.25rem}
+.results-heading{font-size:17px;font-weight:800;color:var(--navy);letter-spacing:-.01em}
+.results-sub{font-size:12px;color:var(--g400);margin-top:2px}
+.toggle-case{display:flex;background:var(--g100);border:1px solid var(--g200);border-radius:10px;padding:3px}
+.tc-opt{padding:6px 18px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;border-radius:8px;color:var(--g400);transition:var(--tr);font-family:inherit}
+.tc-opt.active{background:#fff;color:var(--navy);box-shadow:var(--sh)}
+
+/* ── TOTAL BANNER ── */
+.total-banner{
+  background:linear-gradient(140deg,var(--navy),var(--navy-mid) 60%,#1D4ED8);
+  border-radius:var(--rl);padding:1.75rem 2rem;margin-bottom:1.25rem;
+  position:relative;overflow:hidden;
+}
+.total-banner::before{content:'';position:absolute;top:-50px;right:-50px;width:250px;height:250px;border-radius:50%;background:radial-gradient(circle,rgba(240,90,34,.18),transparent 70%);pointer-events:none}
+.tb-inner{display:flex;align-items:center;gap:2rem;position:relative;flex-wrap:wrap}
+.tb-main{text-align:center;flex:1;min-width:160px}
+.tb-lbl{font-size:10px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.4rem}
+.tb-amt{font-size:3rem;font-weight:800;color:#fff;letter-spacing:-.02em;line-height:1}
+.tb-mode{font-size:11px;color:rgba(255,255,255,.5);margin-top:.35rem}
+.tb-divider{width:1px;height:72px;background:rgba(255,255,255,.15);flex-shrink:0}
+.tb-stats{display:flex;flex-direction:column;gap:.7rem;flex:1;min-width:180px}
+.tb-stat{display:flex;align-items:center;gap:10px}
+.tb-stat-icon{font-size:16px;flex-shrink:0}
+.tb-stat-text{font-size:11px;color:rgba(255,255,255,.7);line-height:1.4}
+.tb-stat-text strong{color:#fff;font-size:13px;display:block}
+
+/* ── COST CARDS ── */
+.cost-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem}
+.cost-card{
+  background:#fff;border:1px solid var(--g200);border-radius:var(--rm);
+  padding:1.1rem 1.2rem;box-shadow:var(--sh);
+  transition:var(--tr);position:relative;overflow:hidden;
+}
+.cost-card:hover{box-shadow:var(--shm);transform:translateY(-2px)}
+.cost-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--cc-color,var(--navy))}
+.cc-toprow{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem}
+.cc-icon-bg{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.cc-badge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em}
+.cc-badge.top{background:var(--orange-bg);color:var(--orange)}
+.cc-badge.other{background:var(--g100);color:var(--g400)}
+.cc-label{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:.3rem;line-height:1.3}
+.cc-amt-row{display:flex;align-items:baseline;gap:4px;margin-bottom:.5rem}
+.cc-amt{font-size:20px;font-weight:800;color:var(--navy)}
+.cc-period{font-size:11px;color:var(--g400)}
+.cc-pct{font-size:11px;font-weight:700;color:var(--g400);margin-left:auto}
+.cc-bar-wrap{height:4px;background:var(--g100);border-radius:2px;margin-bottom:.65rem;overflow:hidden}
+.cc-bar{height:100%;border-radius:2px;background:var(--cc-color,var(--navy));transition:width .8s cubic-bezier(.4,0,.2,1)}
+.cc-insight{font-size:11px;color:var(--g600);line-height:1.55}
+
+/* ── CHART + RECOVERY ROW ── */
+.chart-recovery-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem}
+.chart-card{background:#fff;border:1px solid var(--g200);border-radius:var(--rm);padding:1.25rem;box-shadow:var(--sh)}
+.chart-title{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:1rem;text-transform:uppercase;letter-spacing:.04em}
+.donut-wrap{display:flex;gap:1rem;align-items:center}
+.donut-svg-wrap{position:relative;flex-shrink:0}
+.donut-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none}
+.donut-center-num{font-size:14px;font-weight:800;color:var(--navy)}
+.donut-center-sub{font-size:8px;color:var(--g400);text-transform:uppercase;letter-spacing:.04em;margin-top:1px}
+.chart-legend{flex:1;display:flex;flex-direction:column;gap:.45rem}
+.cl-item{display:flex;align-items:center;gap:6px;font-size:10px}
+.cl-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.cl-name{color:var(--g600);flex:1;line-height:1.3}
+.cl-val{font-weight:700;color:var(--navy);white-space:nowrap}
+/* recovery card */
+.recovery-card{background:var(--green-bg);border:1.5px solid var(--green-b);border-radius:var(--rm);padding:1.25rem;box-shadow:var(--sh);display:flex;flex-direction:column;justify-content:space-between}
+.rc-top{}
+.rc-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(22,163,74,.12);border:1px solid rgba(22,163,74,.3);border-radius:12px;padding:3px 10px;font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.75rem}
+.rc-headline{font-size:14px;font-weight:700;color:#14532D;margin-bottom:.4rem}
+.rc-body{font-size:11px;color:#166534;line-height:1.6}
+.rc-amt{font-size:2rem;font-weight:800;color:var(--green);margin-top:.85rem;letter-spacing:-.01em}
+.rc-amt-lbl{font-size:10px;color:#166534;font-weight:500;margin-top:2px}
+
+/* ── INSIGHTS ── */
+.insights-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.25rem}
+.ibox{border-radius:var(--rm);padding:1rem 1.1rem;font-size:11px;line-height:1.65}
+.ibox.blue{background:var(--sky);border:1px solid var(--sky-b);color:var(--navy-mid)}
+.ibox.amber{background:var(--amber-bg);border:1px solid var(--amber-b);color:#92400E}
+.ibox.green{background:var(--green-bg);border:1px solid var(--green-b);color:#14532D}
+.ibox-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem;opacity:.7}
+.ibox strong{font-weight:700}
+
+/* ── CTA ── */
+.cta-card{background:linear-gradient(140deg,var(--navy),var(--navy-mid));border-radius:var(--rl);padding:2rem;color:#fff;text-align:center;position:relative;overflow:hidden;margin-bottom:1rem}
+.cta-card::before{content:'';position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(240,90,34,.15),transparent 70%);pointer-events:none}
+.cta-inner{position:relative}
+.cta-eyebrow{display:inline-block;background:rgba(240,90,34,.2);border:1px solid rgba(240,90,34,.35);border-radius:20px;padding:4px 14px;font-size:11px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.85rem}
+.cta-card h3{font-size:1.3rem;font-weight:800;margin-bottom:.5rem;letter-spacing:-.01em}
+.cta-card p{font-size:12px;color:rgba(255,255,255,.72);line-height:1.65;max-width:440px;margin:0 auto 1.25rem}
+.cta-btns{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.btn-cta-p{background:var(--orange);color:#fff;border:none;padding:12px 26px;border-radius:var(--r);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:7px;box-shadow:0 4px 14px rgba(240,90,34,.4);transition:var(--tr)}
+.btn-cta-p:hover{background:var(--orange-h);transform:translateY(-2px);box-shadow:0 6px 20px rgba(240,90,34,.5)}
+.btn-cta-s{background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.3);padding:12px 22px;border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:7px;transition:var(--tr)}
+.btn-cta-s:hover{background:rgba(255,255,255,.22);transform:translateY(-1px)}
+.cta-trust{margin-top:1rem;font-size:10px;color:rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.cta-trust span{display:flex;align-items:center;gap:4px}
+
+/* ── SHARE + RECALCULATE ROW ── */
+.action-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:1.5rem}
+.share-group{display:flex;gap:8px;flex-wrap:wrap}
+.share-btn{display:flex;align-items:center;gap:5px;padding:7px 16px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:var(--tr);border:1.5px solid transparent}
+.share-btn.copy{background:var(--sky);color:var(--navy);border-color:var(--sky-b)}
+.share-btn.email{background:var(--orange-bg);color:var(--orange);border-color:rgba(240,90,34,.3)}
+.share-btn.print{background:var(--g100);color:var(--g600);border-color:var(--g200)}
+.share-btn:hover{transform:translateY(-1px);box-shadow:var(--shm)}
+.btn-recalc{padding:7px 18px;border-radius:20px;border:1.5px solid var(--g200);background:#fff;color:var(--g600);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:var(--tr);display:flex;align-items:center;gap:5px}
+.btn-recalc:hover{border-color:var(--navy-light);color:var(--navy);background:var(--sky)}
+
+/* ── METHODOLOGY MODAL ── */
+.method-bar{text-align:center;padding:.5rem 0}
+.btn-method{background:none;border:1.5px dashed var(--g200);border-radius:20px;padding:7px 20px;font-size:11px;font-weight:600;color:var(--g600);cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px;transition:var(--tr)}
+.btn-method:hover{border-color:var(--navy-light);color:var(--navy);background:var(--sky)}
+/* modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(12,27,78,.55);z-index:500;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-overlay.open{opacity:1;pointer-events:auto}
+.modal-sheet{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:720px;max-height:80vh;overflow-y:auto;padding:2rem;transform:translateY(20px);transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+.modal-overlay.open .modal-sheet{transform:translateY(0)}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--g100)}
+.modal-title{font-size:16px;font-weight:700;color:var(--navy)}
+.modal-close{background:var(--g100);border:none;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;color:var(--g600);display:flex;align-items:center;justify-content:center;transition:var(--tr)}
+.modal-close:hover{background:var(--g200);color:var(--navy)}
+.method-item{background:var(--g50);border-left:3px solid var(--navy-light);border-radius:0 var(--r) var(--r) 0;padding:.85rem 1rem;margin-bottom:.75rem}
+.method-item-title{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:.35rem;display:flex;align-items:center;gap:7px}
+.method-formula{font-size:11px;color:var(--g600);line-height:1.7;font-family:monospace;background:#fff;border:1px solid var(--g200);border-radius:4px;padding:.4rem .75rem;margin-top:.35rem}
+.source-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:1rem}
+.source-chip{background:var(--sky);color:var(--navy-mid);border-radius:4px;padding:3px 9px;font-size:10px;font-weight:500}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(70px);background:var(--navy);color:#fff;padding:.7rem 1.4rem;border-radius:20px;font-size:13px;font-weight:500;box-shadow:var(--shl);z-index:999;opacity:0;pointer-events:none;transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .3s;display:flex;align-items:center;gap:8px}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* ── FOOTER ── */
+.footer{background:var(--navy);color:rgba(255,255,255,.5);padding:1.5rem 2rem;text-align:center}
+.footer-inner{max-width:900px;margin:0 auto}
+.footer-logo{margin-bottom:.75rem;display:flex;justify-content:center;align-items:center}
+.footer-logo svg{height:28px;width:auto;opacity:.85}
+.footer-text{font-size:11px;line-height:1.7}
+.footer-text a{color:rgba(255,255,255,.55);text-decoration:none}
+.footer-copy{margin-top:.4rem;font-size:11px;color:rgba(255,255,255,.35)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:780px){
+  .page{grid-template-columns:1fr;gap:1rem}
+  .sidebar{position:static;top:auto}
+  .cost-grid,.chart-recovery-row{grid-template-columns:1fr}
+  .insights-row{grid-template-columns:1fr}
+  .cs-inner{grid-template-columns:1fr}
+  .cs-col{border-radius:0!important}
+  .cs-col:first-child{border-radius:var(--rm) var(--rm) 0 0!important}
+  .cs-col:last-child{border-radius:0 0 var(--rm) var(--rm)!important}
+  .tb-inner{flex-direction:column;text-align:center}
+  .tb-divider{width:60px;height:1px}
+  .hero h1{font-size:1.6rem}
+  .page{padding:1.25rem 1rem 3rem}
+}
+@media print{
+  .topbar,.context-strip,.sidebar,.action-row,.method-bar,.cta-card,.calc-bar,.toast,.footer{display:none!important}
+  .page{grid-template-columns:1fr;gap:1rem}
+  body{background:#fff}
+  .section-card,.cost-card,.chart-card,.recovery-card,.ibox,.total-banner{break-inside:avoid;box-shadow:none!important;border:1px solid #ddd!important}
+  .total-banner{background:var(--navy)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #results-section{display:block!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ── TOPBAR ── -->
+<nav class="topbar">
+  <!-- LDM Global logo (white-background version) -->
+  <svg class="logo-svg" viewBox="0 0 180 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Orange square mark -->
+    <rect width="38" height="38" rx="7" fill="#F05A22"/>
+    <text x="19" y="27" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-weight="800" font-size="17" fill="#fff" letter-spacing="-0.5">LDM</text>
+    <!-- Wordmark -->
+    <text x="48" y="16" font-family="Inter,system-ui,sans-serif" font-weight="800" font-size="15" fill="#0C1B4E" letter-spacing="-0.3">LDM Global</text>
+    <text x="48" y="31" font-family="Inter,system-ui,sans-serif" font-weight="500" font-size="9" fill="#8A99BB" letter-spacing="0.5">LEGAL PROCESS OUTSOURCING</text>
+  </svg>
+  <div class="topbar-right">
+    <div class="topbar-chip">Value Leakage Assessment</div>
+    <div class="topbar-date" id="topDate"></div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="dot"></span> LPO Intelligence Tool</div>
+    <h1>How much value is your<br><em>legal operation leaking?</em></h1>
+    <p class="hero-sub">Fill in the form below and get an instant, benchmarked breakdown of hidden costs across contracts, compliance, and litigation — in under 3 minutes.</p>
+    <div class="hero-pills">
+      <span class="hero-pill"><span class="icon">📄</span> Contracts & Turnaround</span>
+      <span class="hero-pill"><span class="icon">⚖️</span> Compliance Risk</span>
+      <span class="hero-pill"><span class="icon">🏛️</span> Litigation Spend</span>
+      <span class="hero-pill"><span class="icon">📉</span> Opportunity Cost</span>
+      <span class="hero-pill"><span class="icon">💸</span> Rate Arbitrage</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── CONTEXT STRIP ── -->
+<div class="context-strip">
+  <div class="cs-inner">
+    <div class="cs-col">
+      <div class="cs-head"><span class="cs-icon">🎯</span><div class="cs-title">Why this tool</div></div>
+      <div class="cs-body">Most legal teams leak <strong>15–30% of their annual budget</strong> to structural inefficiencies — slow turnaround, senior rates on routine work, fragmented compliance, and reactive litigation. This tool quantifies that leakage using your actual numbers, so leadership can see the real cost of inaction.</div>
+    </div>
+    <div class="cs-col">
+      <div class="cs-head"><span class="cs-icon">👥</span><div class="cs-title">Who it's for</div></div>
+      <div class="cs-body">Designed for <strong>General Counsel, CLOs, Legal Ops Managers, and SME teams</strong> building a business case for operational change. Share the output with your CFO, COO, or Legal Ops committee — it gives your transformation conversation a financial language.</div>
+    </div>
+    <div class="cs-col">
+      <div class="cs-head"><span class="cs-icon">⚡</span><div class="cs-title">How it works</div></div>
+      <div class="cs-body"><strong>Step 1:</strong> Profile your team (org type, size, billing rate). <strong>Step 2:</strong> Enter operational data — contracts, compliance tasks, litigation matters. <strong>Step 3:</strong> Click Calculate. Your results appear instantly below with conservative and worst-case scenarios.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PAGE BODY ── -->
+<div class="page">
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <aside class="sidebar">
+
+    <div class="sidebar-card">
+      <div class="sidebar-title">📋 How to complete this</div>
+      <div class="progress-steps">
+        <div class="ps-item">
+          <div class="ps-circle active" id="psA">1</div>
+          <div class="ps-line"></div>
+          <div class="ps-info">
+            <div class="ps-name">Organisation Profile</div>
+            <div class="ps-desc">Org type, team size, billing rate</div>
+          </div>
+        </div>
+        <div class="ps-item">
+          <div class="ps-circle pending" id="psB">2</div>
+          <div class="ps-line"></div>
+          <div class="ps-info">
+            <div class="ps-name">Contracts & Turnaround</div>
+            <div class="ps-desc">Volume, hours, deal value, cycle time</div>
+          </div>
+        </div>
+        <div class="ps-item">
+          <div class="ps-circle pending" id="psC">3</div>
+          <div class="ps-line"></div>
+          <div class="ps-info">
+            <div class="ps-name">Compliance & Regulatory</div>
+            <div class="ps-desc">Tasks, incidents, incident cost</div>
+          </div>
+        </div>
+        <div class="ps-item">
+          <div class="ps-circle pending" id="psD">4</div>
+          <div class="ps-line"></div>
+          <div class="ps-info">
+            <div class="ps-name">Litigation</div>
+            <div class="ps-desc">Active matters & annual spend</div>
+          </div>
+        </div>
+        <div class="ps-item">
+          <div class="ps-circle pending" id="psE">5</div>
+          <div class="ps-info">
+            <div class="ps-name">Click Calculate</div>
+            <div class="ps-desc">Results appear instantly below</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>💡 Tip on estimates</strong>
+      Rough estimates are fine — even approximate figures produce meaningful, directionally accurate results. When unsure, use your best judgement or the example ranges shown under each field.
+    </div>
+
+    <div class="tip-box" style="background:var(--orange-bg);border-color:rgba(240,90,34,.3);color:#7a2e0c">
+      <strong style="color:var(--orange)">ⓘ Hover labels for guidance</strong>
+      Every field label has a small <strong>i</strong> icon. Hover over it for a definition, benchmark, and formula note.
+    </div>
+
+  </aside>
+
+  <!-- ═══ MAIN COLUMN ═══ -->
+  <div class="main-col">
+
+    <!-- ── SECTION 1: Organisation Profile ── -->
+    <div class="section-card au au1" id="secA">
+      <div class="sc-header">
+        <div class="sc-icon-wrap" style="background:#EEF4FF;font-size:22px">🏢</div>
+        <div class="sc-meta">
+          <div class="sc-tag">Section 1 of 4</div>
+          <div class="sc-title">Organisation Profile</div>
+          <div class="sc-sub">Calibrates benchmarks to your team's size, type, and geography</div>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group fg-full">
+          <label class="fglabel">Organisation Type
+            <span class="tt-anchor">i<div class="tt-box">Corporate in-house teams and law firms have different cost structures and risk profiles. Select the one that best describes your primary operation.</div></span>
+          </label>
+          <select id="orgType">
+            <option value="corporate">Corporate In-house Legal Team</option>
+            <option value="lawfirm">Law Firm / Legal Services Provider</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="fglabel">Legal Team Size
+            <span class="tt-anchor">i<div class="tt-box">Determines estimated total annual attorney hours for opportunity cost calculations. Small: 1–25. Mid-size: 26–199. Large: 200+ attorneys.</div></span>
+          </label>
+          <select id="teamSize">
+            <option value="small">Small — 1 to 25 Attorneys</option>
+            <option value="mid">Mid-size — 26 to 199 Attorneys</option>
+            <option value="large">Large — 200+ Attorneys</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="fglabel">Primary Geography
+            <span class="tt-anchor">i<div class="tt-box">Geography adjusts LPO benchmark rates. LPO blended rates vary by region and affect your rate arbitrage cost calculation.</div></span>
+          </label>
+          <select id="geo">
+            <option value="us">United States</option>
+            <option value="uk">United Kingdom</option>
+            <option value="eu">Europe</option>
+            <option value="apac">Asia Pacific</option>
+            <option value="other">Other / Global</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="fglabel">Avg Lawyer Hourly Rate (USD)
+            <span class="tt-anchor">i<div class="tt-box">Use your blended average across all attorney roles. In-house: $150–$350/hr. Law firm associate: $300–$600/hr. Partner: $500–$1,200/hr.</div></span>
+          </label>
+          <div class="input-pfx">
+            <span class="pfx">$</span>
+            <input type="number" id="hourlyRate" value="300" min="50" max="1500"/>
+          </div>
+          <div class="hint">Tip: use your all-in hourly cost including salary, benefits & overhead</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SECTION 2: Contracts ── -->
+    <div class="section-card au au2" id="secB">
+      <div class="sc-header">
+        <div class="sc-icon-wrap" style="background:#FEF0EB;font-size:22px">📄</div>
+        <div class="sc-meta">
+          <div class="sc-tag">Section 2 of 4 · Affects: Rate Arbitrage + Deal Delay Costs</div>
+          <div class="sc-title">Contracts & Turnaround</div>
+          <div class="sc-sub">Contract volume, time invested, cycle time, and commercial value</div>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="fglabel">Contracts handled per month
+            <span class="tt-anchor">i<div class="tt-box">Include all contract types: NDAs, vendor agreements, MSAs, employment contracts. Count total volume your team handles monthly.</div></span>
+          </label>
+          <input type="number" id="contractsPerMonth" value="40" min="1"/>
+          <div class="example">Industry avg for mid-size teams: 30–80/month</div>
+        </div>
+        <div class="form-group">
+          <label class="fglabel">Avg hours spent per contract
+            <span class="tt-anchor">i<div class="tt-box">Include drafting, review, negotiation, and sign-off. Routine NDAs: 1–2 hrs. Complex commercial contracts: 6–15 hrs. Use your average.</div></span>
+          </label>
+          <input type="number" id="hoursPerContract" value="4" min="0.5" step="0.5"/>
+          <div class="example">Typical range: 2–8 hrs per contract</div>
+        </div>
+        <div class="form-group">
+          <label class="fglabel">Avg turnaround time (days)
+            <span class="tt-anchor">i<div class="tt-box">Calendar days from contract request to execution. LPO-enabled teams average 1–3 days. Each extra week delays revenue recognition and puts deal value at risk.</div></span>
+          </label>
+          <input type="number" id="turnaroundDays" value="7" min="1"/>
+          <div class="example">LPO benchmark: 1–3 days · Industry avg: 5–10 days</div>
+        </div>
+        <div class="form-group">
+          <label class="fglabel">Avg deal value per contract (USD)
+            <span class="tt-anchor">i<div class="tt-box">Average commercial value of contracts handled. Determines revenue-at-risk from slow turnaround. Use $0 for mostly internal / non-revenue contracts.</div></span>
+          </label>
+          <div class="input-pfx">
+            <span class="pfx">$</span>
+            <input type="number" id="dealValue" value="250000" step="10000"/>
+          </div>
+          <div class="hint">Use $0 for mostly internal / non-revenue contracts</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SECTION 3: Compliance ── -->
+    <div class="section-card au au3" id="secC">
+      <div class="sc-header">
+        <div class="sc-icon-wrap" style="background:#FFFBEB;font-size:22px">⚖️</div>
+        <div class="sc-meta">
+          <div class="sc-tag">Section 3 of 4 · Affects: Rate Arbitrage + Incident Risk Costs</div>
+          <div class="sc-title">Compliance & Regulatory</div>
+          <div class="sc-sub">Compliance workload volume and regulatory incident history</div>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="fglabel">Compliance tasks / audits per year
+            <span class="tt-anchor">i<div class="tt-box">Include regulatory filings, internal audits, policy reviews, training programs, and compliance assessments — both recurring and ad-hoc.</div></span>
+          </label>
+          <input type="number" id="complianceTasks" value="24" min="0"/>
+          <div class="example">Typical range: 12–60 tasks/year</div>
+        </div>
+        <div class="form-group">
+          <label class="fglabel">Avg hours per compliance task
+            <span class="tt-anchor">i<div class="tt-box">LPO teams handle routine compliance tasks (document review, filing prep, policy drafting) in 30–50% less time at a fraction of in-house cost.</div></span>
+          </label>
+          <input type="number" id="hoursPerCompliance" value="6" min="1"/>
+          <div class="example">Routine: 3–6 hrs · Complex audits: 10–30 hrs</div>
+        </div>
+        <div class="form-group">
+          <label class="fglabel">Regulatory incidents last year
+            <span class="tt-anchor">i<div class="tt-box">Count any compliance breach, regulatory notice, fine, or corrective action. Proactive LPO-supported compliance management significantly reduces recurrence.</div></span>
+          </label>
+          <input type="number" id="regIncidents" value="3" min="0"/>
+          <div class="example">Mid-size teams avg 2–6 incidents/yr without structured support</div>
+        </div>
+        <div class="form-group">
+          <label class="fglabel">Avg cost per incident (USD)
+            <span class="tt-anchor">i<div class="tt-box">Include regulatory fines, remediation costs, external counsel fees, and internal time. GDPR violations avg $250K+; employment compliance breaches $50–$150K.</div></span>
+          </label>
+          <div class="input-pfx">
+            <span class="pfx">$</span>
+            <input type="number" id="incidentCost" value="50000" step="5000"/>
+          </div>
+          <div class="hint">Include fines, remediation, and internal time spent</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SECTION 4: Litigation ── -->
+    <div class="section-card au au4" id="secD">
+      <div class="sc-header">
+        <div class="sc-icon-wrap" style="background:#F3F0FF;font-size:22px">🏛️</div>
+        <div class="sc-meta">
+          <div class="sc-tag">Section 4 of 4 · Affects: Litigation Overspend Cost</div>
+          <div class="sc-title">Litigation Management</div>
+          <div class="sc-sub">Active disputes and external legal spend per matter</div>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="fglabel">Active litigation matters
+            <span class="tt-anchor">i<div class="tt-box">Count all ongoing disputes, arbitrations, regulatory investigations, and formal claims. LPO handles discovery, document review, and research at 60–80% lower rates.</div></span>
+          </label>
+          <input type="number" id="litMatters" value="8" min="0"/>
+          <div class="example">Mid-size corporate teams typically carry 5–25 active matters</div>
+        </div>
+        <div class="form-group">
+          <label class="fglabel">Avg legal spend per matter / year (USD)
+            <span class="tt-anchor">i<div class="tt-box">Include external counsel fees, e-discovery, and internal lawyer time. LPO-supported litigation typically reduces per-matter spend by 20–35% through efficient document review and legal research support.</div></span>
+          </label>
+          <div class="input-pfx">
+            <span class="pfx">$</span>
+            <input type="number" id="litCostPerMatter" value="80000" step="5000"/>
+          </div>
+          <div class="example">Typical range: $20K–$500K per matter per year</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CALCULATE BAR ── -->
+    <div class="calc-bar au au5">
+      <div class="calc-bar-text">
+        <strong>Ready? Calculate your value leakage →</strong>
+        Your personalised results will appear immediately below. Rough estimates produce meaningful results.
+      </div>
+      <button class="btn-calc" onclick="calculate()">⚡ Calculate My Leakage</button>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- ═══ RESULTS (revealed after calculate) ═══ -->
+    <!-- ══════════════════════════════════════════ -->
+    <div id="results-section">
+
+      <!-- Divider -->
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.25rem">
+        <div style="flex:1;height:1px;background:var(--g200)"></div>
+        <div style="font-size:11px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:.07em;white-space:nowrap">Your Results</div>
+        <div style="flex:1;height:1px;background:var(--g200)"></div>
+      </div>
+
+      <!-- Actions row -->
+      <div class="action-row">
+        <div class="share-group">
+          <button class="share-btn copy" onclick="copyLink()">📋 Copy Summary</button>
+          <button class="share-btn email" onclick="emailReport()">✉️ Email Report</button>
+          <button class="share-btn print" onclick="window.print()">🖨️ Print / PDF</button>
+        </div>
+        <button class="btn-recalc" onclick="scrollToForm()">↺ Edit Inputs</button>
+      </div>
+
+      <!-- Toggle + heading -->
+      <div class="results-toprow">
+        <div>
+          <div class="results-heading">Annual Value Leakage Assessment</div>
+          <div class="results-sub" id="resultsOrgLabel"></div>
+        </div>
+        <div class="toggle-case">
+          <button class="tc-opt active" id="tcBest" onclick="toggleCase('best')">Conservative</button>
+          <button class="tc-opt" id="tcWorst" onclick="toggleCase('worst')">Worst Case</button>
+        </div>
+      </div>
+
+      <!-- Total banner -->
+      <div class="total-banner">
+        <div class="tb-inner">
+          <div class="tb-main">
+            <div class="tb-lbl">Estimated Annual Cost of Doing Nothing</div>
+            <div class="tb-amt" id="totalAmt">$0</div>
+            <div class="tb-mode" id="totalSub"></div>
+          </div>
+          <div class="tb-divider"></div>
+          <div class="tb-stats">
+            <div class="tb-stat">
+              <span class="tb-stat-icon">⚠️</span>
+              <div class="tb-stat-text"><strong id="metaTopCost">—</strong>Largest cost driver</div>
+            </div>
+            <div class="tb-stat">
+              <span class="tb-stat-icon">💡</span>
+              <div class="tb-stat-text"><strong id="metaRecovery">—</strong>LPO recovery potential/yr</div>
+            </div>
+            <div class="tb-stat">
+              <span class="tb-stat-icon">⏱️</span>
+              <div class="tb-stat-text"><strong>6–9 months</strong>Typical time to measurable ROI</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cost cards (sorted descending, rendered by JS) -->
+      <div class="cost-grid" id="costGrid"></div>
+
+      <!-- Chart + Recovery row -->
+      <div class="chart-recovery-row">
+        <div class="chart-card">
+          <div class="chart-title">Cost Distribution</div>
+          <div class="donut-wrap">
+            <div class="donut-svg-wrap">
+              <svg id="donutSvg" width="130" height="130" viewBox="0 0 130 130">
+                <circle cx="65" cy="65" r="48" fill="none" stroke="#EEF2F9" stroke-width="20"/>
+              </svg>
+              <div class="donut-center">
+                <div class="donut-center-num" id="donutLabel">—</div>
+                <div class="donut-center-sub">total/yr</div>
+              </div>
+            </div>
+            <div class="chart-legend" id="chartLegend"></div>
+          </div>
+        </div>
+        <div class="recovery-card">
+          <div class="rc-top">
+            <div class="rc-badge">✅ LPO Recovery Potential</div>
+            <div class="rc-headline">Value your team can reclaim</div>
+            <div class="rc-body">A structured LDM Global partnership typically recovers 40–65% of total leakage cost within the first 12 months. Measurable impact is often visible within 6–9 weeks of engagement.</div>
+          </div>
+          <div>
+            <div class="rc-amt" id="recoveryAmt">—</div>
+            <div class="rc-amt-lbl">estimated annual recovery</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Insight boxes -->
+      <div class="insights-row" id="insightBoxes"></div>
+
+      <!-- CTA -->
+      <div class="cta-card">
+        <div class="cta-inner">
+          <div class="cta-eyebrow">Ready to reclaim this value?</div>
+          <h3>Turn this assessment into a recovery plan</h3>
+          <p>LDM Global can typically recover 40–65% of your identified value leakage in year one — with clear milestones, zero disruption, and guaranteed SLAs from day one. No commitment required.</p>
+          <div class="cta-btns">
+            <button class="btn-cta-p" onclick="showToast('Thank you! Our team will be in touch within 24 hours.','📅')">📅 Book a Free 30-min Consultation</button>
+            <button class="btn-cta-s" onclick="downloadReport()">⬇ Download Full Report</button>
+          </div>
+          <div class="cta-trust">
+            <span>🔒 Confidential</span>
+            <span>🌍 Global coverage</span>
+            <span>✅ No commitment required</span>
+            <span>⏱️ Response within 24 hours</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Methodology trigger -->
+      <div class="method-bar">
+        <button class="btn-method" onclick="openMethod()">📐 View Methodology &amp; Data Sources</button>
+      </div>
+
+    </div><!-- /results-section -->
+  </div><!-- /main-col -->
+</div><!-- /page -->
+
+<!-- ── METHODOLOGY MODAL ── -->
+<div class="modal-overlay" id="methodModal" onclick="closeMethodIfOutside(event)">
+  <div class="modal-sheet" id="methodSheet">
+    <div class="modal-header">
+      <div class="modal-title">📐 Methodology & Data Sources</div>
+      <button class="modal-close" onclick="closeMethod()">✕</button>
+    </div>
+    <div class="method-item">
+      <div class="method-item-title">💸 Cost 1 — Rate Arbitrage (Overpaying on In-house Rates)</div>
+      <div class="method-formula">(Contract hrs/yr + Compliance hrs/yr) × (Your hourly rate − LPO blended rate of $45–$65/hr)</div>
+    </div>
+    <div class="method-item">
+      <div class="method-item-title">⏱️ Cost 2 — Delayed Deals (Slow Contract Turnaround)</div>
+      <div class="method-formula">Monthly contracts × Avg deal value × 1.5% revenue-at-risk per extra week of delay × 12 months</div>
+    </div>
+    <div class="method-item">
+      <div class="method-item-title">⚠️ Cost 3 — Compliance & Regulatory Risk</div>
+      <div class="method-formula">Incidents × Cost per incident × Avoidable portion (30–50% conservative · 50–70% worst case)</div>
+    </div>
+    <div class="method-item">
+      <div class="method-item-title">🏛️ Cost 4 — Litigation Overspend</div>
+      <div class="method-formula">Active matters × Annual spend per matter × LPO-reducible portion (20–35%)</div>
+    </div>
+    <div class="method-item">
+      <div class="method-item-title">📉 Cost 5 — Opportunity Cost (Senior Lawyer Time on Low-value Work)</div>
+      <div class="method-formula">Lawyer headcount × 1,800 hrs/yr × 25–40% low-value time × Hourly rate × 50–60% recoverable fraction</div>
+    </div>
+    <div class="source-chips">
+      <span class="source-chip">CLOC State of the Industry Survey</span>
+      <span class="source-chip">ACC Chief Legal Officer Survey</span>
+      <span class="source-chip">Thomson Reuters Legal Tracker Report</span>
+      <span class="source-chip">Wolters Kluwer ELM Benchmarking</span>
+      <span class="source-chip">McKinsey Legal Operations Study</span>
+    </div>
+    <p style="font-size:10px;color:var(--g400);margin-top:1rem;line-height:1.7">This assessment is indicative and based on published industry benchmarks. Actual savings vary by organisation, scope, and engagement model.</p>
+  </div>
+</div>
+
+<!-- ── TOAST ── -->
+<div class="toast" id="toast"></div>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <svg viewBox="0 0 160 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="32" height="32" rx="6" fill="#F05A22" opacity=".9"/>
+        <text x="16" y="23" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-weight="800" font-size="14" fill="#fff" letter-spacing="-0.5">LDM</text>
+        <text x="42" y="14" font-family="Inter,system-ui,sans-serif" font-weight="700" font-size="13" fill="rgba(255,255,255,0.8)">LDM Global</text>
+        <text x="42" y="27" font-family="Inter,system-ui,sans-serif" font-weight="400" font-size="8" fill="rgba(255,255,255,0.4)" letter-spacing="0.5">LEGAL PROCESS OUTSOURCING</text>
+      </svg>
+    </div>
+    <div class="footer-text">
+      Value Leakage Assessment Tool · For internal SME and leadership use ·
+      Figures are indicative, based on published industry benchmarks.
+    </div>
+    <div class="footer-copy">© 2026 LDM Global. All Rights Reserved.</div>
+  </div>
+</footer>
+
+<script>
+/* ── GLOBALS ── */
+var R={}, caseMode='best';
+var COLORS=['#0C1B4E','#F05A22','#D97706','#6B3BE0','#16A34A'];
+var BGCOLS=['#EEF4FF','#FEF0EB','#FFFBEB','#F3F0FF','#F0FDF4'];
+var BENCH={
+  lpoRateBest:65,lpoRateWorst:45,
+  turnaroundBest:3,turnaroundWorst:1,
+  compSaveBest:.30,compSaveWorst:.50,
+  litSaveBest:.20,litSaveWorst:.35,
+  oppPctBest:.25,oppPctWorst:.40
+};
+
+/* ── INIT ── */
+document.getElementById('topDate').textContent=
+  new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+
+/* ── SIDEBAR PROGRESS ── */
+function setSidebarProgress(done){
+  var ids=['psA','psB','psC','psD','psE'];
+  ids.forEach(function(id,i){
+    var el=document.getElementById(id);
+    if(!el)return;
+    el.className='ps-circle '+(i<done?'done':i===done?'active':'pending');
+    el.textContent=i<done?'✓':(i+1);
+  });
+}
+
+/* ── SCROLL TO FORM ── */
+function scrollToForm(){
+  document.getElementById('secA').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ── HELPERS ── */
+function gv(id){return parseFloat(document.getElementById(id).value)||0}
+function fmt(n){
+  if(n>=1000000)return'$'+(n/1000000).toFixed(2)+'M';
+  if(n>=100000) return'$'+(n/1000000).toFixed(2)+'M';
+  if(n>=1000)   return'$'+(n/1000).toFixed(1).replace(/\.0$/,'')+'K';
+  return'$'+Math.round(n).toLocaleString();
+}
+function fmtT(n){
+  if(n>=1000000)return'$'+(n/1000000).toFixed(2)+'M';
+  if(n>=1000)   return'$'+(n/1000).toFixed(1)+'K';
+  return'$'+Math.round(n).toLocaleString();
+}
+
+/* ── CALCULATE ── */
+function calculate(){
+  var rate  =gv('hourlyRate');
+  var cpm   =gv('contractsPerMonth');
+  var hpc   =gv('hoursPerContract');
+  var tdays =gv('turnaroundDays');
+  var dval  =gv('dealValue');
+  var ctasks=gv('complianceTasks');
+  var hpct  =gv('hoursPerCompliance');
+  var rinc  =gv('regIncidents');
+  var icost =gv('incidentCost');
+  var litM  =gv('litMatters');
+  var litC  =gv('litCostPerMatter');
+  var ts    =document.getElementById('teamSize').value||'mid';
+  var lc    ={small:5,mid:25,large:100}[ts]||25;
+  var annHrs=lc*1800;
+  var outHrs=(cpm*hpc*12)+(ctasks*hpct);
+
+  var c1b=outHrs*Math.max(0,rate-BENCH.lpoRateBest);
+  var c1w=outHrs*Math.max(0,rate-BENCH.lpoRateWorst);
+  var dB=Math.max(0,tdays-BENCH.turnaroundBest);
+  var dW=Math.max(0,tdays-BENCH.turnaroundWorst);
+  var c2b=cpm*dval*(dB/7)*0.015*12;
+  var c2w=cpm*dval*(dW/7)*0.015*12;
+  var c3b=rinc*icost*BENCH.compSaveBest;
+  var c3w=rinc*icost*BENCH.compSaveWorst;
+  var c4b=litM*litC*BENCH.litSaveBest;
+  var c4w=litM*litC*BENCH.litSaveWorst;
+  var c5b=annHrs*BENCH.oppPctBest*rate*0.50;
+  var c5w=annHrs*BENCH.oppPctWorst*rate*0.60;
+
+  R.best =[c1b,c2b,c3b,c4b,c5b];
+  R.worst=[c1w,c2w,c3w,c4w,c5w];
+  R.labels=['Rate Arbitrage Leakage','Delayed Deals & Slow Turnaround','Compliance & Regulatory Risk','Litigation Overspend','Senior Lawyer Time on Low-value Work'];
+  R.icons =['💸','⏱️','⚠️','🏛️','📉'];
+  R.insights=[
+    'Your team spends ~<strong>'+Math.round(outHrs).toLocaleString()+' hrs/year</strong> on work LPO handles at $'+BENCH.lpoRateWorst+'–$'+BENCH.lpoRateBest+'/hr — a fraction of your current billing rate.',
+    'At a <strong>'+tdays+'-day turnaround</strong>, every delayed contract puts deal revenue at risk. LPO-enabled teams routinely deliver in 24–72 hours.',
+    '<strong>'+rinc+' incident(s)</strong> last year at ~$'+icost.toLocaleString()+' each. Structured LPO compliance support reduces recurrence by 30–50%.',
+    '<strong>'+litM+' active matter(s)</strong> at $'+litC.toLocaleString()+'/yr each. LPO-supported document review and research reduces per-matter spend by 20–35%.',
+    'Senior lawyers spending 25–40% of their time on routine tasks is a strategic tax. That time should drive business outcomes, not process.'
+  ];
+  R.orgLabel=(document.getElementById('orgType').value==='lawfirm'?'Law Firm':'Corporate In-house')
+    +' · '+document.getElementById('teamSize').options[document.getElementById('teamSize').selectedIndex].text.split('—')[0].trim();
+
+  // show results
+  var sec=document.getElementById('results-section');
+  sec.className='visible';
+  sec.style.display='block';
+  setSidebarProgress(5);
+  renderResults('best');
+  setTimeout(function(){
+    sec.scrollIntoView({behavior:'smooth',block:'start'});
+  },120);
+}
+
+/* ── RENDER ── */
+function renderResults(mode){
+  caseMode=mode;
+  var vals=R[mode];
+  var total=vals.reduce(function(a,b){return a+b;},0);
+
+  // sort indices descending
+  var idxs=[0,1,2,3,4].sort(function(a,b){return vals[b]-vals[a]});
+  var maxVal=vals[idxs[0]];
+
+  document.getElementById('resultsOrgLabel').textContent=R.orgLabel;
+  animCount('totalAmt',total,fmtT);
+  document.getElementById('totalSub').textContent=mode==='best'
+    ?'Conservative estimate · Based on published industry benchmarks'
+    :'Worst-case estimate · If current inefficiencies compound unchecked';
+  document.getElementById('metaTopCost').textContent=R.labels[idxs[0]];
+  animCount('metaRecovery',total*0.52,fmtT);
+  animCount('recoveryAmt',total*0.52,fmtT);
+  document.getElementById('donutLabel').textContent=fmtT(total);
+
+  // cost cards — descending
+  var grid='';
+  idxs.forEach(function(i,rank){
+    var v=vals[i];
+    var pct=maxVal>0?Math.round(v/maxVal*100):0;
+    var sPct=total>0?Math.round(v/total*100):0;
+    grid+='<div class="cost-card" style="--cc-color:'+COLORS[i]+'">'
+      +'<div class="cc-toprow">'
+      +'<div class="cc-icon-bg" style="background:'+BGCOLS[i]+'">'+R.icons[i]+'</div>'
+      +'<span class="cc-badge '+(rank===0?'top':'other')+'">'+(rank===0?'⚠️ Highest':'#'+(rank+1)+'</span>')
+      +'</div>'
+      +'<div class="cc-label">'+R.labels[i]+'</div>'
+      +'<div class="cc-amt-row">'
+      +'<div class="cc-amt">'+fmt(v)+'</div>'
+      +'<div class="cc-period">/year</div>'
+      +'<div class="cc-pct">'+sPct+'% of total</div>'
+      +'</div>'
+      +'<div class="cc-bar-wrap"><div class="cc-bar" style="width:'+pct+'%;background:'+COLORS[i]+'"></div></div>'
+      +'<div class="cc-insight">'+R.insights[i]+'</div>'
+      +'</div>';
+  });
+  document.getElementById('costGrid').innerHTML=grid;
+
+  // donut — descending
+  renderDonut(vals,idxs,total);
+
+  // legend — descending
+  var leg='';
+  idxs.forEach(function(i){
+    var v=vals[i];
+    var p=total>0?Math.round(v/total*100):0;
+    leg+='<div class="cl-item">'
+      +'<div class="cl-dot" style="background:'+COLORS[i]+'"></div>'
+      +'<div class="cl-name">'+R.labels[i]+'</div>'
+      +'<div class="cl-val">'+fmt(v)+' <span style="color:var(--g400);font-weight:400">'+p+'%</span></div>'
+      +'</div>';
+  });
+  document.getElementById('chartLegend').innerHTML=leg;
+
+  // insights
+  document.getElementById('insightBoxes').innerHTML=
+    '<div class="ibox blue">'
+    +'<div class="ibox-label">🔍 Key Finding</div>'
+    +'Largest cost driver: <strong>'+R.labels[idxs[0]]+'</strong> at <strong>'+fmt(vals[idxs[0]])+'/yr</strong>. '
+    +'An LPO partnership could recover approximately <strong>'+fmt(total*.52)+' annually</strong> — typically within 6–9 months of engagement.'
+    +'</div>'
+    +'<div class="ibox amber">'
+    +'<div class="ibox-label">📊 Industry Benchmark</div>'
+    +'Organisations of your size report <strong>38% faster contract cycles</strong> and <strong>42% savings</strong> on routine legal work within 12 months of LPO engagement. <em>(CLOC; ACC CLO Survey)</em>'
+    +'</div>'
+    +'<div class="ibox green">'
+    +'<div class="ibox-label">✅ Compliance Insight</div>'
+    +'A <strong>60% drop in compliance incidents</strong> is reported in the first year of structured LPO-supported compliance programmes. <em>(Thomson Reuters Legal Tracker)</em>'
+    +'</div>';
+
+  // toggle state
+  document.getElementById('tcBest').classList.toggle('active',mode==='best');
+  document.getElementById('tcWorst').classList.toggle('active',mode==='worst');
+}
+
+/* ── DONUT ── */
+function renderDonut(vals,idxs,total){
+  var svg=document.getElementById('donutSvg');
+  while(svg.children.length>1){svg.removeChild(svg.lastChild)}
+  if(total===0)return;
+  var r=48,cx=65,cy=65,circ=2*Math.PI*r,offset=0;
+  idxs.forEach(function(i){
+    var v=vals[i];if(v<=0)return;
+    var dash=(v/total)*circ,gap=circ-dash;
+    var rot=-90+(offset/circ)*360;
+    var c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',cx);c.setAttribute('cy',cy);c.setAttribute('r',r);
+    c.setAttribute('fill','none');c.setAttribute('stroke',COLORS[i]);c.setAttribute('stroke-width','20');
+    c.setAttribute('stroke-dasharray',dash+' '+gap);
+    c.style.transform='rotate('+rot+'deg)';c.style.transformOrigin=cx+'px '+cy+'px';
+    c.style.transition='stroke-dasharray .8s ease';
+    svg.appendChild(c);offset+=dash;
+  });
+}
+
+/* ── COUNT UP ── */
+function animCount(id,target,fn){
+  var el=document.getElementById(id);if(!el)return;
+  var dur=700,start=null;
+  function step(ts){
+    if(!start)start=ts;
+    var p=Math.min((ts-start)/dur,1);
+    var e=1-Math.pow(1-p,3);
+    el.textContent=fn(target*e);
+    if(p<1)requestAnimationFrame(step);else el.textContent=fn(target);
+  }
+  requestAnimationFrame(step);
+}
+
+/* ── TOGGLE ── */
+function toggleCase(m){renderResults(m)}
+
+/* ── METHODOLOGY MODAL ── */
+function openMethod(){document.getElementById('methodModal').classList.add('open')}
+function closeMethod(){document.getElementById('methodModal').classList.remove('open')}
+function closeMethodIfOutside(e){if(e.target===document.getElementById('methodModal'))closeMethod()}
+
+/* ── TOAST ── */
+function showToast(msg,icon){
+  var t=document.getElementById('toast');
+  t.innerHTML=(icon||'✅')+' '+msg;
+  t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show')},3000);
+}
+
+/* ── COPY ── */
+function copyLink(){
+  var vals=R[caseMode],total=vals.reduce(function(a,b){return a+b;},0);
+  var txt='LDM Global – Value Leakage Assessment\n'
+    +'Organisation: '+R.orgLabel+'\n'
+    +'Scenario: '+(caseMode==='best'?'Conservative':'Worst Case')+'\n\n'
+    +'TOTAL ANNUAL LEAKAGE: '+fmtT(total)+'\n\n';
+  [0,1,2,3,4].sort(function(a,b){return vals[b]-vals[a]}).forEach(function(i){
+    txt+=R.icons[i]+' '+R.labels[i]+': '+fmt(vals[i])+'/yr\n';
+  });
+  txt+='\nEstimated LPO Recovery Potential: '+fmt(total*.52)+'/yr';
+  navigator.clipboard.writeText(txt).then(function(){showToast('Summary copied to clipboard','📋')})
+    .catch(function(){showToast('Press Ctrl+C to copy','⚠️')});
+}
+
+/* ── EMAIL ── */
+function emailReport(){
+  var vals=R[caseMode],total=vals.reduce(function(a,b){return a+b;},0);
+  var b='LDM Global Value Leakage Assessment%0A%0AOrganisation: '+encodeURIComponent(R.orgLabel)
+    +'%0ATotal Annual Leakage: '+encodeURIComponent(fmtT(total))+'%0A%0ACost breakdown:%0A';
+  [0,1,2,3,4].sort(function(a,b){return vals[b]-vals[a]}).forEach(function(i){
+    b+=encodeURIComponent(R.labels[i]+': '+fmt(vals[i])+'/yr')+'%0A';
+  });
+  b+='%0AEstimated LPO Recovery: '+encodeURIComponent(fmt(total*.52));
+  window.location.href='mailto:?subject=LDM%20Global%20Value%20Leakage%20Assessment&body='+b;
+  showToast('Opening email client...','✉️');
+}
+
+/* ── DOWNLOAD REPORT ── */
+function downloadReport(){
+  var vals=R[caseMode],total=vals.reduce(function(a,b){return a+b;},0);
+  var modeStr=caseMode==='best'?'Conservative':'Worst Case';
+  var date=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+  var idxs=[0,1,2,3,4].sort(function(a,b){return vals[b]-vals[a]});
+  var rows='';
+  idxs.forEach(function(i){
+    rows+='<tr><td><strong>'+R.icons[i]+' '+R.labels[i]+'</strong>'
+      +'<div style="font-size:10px;color:#718096;margin-top:3px">'+R.insights[i].replace(/<[^>]+>/g,'')+'</div></td>'
+      +'<td style="text-align:right;font-weight:700;white-space:nowrap;font-size:15px">'+fmt(vals[i])+'</td></tr>';
+  });
+  var html='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>LDM Global · Value Leakage Assessment</title>'
+    +'<style>body{font-family:system-ui,sans-serif;color:#1a1a2e;max-width:760px;margin:0 auto;padding:2.5rem;font-size:12px}'
+    +'h1{font-size:20px;font-weight:800;margin-bottom:.2rem;letter-spacing:-.01em}'
+    +'.sub{color:#718096;font-size:11px;margin-bottom:1.5rem}'
+    +'.tag{display:inline-block;background:#FEF0EB;color:#F05A22;padding:3px 10px;border-radius:4px;font-size:10px;font-weight:700;margin-bottom:1rem;letter-spacing:.04em}'
+    +'.brand{display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid #E2E8F0}'
+    +'.bm{width:32px;height:32px;background:#F05A22;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:11px}'
+    +'.bn{font-size:14px;font-weight:700;color:#0C1B4E}'
+    +'.meta{display:flex;gap:1.5rem;margin-bottom:1.5rem;padding:.9rem 1rem;background:#F7F9FC;border-radius:8px;flex-wrap:wrap}'
+    +'.meta div strong{display:block;font-size:9px;text-transform:uppercase;color:#a0aec0;margin-bottom:1px;letter-spacing:.04em}'
+    +'.total{background:#0C1B4E;color:#fff;border-radius:10px;padding:1.25rem;text-align:center;margin-bottom:1.5rem}'
+    +'.total .lbl{font-size:10px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.06em}'
+    +'.total .amt{font-size:32px;font-weight:800;margin:.2rem 0;letter-spacing:-.02em}'
+    +'.total .mode{font-size:10px;color:rgba(255,255,255,.45)}'
+    +'table{width:100%;border-collapse:collapse;margin-bottom:1.5rem}'
+    +'th{background:#F7F9FC;padding:8px 12px;text-align:left;font-size:10px;text-transform:uppercase;color:#718096;border-bottom:1px solid #E2E8F0;letter-spacing:.04em}'
+    +'td{padding:9px 12px;border-bottom:1px solid #E2E8F0;vertical-align:top}'
+    +'.ib{border-radius:8px;padding:.75rem 1rem;font-size:11px;line-height:1.65;margin-bottom:.75rem}'
+    +'.ib.b{background:#EEF4FF;border:1px solid #C5D6FF;color:#1B3272}'
+    +'.ib.a{background:#FFFBEB;border:1px solid #FDE68A;color:#92400E}'
+    +'.ib.g{background:#F0FDF4;border:1px solid #86EFAC;color:#14532D}'
+    +'.footer{font-size:9px;color:#a0aec0;text-align:center;margin-top:2rem;padding-top:1rem;border-top:1px solid #E2E8F0}'
+    +'</style></head><body>'
+    +'<div class="brand"><div class="bm">LDM</div><div class="bn">LDM Global<br><span style="font-size:9px;color:#8A99BB;font-weight:400">LEGAL PROCESS OUTSOURCING</span></div></div>'
+    +'<div class="tag">CONFIDENTIAL · FOR DISCUSSION PURPOSES ONLY</div>'
+    +'<h1>Value Leakage Assessment</h1>'
+    +'<div class="sub">Generated '+date+'</div>'
+    +'<div class="meta">'
+    +'<div><strong>Organisation</strong>'+R.orgLabel+'</div>'
+    +'<div><strong>Scenario</strong>'+modeStr+'</div>'
+    +'<div><strong>Currency</strong>USD</div>'
+    +'<div><strong>Date</strong>'+date+'</div>'
+    +'</div>'
+    +'<div class="total"><div class="lbl">Total Estimated Annual Value Leakage</div><div class="amt">'+fmtT(total)+'</div><div class="mode">'+modeStr+' estimate · Based on published industry benchmarks</div></div>'
+    +'<table><thead><tr><th>Cost Category (Ranked by Impact)</th><th style="text-align:right">Annual Leakage</th></tr></thead><tbody>'
+    +rows
+    +'<tr style="background:#F7F9FC"><td><strong>Total Annual Leakage</strong></td><td style="text-align:right;font-weight:800;font-size:16px">'+fmtT(total)+'</td></tr>'
+    +'</tbody></table>'
+    +'<div class="ib b"><strong>🔍 LPO Recovery Potential:</strong> A structured LDM Global partnership could recover approximately <strong>'+fmt(total*.52)+'</strong> annually — typically within 6–9 months of engagement.</div>'
+    +'<div class="ib a"><strong>📊 Industry Benchmark:</strong> Organisations of similar size report 38% faster contract cycles, 42% cost reduction on routine legal work, and 60% fewer compliance incidents within 12 months of LPO engagement. <em>(CLOC; ACC CLO Survey; Thomson Reuters)</em></div>'
+    +'<div class="ib g"><strong>✅ Next Step:</strong> Book a free 30-minute consultation with LDM Global to translate this assessment into a tailored recovery roadmap — no commitment required.</div>'
+    +'<div class="footer">© 2026 LDM Global. All Rights Reserved. · This assessment is indicative and based on industry benchmarks. Actual results vary by organisation, scope, and engagement model.</div>'
+    +'</body></html>';
+  var win=window.open('','_blank');
+  if(win){win.document.write(html);win.document.close();setTimeout(function(){win.print()},500);showToast('Report opened — use Print to save as PDF','⬇')}
+  else showToast('Please allow pop-ups to download the report','⚠️');
+}
+
+/* ── SECTION SCROLL HIGHLIGHTS ── */
+var sections=[
+  {id:'secA',ps:0},{id:'secB',ps:1},{id:'secC',ps:2},{id:'secD',ps:3}
+];
+var io=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      var found=sections.find(function(s){return s.id===e.target.id});
+      if(found)setSidebarProgress(found.ps);
+    }
+  });
+},{threshold:.4,rootMargin:'0px 0px -30% 0px'});
+sections.forEach(function(s){var el=document.getElementById(s.id);if(el)io.observe(el)});
+</script>
+</body>
+</html>
