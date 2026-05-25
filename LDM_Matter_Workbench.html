@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LDM Global — SME Intelligence Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#152148;--blue:#446280;--orange:#FF9425;--orange2:#FFAB43;
+  --bg:#f0f3f8;--card:#fff;--text:#0f1e3c;--muted:#64748b;--border:#e2e8f0;
+  --green:#1a9e5c;--red:#dc2626;--amber:#d97706;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+button,input,select,textarea{font-family:'DM Sans',sans-serif}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes barGrow{from{width:0}to{width:var(--w)}}
+.fade-up{animation:fadeUp .4s ease both}
+.fade-up-1{animation:fadeUp .42s .05s ease both;opacity:0}
+.fade-up-2{animation:fadeUp .42s .10s ease both;opacity:0}
+.fade-up-3{animation:fadeUp .42s .15s ease both;opacity:0}
+.fade-up-4{animation:fadeUp .42s .20s ease both;opacity:0}
+.fade-up-5{animation:fadeUp .42s .25s ease both;opacity:0}
+
+/* ── Header ── */
+.hdr{background:var(--navy);border-bottom:3px solid var(--orange);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,.2)}
+.logo{font-family:'DM Serif Display',serif;font-size:22px;color:#fff;letter-spacing:.3px}
+.logo span{color:var(--orange)}
+.logo-sub{font-size:9px;color:var(--blue);letter-spacing:2.5px;text-transform:uppercase;margin-top:2px}
+.hdr-right{display:flex;align-items:center;gap:12px}
+.badge{font-size:10px;color:var(--orange);border:1px solid rgba(255,148,37,.4);border-radius:12px;padding:2px 10px;letter-spacing:1px;text-transform:uppercase}
+.btn-back{background:transparent;color:var(--muted);border:1.5px solid var(--border);border-radius:8px;padding:8px 16px;font-size:13px;cursor:pointer;transition:all .15s}
+.btn-back:hover{border-color:var(--orange);color:var(--orange)}
+
+/* ── Layout ── */
+.wrap{max-width:1120px;margin:0 auto;padding:40px 24px 80px}
+.screen{display:none}.screen.active{display:block}
+
+/* ── Cards ── */
+.card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:26px;margin-bottom:16px;box-shadow:0 2px 12px rgba(21,33,72,.06)}
+.card-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);margin-bottom:14px;display:block}
+.field-label{display:block;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+input,select{width:100%;background:#f8fafc;border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-size:14px;color:var(--text);outline:none;transition:border-color .2s}
+input:focus,select:focus{border-color:var(--orange)}
+textarea{width:100%;background:#f8fafc;border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-size:13px;color:var(--text);outline:none;resize:vertical;min-height:70px;transition:border-color .2s}
+textarea:focus{border-color:var(--orange)}
+
+/* ── Buttons ── */
+.btn-primary{background:var(--navy);color:#fff;border:none;border-radius:9px;padding:13px 28px;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .15s;letter-spacing:.2px}
+.btn-primary:hover{opacity:.85}
+.btn-primary:disabled{opacity:.35;cursor:not-allowed}
+.btn-orange{background:var(--orange);color:#fff;border:none;border-radius:9px;padding:13px 28px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(255,148,37,.3)}
+.btn-orange:hover{opacity:.9}
+.btn-sec{background:transparent;color:var(--muted);border:1.5px solid var(--border);border-radius:8px;padding:10px 18px;font-size:13px;cursor:pointer;transition:all .15s}
+.btn-sec:hover{border-color:var(--navy);color:var(--navy)}
+.btn-generate{background:var(--navy);color:#fff;border:none;border-radius:9px;padding:14px 24px;font-size:14px;font-weight:700;cursor:pointer;width:100%;margin-top:8px;transition:all .2s;box-shadow:0 4px 14px rgba(21,33,72,.2)}
+.btn-generate:hover{background:#1e3266;transform:translateY(-1px)}
+.btn-generate:disabled{opacity:.4;cursor:not-allowed;transform:none}
+
+/* ── Progress bar ── */
+.prog-track{background:#e2e8f0;border-radius:4px;height:5px;overflow:hidden;margin:10px 0}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--orange));border-radius:4px;transition:width .4s ease}
+
+/* ── Tag pills ── */
+.tag-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:4px}
+.tag-pill{padding:5px 11px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:#f8fafc;color:var(--muted);transition:all .15s;user-select:none}
+.tag-pill:hover{border-color:var(--blue);color:var(--blue)}
+.tag-pill.on{background:rgba(255,148,37,.1);border-color:var(--orange);color:var(--navy)}
+
+/* ── Checkboxes ── */
+.chk-row{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;border:1.5px solid var(--border);background:#f8fafc;cursor:pointer;margin-bottom:7px;transition:all .15s}
+.chk-row:hover{border-color:var(--blue)}
+.chk-row input{width:15px;height:15px;accent-color:var(--orange);flex-shrink:0;cursor:pointer}
+.chk-row span{font-size:13px;color:var(--text)}
+
+/* ── Two-col form layout ── */
+.form-split{display:grid;grid-template-columns:340px 1fr;gap:0;min-height:500px}
+.form-side{padding:24px 20px;background:#fafbfc;border-right:1.5px solid var(--border);display:flex;flex-direction:column;gap:14px;overflow-y:auto}
+.output-side{padding:24px;display:flex;flex-direction:column;gap:14px;overflow-y:auto;max-height:680px}
+.output-placeholder{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--muted);text-align:center;padding:40px 20px}
+.output-placeholder .ph-icon{font-size:42px;opacity:.22}
+.output-placeholder p{font-size:13px;max-width:240px;line-height:1.7}
+.output-body{display:none;flex-direction:column;gap:12px;flex:1}
+.output-body.show{display:flex}
+.output-topbar{display:flex;align-items:center;justify-content:space-between}
+.out-tag{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange)}
+.copy-btn{padding:6px 14px;background:transparent;border:1.5px solid var(--border);color:var(--muted);border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s}
+.copy-btn:hover{border-color:var(--orange);color:var(--orange)}
+.print-btn{padding:6px 14px;background:transparent;border:1.5px solid var(--border);color:var(--muted);border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s}
+.print-btn:hover{border-color:var(--navy);color:var(--navy)}
+.output-text{background:#f8fafc;border:1.5px solid var(--border);border-radius:10px;padding:20px;font-size:13px;line-height:1.85;color:var(--text);white-space:pre-wrap;flex:1}
+.output-text h3{font-family:'DM Serif Display',serif;font-size:15px;color:var(--navy);margin:14px 0 5px}
+.output-text strong{color:var(--navy)}
+.output-text .section-hdr{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin:16px 0 6px;display:block}
+
+/* ── Panel header ── */
+.panel-hdr{background:var(--navy);padding:20px 28px;display:flex;align-items:center;justify-content:space-between}
+.panel-title{font-family:'DM Serif Display',serif;font-size:20px;color:#fff}
+.panel-sub{font-size:12px;color:rgba(255,255,255,.5);margin-top:4px}
+.panel-tag{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange);border:1px solid rgba(255,148,37,.3);border-radius:12px;padding:3px 11px}
+
+/* ── HUB ── */
+.hub-hero{text-align:center;margin-bottom:48px}
+.tools-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.tools-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:32px}
+.tool-card{background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:24px;cursor:pointer;text-align:left;transition:all .2s;box-shadow:0 2px 12px rgba(21,33,72,.05);display:flex;flex-direction:column;gap:12px}
+.tool-card:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(21,33,72,.11);border-color:var(--orange)}
+.tool-icon-wrap{width:50px;height:50px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:24px}
+.tool-tag{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:20px;padding:3px 10px}
+.tool-title{font-family:'DM Serif Display',serif;font-size:19px;color:var(--navy);margin-bottom:5px}
+.tool-sub{font-size:13px;color:var(--muted);line-height:1.65}
+.tool-cta{font-size:12px;color:var(--orange);font-weight:600;margin-top:4px}
+.cta-banner{background:var(--navy);border-radius:16px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+
+/* ── Results ── */
+.result-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:24px;margin-bottom:14px}
+.result-section{background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:10px}
+.result-section-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);margin-bottom:10px}
+.result-item{font-size:13px;color:var(--text);line-height:1.7;margin-bottom:6px;padding-left:16px;position:relative}
+.result-item::before{content:'•';position:absolute;left:0;color:var(--orange)}
+.priority-badge{display:inline-block;font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;border-radius:4px;padding:2px 7px;margin-right:6px}
+.pri-critical{background:rgba(220,38,38,.12);color:#dc2626;border:1px solid rgba(220,38,38,.25)}
+.pri-high{background:rgba(255,148,37,.12);color:#c2760a;border:1px solid rgba(255,148,37,.25)}
+.pri-medium{background:rgba(68,98,128,.1);color:var(--blue);border:1px solid rgba(68,98,128,.2)}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+/* ── Divider ── */
+.divider{height:1px;background:var(--border);margin:4px 0}
+
+/* ── Print ── */
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  body{background:#fff!important}
+  /* Hide everything by default */
+  body > *{display:none!important}
+  .hdr,.btn-back,.no-print,.form-side,.panel-hdr{display:none!important}
+  /* Show only the marked print target */
+  .print-target{display:block!important}
+  .print-target *{display:revert!important}
+  .print-target .no-print{display:none!important}
+  .print-target .form-side{display:none!important}
+  .print-target .panel-hdr{display:none!important}
+  .print-target .output-side{padding:0!important;max-height:none!important;overflow:visible!important}
+  .print-target .output-body{display:flex!important}
+  .print-target .output-topbar{display:none!important}
+  .print-target .output-text{border:none!important;background:#fff!important;padding:0!important;font-size:12px!important;line-height:1.7!important}
+  .print-target .result-section{break-inside:avoid}
+  /* Print header shown only during print */
+  .print-hdr{display:flex!important;align-items:center;justify-content:space-between;background:#152148!important;color:#fff!important;padding:10px 16px!important;margin-bottom:16px!important;border-radius:6px!important;page-break-after:avoid}
+  .print-hdr-logo{font-family:'DM Serif Display',serif;font-size:16px!important;color:#fff!important}
+  .print-hdr-logo span{color:#FF9425!important}
+  .print-hdr-meta{text-align:right;font-size:10px!important;color:#94a3b8!important}
+  @page{margin:12mm 14mm;size:A4}
+}
+
+/* ── Responsive ── */
+@media(max-width:900px){
+  .form-split{grid-template-columns:1fr}
+  .form-side{border-right:none;border-bottom:1.5px solid var(--border)}
+  .tools-grid{grid-template-columns:1fr}
+  .tools-grid-2{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .hdr{padding:12px 16px}
+  .wrap{padding:24px 14px 60px}
+  .panel-hdr{padding:16px 18px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div>
+    <div class="logo">LDM <span>Global</span></div>
+    <div class="logo-sub">SME Intelligence Hub · Internal</div>
+  </div>
+  <div class="hdr-right">
+    <button class="btn-back" id="btn-back" style="display:none" onclick="goBack()">← All Tools</button>
+    <span class="badge">Internal Use Only</span>
+  </div>
+</div>
+
+<!-- ══════════════════════ HUB ══════════════════════ -->
+<div id="screen-hub" class="screen active">
+<div class="wrap">
+  <div class="hub-hero fade-up">
+    <div style="display:inline-flex;align-items:center;gap:10px;margin-bottom:24px">
+      <div style="width:1px;height:32px;background:var(--orange)"></div>
+      <span style="font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--blue)">LDM Global · SME Enablement</span>
+      <div style="width:1px;height:32px;background:var(--orange)"></div>
+    </div>
+    <h1 style="font-family:'DM Serif Display',serif;font-size:48px;font-weight:400;color:var(--navy);line-height:1.1;margin-bottom:18px;letter-spacing:-.5px">Precision tools for<br><em style="color:var(--orange);font-style:italic">eDiscovery &amp; incident teams.</em></h1>
+    <p style="font-size:16px;color:var(--muted);max-width:560px;margin:0 auto 14px;line-height:1.8;font-weight:300">Five structured instruments to help LDM Global SMEs move faster, communicate with precision, and deliver consistent outputs across eDiscovery and incident management engagements.</p>
+    <p style="font-size:12px;color:var(--blue);letter-spacing:.5px">Internal use only · Powered by EXOedge · LDM Global</p>
+  </div>
+
+  <div style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:10px">eDiscovery Tools <span style="flex:1;height:1px;background:var(--border);display:inline-block"></span></div>
+
+  <div class="tools-grid">
+    <div class="tool-card fade-up-1" onclick="openTool('scope')">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between">
+        <div class="tool-icon-wrap" style="background:rgba(21,33,72,.08)">🔭</div>
+        <span class="tool-tag" style="color:var(--navy);background:rgba(21,33,72,.07);border:1px solid rgba(21,33,72,.15)">Estimator</span>
+      </div>
+      <div><div class="tool-title">Scope Estimator</div><div class="tool-sub">Input custodians, data types, and date range to generate a structured volume, timeline, and cost band estimate for any matter.</div></div>
+      <div class="tool-cta">Launch tool → <span style="font-size:11px;color:var(--muted);font-weight:400">Instant output</span></div>
+    </div>
+    <div class="tool-card fade-up-2" onclick="openTool('intake')">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between">
+        <div class="tool-icon-wrap" style="background:rgba(68,98,128,.1)">📋</div>
+        <span class="tool-tag" style="color:var(--blue);background:rgba(68,98,128,.09);border:1px solid rgba(68,98,128,.2)">Questionnaire</span>
+      </div>
+      <div><div class="tool-title">Matter Intake Generator</div><div class="tool-sub">Select case type and industry to generate a tailored client intake questionnaire across six structured sections.</div></div>
+      <div class="tool-cta">Launch tool → <span style="font-size:11px;color:var(--muted);font-weight:400">Instant output</span></div>
+    </div>
+    <div class="tool-card fade-up-3" onclick="openTool('hold')">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between">
+        <div class="tool-icon-wrap" style="background:rgba(26,110,60,.09)">⚖️</div>
+        <span class="tool-tag" style="color:#1a6e3c;background:rgba(26,110,60,.09);border:1px solid rgba(26,110,60,.18)">Legal Hold</span>
+      </div>
+      <div><div class="tool-title">Litigation Hold Drafter</div><div class="tool-sub">Draft legally-neutral litigation hold notices tailored to the matter, custodian audience, and data sources — ready for counsel review.</div></div>
+      <div class="tool-cta">Launch tool → <span style="font-size:11px;color:var(--muted);font-weight:400">Instant output</span></div>
+    </div>
+  </div>
+
+  <div style="font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:10px">Incident Management Tools <span style="flex:1;height:1px;background:var(--border);display:inline-block"></span></div>
+
+  <div class="tools-grid-2">
+    <div class="tool-card fade-up-4" onclick="openTool('triage')">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between">
+        <div class="tool-icon-wrap" style="background:rgba(192,57,43,.08)">🚨</div>
+        <span class="tool-tag" style="color:#c0392b;background:rgba(192,57,43,.09);border:1px solid rgba(192,57,43,.18)">IR Checklist</span>
+      </div>
+      <div><div class="tool-title">Incident Triage Checklist Builder</div><div class="tool-sub">Generate a phased, prioritized response checklist by incident type and severity — with team ownership, regulatory deadlines, and eDiscovery preservation steps built in.</div></div>
+      <div class="tool-cta">Launch tool → <span style="font-size:11px;color:var(--muted);font-weight:400">Instant output</span></div>
+    </div>
+    <div class="tool-card fade-up-5" onclick="openTool('protocol')">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between">
+        <div class="tool-icon-wrap" style="background:rgba(109,40,217,.08)">📂</div>
+        <span class="tool-tag" style="color:#6d28d9;background:rgba(109,40,217,.08);border:1px solid rgba(109,40,217,.18)">Protocol</span>
+      </div>
+      <div><div class="tool-title">Review Protocol Generator</div><div class="tool-sub">Generate a 10-section review protocol outline covering coding framework, QC methodology, production specs, and team structure — specific to jurisdiction and document types.</div></div>
+      <div class="tool-cta">Launch tool → <span style="font-size:11px;color:var(--muted);font-weight:400">Instant output</span></div>
+    </div>
+  </div>
+
+  <div class="cta-banner fade-up">
+    <div>
+      <div style="font-size:12px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:6px">LDM Global · Internal Resource</div>
+      <div style="font-size:15px;color:#fff;font-weight:600;margin-bottom:4px">eDiscovery · Incident Management · Legal Process Outsourcing</div>
+      <div style="font-size:13px;color:#94a3b8;line-height:1.6">All outputs are structured templates. Review with counsel before client use.</div>
+    </div>
+    <a href="mailto:sales@ldmglobal.com" style="display:inline-block;background:var(--orange);color:#fff;border-radius:9px;padding:13px 24px;font-size:13px;font-weight:700;text-decoration:none">Contact Sales Team →</a>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════ SCOPE ESTIMATOR ══════════════════════ -->
+<div id="screen-scope" class="screen">
+<div class="panel-hdr">
+  <div><div class="panel-title">eDiscovery Scope Estimator</div><div class="panel-sub">Estimate volume, timeline &amp; cost band for any matter</div></div>
+  <span class="panel-tag">eDiscovery · Estimator</span>
+</div>
+<div class="card" style="border-radius:0;border-left:none;border-right:none;border-top:none;margin-bottom:0">
+  <div class="form-split">
+    <div class="form-side">
+      <div><label class="field-label">Matter Name / Reference</label><input type="text" id="sc-matter" placeholder="e.g. Project Apex — SEC Inquiry"></div>
+      <div><label class="field-label">Number of Custodians</label><input type="number" id="sc-cust" placeholder="e.g. 12" min="1" max="500"></div>
+      <div><label class="field-label">Matter Type / Jurisdiction</label>
+        <select id="sc-type">
+          <option value="">Select...</option>
+          <option value="commercial">Commercial Litigation</option>
+          <option value="regulatory">SEC / Regulatory Investigation</option>
+          <option value="employment">Employment Litigation</option>
+          <option value="ip">IP / Trade Secret</option>
+          <option value="ma">M&amp;A Due Diligence</option>
+          <option value="internal">Internal Investigation</option>
+          <option value="breach">Data Breach / IR</option>
+        </select>
+      </div>
+      <div><label class="field-label">Review Platform</label>
+        <select id="sc-platform">
+          <option value="">Select...</option>
+          <option>Relativity</option><option>Nuix</option><option>Reveal</option>
+          <option>Everlaw</option><option>Logikcull</option><option>DISCO</option><option>Not yet decided</option>
+        </select>
+      </div>
+      <div>
+        <label class="field-label">Data Types in Scope</label>
+        <div class="tag-wrap" id="sc-dtypes">
+          <span class="tag-pill" onclick="tog(this,'sc')">Email</span>
+          <span class="tag-pill" onclick="tog(this,'sc')">Slack / Teams</span>
+          <span class="tag-pill" onclick="tog(this,'sc')">SharePoint / OneDrive</span>
+          <span class="tag-pill" onclick="tog(this,'sc')">Salesforce</span>
+          <span class="tag-pill" onclick="tog(this,'sc')">Box / Dropbox</span>
+          <span class="tag-pill" onclick="tog(this,'sc')">Mobile / SMS</span>
+          <span class="tag-pill" onclick="tog(this,'sc')">Databases</span>
+          <span class="tag-pill" onclick="tog(this,'sc')">Laptops / Desktops</span>
+        </div>
+      </div>
+      <div>
+        <label class="field-label">Additional Flags</label>
+        <label class="chk-row"><input type="checkbox" id="sc-tar"><span>TAR / AI-assisted review</span></label>
+        <label class="chk-row"><input type="checkbox" id="sc-foreign"><span>Foreign language documents</span></label>
+        <label class="chk-row"><input type="checkbox" id="sc-priv"><span>Significant privilege concerns</span></label>
+        <label class="chk-row"><input type="checkbox" id="sc-remote"><span>Remote collection required</span></label>
+        <label class="chk-row"><input type="checkbox" id="sc-cross"><span>Cross-border / multi-jurisdictional</span></label>
+      </div>
+      <div><label class="field-label">Notes / Complexity</label><textarea id="sc-notes" placeholder="Any additional context..."></textarea></div>
+      <button class="btn-generate" onclick="genScope()">Generate Scope Estimate →</button>
+    </div>
+    <div class="output-side">
+      <div class="output-placeholder" id="sc-ph">
+        <span class="ph-icon">🔭</span>
+        <p>Fill in the matter parameters and click Generate to produce a structured scope estimate.</p>
+      </div>
+      <div class="output-body" id="sc-out">
+        <div class="output-topbar">
+          <span class="out-tag">Scope Estimate</span>
+          <div style="display:flex;gap:8px">
+            <button class="copy-btn" onclick="copyEl('sc-content')">Copy</button>
+            <button class="print-btn no-print" onclick="printTool('screen-scope','eDiscovery Scope Estimate')">Print / Download</button>
+          </div>
+        </div>
+        <div class="print-hdr" style="display:none" id="sc-print-hdr">
+          <div><div class="print-hdr-logo">LDM <span>Global</span></div><div style="font-size:10px;color:#94a3b8;margin-top:2px">eDiscovery Scope Estimate</div></div>
+          <div class="print-hdr-meta"><div id="sc-print-date"></div><div style="font-size:9px;color:#64748b;margin-top:1px">Internal Use Only · LDM Global SME Team</div></div>
+        </div>
+        <div class="output-text" id="sc-content"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════ MATTER INTAKE ══════════════════════ -->
+<div id="screen-intake" class="screen">
+<div class="panel-hdr">
+  <div><div class="panel-title">Matter Intake Questionnaire Generator</div><div class="panel-sub">Generate tailored client questionnaires by case type &amp; industry</div></div>
+  <span class="panel-tag">eDiscovery · Intake</span>
+</div>
+<div class="card" style="border-radius:0;border-left:none;border-right:none;border-top:none;margin-bottom:0">
+  <div class="form-split">
+    <div class="form-side">
+      <div><label class="field-label">Case Type</label>
+        <select id="in-case">
+          <option value="">Select case type...</option>
+          <option value="sec">SEC / Regulatory Investigation</option>
+          <option value="internal">Internal Investigation</option>
+          <option value="employment">Employment Litigation</option>
+          <option value="ip">IP / Trade Secret Dispute</option>
+          <option value="ma">M&amp;A Due Diligence</option>
+          <option value="antitrust">Antitrust / Competition</option>
+          <option value="breach">Data Breach / Incident Response</option>
+          <option value="commercial">Commercial Litigation</option>
+          <option value="subpoena">Government Subpoena</option>
+          <option value="arbitration">International Arbitration</option>
+        </select>
+      </div>
+      <div><label class="field-label">Client Industry</label>
+        <select id="in-ind">
+          <option value="">Select industry...</option>
+          <option value="financial">Financial Services / Banking</option>
+          <option value="healthcare">Healthcare / Life Sciences</option>
+          <option value="tech">Technology / SaaS</option>
+          <option value="energy">Energy / Utilities</option>
+          <option value="retail">Retail / Consumer</option>
+          <option value="manufacturing">Manufacturing</option>
+          <option value="legal">Legal / Professional Services</option>
+          <option value="government">Government / Public Sector</option>
+        </select>
+      </div>
+      <div><label class="field-label">Company Size</label>
+        <select id="in-size">
+          <option value="">Select...</option>
+          <option value="startup">Startup (&lt; 50 employees)</option>
+          <option value="sme">SME (50–500)</option>
+          <option value="mid">Mid-market (500–5,000)</option>
+          <option value="enterprise">Enterprise (5,000+)</option>
+        </select>
+      </div>
+      <div>
+        <label class="field-label">Known Sensitivities</label>
+        <label class="chk-row"><input type="checkbox" class="in-s"><span>Attorney-client privilege concerns</span></label>
+        <label class="chk-row"><input type="checkbox" class="in-s"><span>Personal data / GDPR / CCPA</span></label>
+        <label class="chk-row"><input type="checkbox" class="in-s"><span>Trade secrets / IP</span></label>
+        <label class="chk-row"><input type="checkbox" class="in-s"><span>Cross-border data transfer restrictions</span></label>
+        <label class="chk-row"><input type="checkbox" class="in-s"><span>Financial records / insider trading risk</span></label>
+      </div>
+      <div><label class="field-label">Jurisdictions</label><input type="text" id="in-juris" placeholder="e.g. US Federal, UK, EU (GDPR)"></div>
+      <button class="btn-generate" onclick="genIntake()">Generate Questionnaire →</button>
+    </div>
+    <div class="output-side">
+      <div class="output-placeholder" id="in-ph">
+        <span class="ph-icon">📋</span>
+        <p>Select a case type and industry to generate a tailored client intake questionnaire.</p>
+      </div>
+      <div class="output-body" id="in-out">
+        <div class="output-topbar">
+          <span class="out-tag">Client Questionnaire</span>
+          <div style="display:flex;gap:8px">
+            <button class="copy-btn" onclick="copyEl('in-content')">Copy</button>
+            <button class="print-btn no-print" onclick="printTool('screen-intake','Matter Intake Questionnaire')">Print / Download</button>
+          </div>
+        </div>
+        <div class="print-hdr" style="display:none" id="in-print-hdr">
+          <div><div class="print-hdr-logo">LDM <span>Global</span></div><div style="font-size:10px;color:#94a3b8;margin-top:2px">Matter Intake Questionnaire</div></div>
+          <div class="print-hdr-meta"><div id="in-print-date"></div><div style="font-size:9px;color:#64748b;margin-top:1px">Internal Use Only · LDM Global SME Team</div></div>
+        </div>
+        <div class="output-text" id="in-content"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════ LITIGATION HOLD ══════════════════════ -->
+<div id="screen-hold" class="screen">
+<div class="panel-hdr">
+  <div><div class="panel-title">Litigation Hold Notice Drafter</div><div class="panel-sub">Draft legally-neutral hold notices ready for counsel review</div></div>
+  <span class="panel-tag">eDiscovery · Legal Hold</span>
+</div>
+<div class="card" style="border-radius:0;border-left:none;border-right:none;border-top:none;margin-bottom:0">
+  <div class="form-split">
+    <div class="form-side">
+      <div><label class="field-label">Matter / Case Name</label><input type="text" id="hd-matter" placeholder="e.g. Smith v. Apex Corp"></div>
+      <div><label class="field-label">Issuing Organization</label><input type="text" id="hd-org" placeholder="e.g. Legal Department, Apex Corp"></div>
+      <div><label class="field-label">Custodian Audience</label><input type="text" id="hd-cust" placeholder="e.g. Sales team, all VP+ employees"></div>
+      <div><label class="field-label">Issue Date</label><input type="date" id="hd-date"></div>
+      <div>
+        <label class="field-label">Data Sources to Preserve</label>
+        <div class="tag-wrap" id="hd-sources">
+          <span class="tag-pill" onclick="tog(this,'hd')">Email</span>
+          <span class="tag-pill" onclick="tog(this,'hd')">Instant Messages / Teams</span>
+          <span class="tag-pill" onclick="tog(this,'hd')">Files &amp; Documents</span>
+          <span class="tag-pill" onclick="tog(this,'hd')">Voicemail</span>
+          <span class="tag-pill" onclick="tog(this,'hd')">Mobile Devices</span>
+          <span class="tag-pill" onclick="tog(this,'hd')">Cloud Storage</span>
+          <span class="tag-pill" onclick="tog(this,'hd')">Social Media</span>
+          <span class="tag-pill" onclick="tog(this,'hd')">Databases</span>
+          <span class="tag-pill" onclick="tog(this,'hd')">Physical Documents</span>
+          <span class="tag-pill" onclick="tog(this,'hd')">Calendar &amp; Contacts</span>
+        </div>
+      </div>
+      <div><label class="field-label">Subject Matter (brief, neutral description)</label><textarea id="hd-subject" placeholder="e.g. a commercial dispute involving alleged contract breaches during 2022–2024..."></textarea></div>
+      <div><label class="field-label">Tone</label>
+        <select id="hd-tone">
+          <option value="formal">Formal / Legal</option>
+          <option value="plain">Plain Language (non-legal audience)</option>
+          <option value="both">Both versions</option>
+        </select>
+      </div>
+      <button class="btn-generate" onclick="genHold()">Draft Hold Notice →</button>
+    </div>
+    <div class="output-side">
+      <div class="output-placeholder" id="hd-ph">
+        <span class="ph-icon">⚖️</span>
+        <p>Complete the matter details to generate a litigation hold notice template.</p>
+      </div>
+      <div class="output-body" id="hd-out">
+        <div class="output-topbar">
+          <span class="out-tag">Hold Notice Draft</span>
+          <div style="display:flex;gap:8px">
+            <button class="copy-btn" onclick="copyEl('hd-content')">Copy</button>
+            <button class="print-btn no-print" onclick="printTool('screen-hold','Litigation Hold Notice')">Print / Download</button>
+          </div>
+        </div>
+        <div class="print-hdr" style="display:none" id="hd-print-hdr">
+          <div><div class="print-hdr-logo">LDM <span>Global</span></div><div style="font-size:10px;color:#94a3b8;margin-top:2px">Litigation Hold Notice — TEMPLATE</div></div>
+          <div class="print-hdr-meta"><div id="hd-print-date"></div><div style="font-size:9px;color:#64748b;margin-top:1px">Requires counsel review before use · LDM Global SME Team</div></div>
+        </div>
+        <div class="output-text" id="hd-content"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════ TRIAGE CHECKLIST ══════════════════════ -->
+<div id="screen-triage" class="screen">
+<div class="panel-hdr">
+  <div><div class="panel-title">Incident Triage Checklist Builder</div><div class="panel-sub">Phased, prioritized response checklists by incident type &amp; severity</div></div>
+  <span class="panel-tag">IR · Checklist</span>
+</div>
+<div class="card" style="border-radius:0;border-left:none;border-right:none;border-top:none;margin-bottom:0">
+  <div class="form-split">
+    <div class="form-side">
+      <div><label class="field-label">Incident Type</label>
+        <select id="tr-type">
+          <option value="">Select...</option>
+          <option value="ransomware">Ransomware Attack</option>
+          <option value="breach">Data Breach / Unauthorized Access</option>
+          <option value="insider">Insider Threat / Data Exfiltration</option>
+          <option value="bec">Business Email Compromise (BEC)</option>
+          <option value="ddos">DDoS Attack</option>
+          <option value="phishing">Phishing Campaign (widespread)</option>
+          <option value="supply">Third-Party / Supply Chain Breach</option>
+          <option value="device">Lost / Stolen Device</option>
+          <option value="exposure">Accidental Data Exposure</option>
+          <option value="cloud">Cloud Misconfiguration</option>
+        </select>
+      </div>
+      <div><label class="field-label">Severity</label>
+        <select id="tr-sev">
+          <option value="critical">Critical — business operations impacted</option>
+          <option value="high">High — significant data or systems at risk</option>
+          <option value="medium">Medium — contained but under investigation</option>
+          <option value="low">Low — suspected / early stage</option>
+        </select>
+      </div>
+      <div><label class="field-label">Organization Type</label>
+        <select id="tr-org">
+          <option value="">Select...</option>
+          <option value="financial">Financial Services (regulated)</option>
+          <option value="healthcare">Healthcare (HIPAA scope)</option>
+          <option value="tech">Technology / SaaS</option>
+          <option value="retail">Retail / E-commerce</option>
+          <option value="legal">Legal / Professional Services</option>
+          <option value="government">Government / Public Sector</option>
+          <option value="manufacturing">Manufacturing / OT environments</option>
+        </select>
+      </div>
+      <div>
+        <label class="field-label">Applicable Regulations</label>
+        <div class="tag-wrap" id="tr-regs">
+          <span class="tag-pill" onclick="tog(this,'tr')">GDPR</span>
+          <span class="tag-pill" onclick="tog(this,'tr')">CCPA</span>
+          <span class="tag-pill" onclick="tog(this,'tr')">HIPAA</span>
+          <span class="tag-pill" onclick="tog(this,'tr')">PCI-DSS</span>
+          <span class="tag-pill" onclick="tog(this,'tr')">SOX</span>
+          <span class="tag-pill" onclick="tog(this,'tr')">ISO 27001</span>
+          <span class="tag-pill" onclick="tog(this,'tr')">NIS2</span>
+        </div>
+      </div>
+      <div>
+        <label class="field-label">Teams Involved</label>
+        <label class="chk-row"><input type="checkbox" class="tr-t" checked><span>IT / Security</span></label>
+        <label class="chk-row"><input type="checkbox" class="tr-t" checked><span>Legal / Compliance</span></label>
+        <label class="chk-row"><input type="checkbox" class="tr-t"><span>Executive / C-Suite</span></label>
+        <label class="chk-row"><input type="checkbox" class="tr-t"><span>HR</span></label>
+        <label class="chk-row"><input type="checkbox" class="tr-t"><span>PR / Communications</span></label>
+        <label class="chk-row"><input type="checkbox" class="tr-t"><span>External Forensics / eDiscovery</span></label>
+      </div>
+      <button class="btn-generate" onclick="genTriage()">Build Triage Checklist →</button>
+    </div>
+    <div class="output-side">
+      <div class="output-placeholder" id="tr-ph">
+        <span class="ph-icon">🚨</span>
+        <p>Select the incident type and parameters to generate a prioritized triage checklist.</p>
+      </div>
+      <div class="output-body" id="tr-out">
+        <div class="output-topbar">
+          <span class="out-tag">Triage Checklist</span>
+          <div style="display:flex;gap:8px">
+            <button class="copy-btn" onclick="copyEl('tr-content')">Copy</button>
+            <button class="print-btn no-print" onclick="printTool('screen-triage','Incident Triage Checklist')">Print / Download</button>
+          </div>
+        </div>
+        <div class="print-hdr" style="display:none" id="tr-print-hdr">
+          <div><div class="print-hdr-logo">LDM <span>Global</span></div><div style="font-size:10px;color:#94a3b8;margin-top:2px">Incident Triage Checklist</div></div>
+          <div class="print-hdr-meta"><div id="tr-print-date"></div><div style="font-size:9px;color:#64748b;margin-top:1px">Internal Use Only · LDM Global SME Team</div></div>
+        </div>
+        <div id="tr-content"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════ REVIEW PROTOCOL ══════════════════════ -->
+<div id="screen-protocol" class="screen">
+<div class="panel-hdr">
+  <div><div class="panel-title">Review Protocol Generator</div><div class="panel-sub">Generate structured review protocol outlines for project leads</div></div>
+  <span class="panel-tag">eDiscovery · Protocol</span>
+</div>
+<div class="card" style="border-radius:0;border-left:none;border-right:none;border-top:none;margin-bottom:0">
+  <div class="form-split">
+    <div class="form-side">
+      <div><label class="field-label">Matter Name</label><input type="text" id="pr-matter" placeholder="e.g. Project Falcon — Internal Investigation"></div>
+      <div><label class="field-label">Primary Jurisdiction</label>
+        <select id="pr-juris">
+          <option value="">Select...</option>
+          <option value="us_federal">US Federal (FRCP)</option>
+          <option value="us_state">US State Court</option>
+          <option value="uk">UK (CPR)</option>
+          <option value="eu">EU / GDPR-governed</option>
+          <option value="australia">Australia (FCA)</option>
+          <option value="singapore">Singapore</option>
+          <option value="multi">Multi-jurisdictional</option>
+          <option value="internal">Internal (no court)</option>
+        </select>
+      </div>
+      <div><label class="field-label">Estimated Document Volume</label>
+        <select id="pr-vol">
+          <option value="">Select...</option>
+          <option value="small">Small — &lt; 10,000 docs</option>
+          <option value="medium">Medium — 10,000–100,000 docs</option>
+          <option value="large">Large — 100,000–1M docs</option>
+          <option value="xlarge">Very Large — 1M+ docs</option>
+        </select>
+      </div>
+      <div><label class="field-label">Sensitivity Level</label>
+        <select id="pr-sens">
+          <option value="standard">Standard (business records)</option>
+          <option value="elevated">Elevated (PII / financial data)</option>
+          <option value="high">High (regulated data / PHI)</option>
+          <option value="classified">Classified / Highly Confidential</option>
+        </select>
+      </div>
+      <div>
+        <label class="field-label">Document Types in Scope</label>
+        <div class="tag-wrap" id="pr-docs">
+          <span class="tag-pill" onclick="tog(this,'pr')">Email &amp; Attachments</span>
+          <span class="tag-pill" onclick="tog(this,'pr')">IM / Chat</span>
+          <span class="tag-pill" onclick="tog(this,'pr')">Contracts</span>
+          <span class="tag-pill" onclick="tog(this,'pr')">Financial Records</span>
+          <span class="tag-pill" onclick="tog(this,'pr')">Source Code</span>
+          <span class="tag-pill" onclick="tog(this,'pr')">HR / Personnel Files</span>
+          <span class="tag-pill" onclick="tog(this,'pr')">Meeting Notes</span>
+          <span class="tag-pill" onclick="tog(this,'pr')">Audio / Video</span>
+        </div>
+      </div>
+      <div>
+        <label class="field-label">Review Approach</label>
+        <label class="chk-row"><input type="checkbox" class="pr-a"><span>Technology Assisted Review (TAR / CAL)</span></label>
+        <label class="chk-row"><input type="checkbox" class="pr-a"><span>Linear review</span></label>
+        <label class="chk-row"><input type="checkbox" class="pr-a"><span>Privilege review &amp; logging</span></label>
+        <label class="chk-row"><input type="checkbox" class="pr-a"><span>Redaction requirements</span></label>
+        <label class="chk-row"><input type="checkbox" class="pr-a"><span>Foreign language documents</span></label>
+        <label class="chk-row"><input type="checkbox" class="pr-a"><span>QC / second-level review</span></label>
+      </div>
+      <button class="btn-generate" onclick="genProtocol()">Generate Review Protocol →</button>
+    </div>
+    <div class="output-side">
+      <div class="output-placeholder" id="pr-ph">
+        <span class="ph-icon">📂</span>
+        <p>Configure matter details to generate a structured review protocol outline.</p>
+      </div>
+      <div class="output-body" id="pr-out">
+        <div class="output-topbar">
+          <span class="out-tag">Review Protocol</span>
+          <div style="display:flex;gap:8px">
+            <button class="copy-btn" onclick="copyEl('pr-content')">Copy</button>
+            <button class="print-btn no-print" onclick="printTool('screen-protocol','Review Protocol')">Print / Download</button>
+          </div>
+        </div>
+        <div class="print-hdr" style="display:none" id="pr-print-hdr">
+          <div><div class="print-hdr-logo">LDM <span>Global</span></div><div style="font-size:10px;color:#94a3b8;margin-top:2px">Review Protocol Outline</div></div>
+          <div class="print-hdr-meta"><div id="pr-print-date"></div><div style="font-size:9px;color:#64748b;margin-top:1px">Requires counsel approval before use · LDM Global SME Team</div></div>
+        </div>
+        <div class="output-text" id="pr-content"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+// ── Navigation ───────────────────────────────────────────────
+function openTool(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+id).classList.add('active');
+  document.getElementById('btn-back').style.display='flex';
+  window.scrollTo(0,0);
+}
+function goBack(){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-hub').classList.add('active');
+  document.getElementById('btn-back').style.display='none';
+  window.scrollTo(0,0);
+}
+
+// ── Helpers ──────────────────────────────────────────────────
+function tog(el){el.classList.toggle('on')}
+function getTags(id){return[...document.querySelectorAll('#'+id+' .tag-pill.on')].map(t=>t.textContent.trim()).join(', ')}
+function getChecked(cls){return[...document.querySelectorAll('.'+cls+':checked')].map(el=>el.nextElementSibling.textContent.trim())}
+function v(id){return(document.getElementById(id)||{}).value||''}
+function show(outId,phId){document.getElementById(outId).classList.add('show');document.getElementById(phId).style.display='none'}
+function copyEl(id){
+  const t=document.getElementById(id).innerText;
+  navigator.clipboard.writeText(t).then(()=>{
+    const b=event.target;const o=b.textContent;b.textContent='Copied!';
+    setTimeout(()=>b.textContent=o,1800);
+  }).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
+    const b=event.target;const o=b.textContent;b.textContent='Copied!';setTimeout(()=>b.textContent=o,1800);
+  });
+}
+function fmt(n){if(n>=1000000)return'$'+(n/1e6).toFixed(1)+'M';if(n>=1000)return'$'+(n/1000).toFixed(0)+'K';return'$'+n;}
+
+// ════════════════════════════════════════════════════════════
+// 1. SCOPE ESTIMATOR
+// ════════════════════════════════════════════════════════════
+function genScope(){
+  const cust=parseInt(v('sc-cust'))||5;
+  const matter=v('sc-matter')||'Unnamed Matter';
+  const type=v('sc-type')||'commercial';
+  const platform=v('sc-platform')||'Not yet decided';
+  const dtypes=getTags('sc-dtypes')||'Email';
+  const tar=document.getElementById('sc-tar').checked;
+  const foreign=document.getElementById('sc-foreign').checked;
+  const priv=document.getElementById('sc-priv').checked;
+  const remote=document.getElementById('sc-remote').checked;
+  const cross=document.getElementById('sc-cross').checked;
+  const notes=v('sc-notes');
+
+  // Volume model: ~2.5 GB per custodian per year, assume 2yr date range
+  const gbPerCust={email:1.8,'slack / teams':0.4,'sharepoint / onedrive':1.2,salesforce:0.3,'box / dropbox':0.8,'mobile / sms':0.2,databases:2.0,'laptops / desktops':3.5};
+  let gbBase=cust*2.5;
+  const selectedTypes=dtypes.toLowerCase().split(', ');
+  selectedTypes.forEach(t=>{const k=Object.keys(gbPerCust).find(k=>t.includes(k.split(' ')[0]));if(k)gbBase+=cust*(gbPerCust[k]-0.5);});
+  const gbLo=Math.round(gbBase*0.7);
+  const gbHi=Math.round(gbBase*1.6);
+  const docsLo=Math.round(gbLo*3000);
+  const docsHi=Math.round(gbHi*5000);
+
+  // Cost model
+  const revRate=tar?0.65:1.0;
+  const crossMult=cross?1.3:1.0;
+  const privMult=priv?1.2:1.0;
+  const matterMult={commercial:1,regulatory:1.1,employment:0.9,ip:1.15,ma:0.95,internal:0.9,breach:1.05}[type]||1;
+
+  const collLo=Math.round((800+cust*120)*(remote?1.3:1)*crossMult);
+  const collHi=Math.round((2000+cust*250)*(remote?1.4:1)*crossMult);
+  const procLo=Math.round(gbLo*8*matterMult);
+  const procHi=Math.round(gbHi*14*matterMult);
+  const hostLo=Math.round(gbLo*3.5*3); // 3 months base
+  const hostHi=Math.round(gbHi*4.5*6);
+  const revLo=Math.round(docsLo*0.008*revRate*privMult*matterMult);
+  const revHi=Math.round(docsHi*0.015*revRate*privMult*matterMult);
+  const prodLo=Math.round(gbLo*4+500);
+  const prodHi=Math.round(gbHi*7+1200);
+  const totalLo=collLo+procLo+hostLo+revLo+prodLo;
+  const totalHi=collHi+procHi+hostHi+revHi+prodHi;
+
+  // Timeline
+  const timelineWeeks={small:[2,4],medium:[4,8],large:[8,14],xlarge:[14,26]};
+  const sizeKey=cust<=5?'small':cust<=20?'medium':cust<=60?'large':'xlarge';
+  const [wkLo,wkHi]=timelineWeeks[sizeKey];
+
+  const typeLabels={commercial:'Commercial Litigation',regulatory:'SEC / Regulatory Investigation',employment:'Employment Litigation',ip:'IP / Trade Secret',ma:'M&A Due Diligence',internal:'Internal Investigation',breach:'Data Breach / IR'};
+
+  const flags=[];
+  if(tar)flags.push('TAR/AI-assisted review selected — estimated 35% review cost reduction applied');
+  if(foreign)flags.push('Foreign language documents — add translation costs and specialist reviewers');
+  if(priv)flags.push('Significant privilege concerns — first-pass privilege review and logging required');
+  if(remote)flags.push('Remote collection — elevated collection costs applied');
+  if(cross)flags.push('Cross-border / multi-jurisdictional — data transfer restrictions, local counsel coordination');
+
+  let out='';
+  out+=`MATTER OVERVIEW\n`;
+  out+=`Matter: ${matter}\n`;
+  out+=`Type: ${typeLabels[type]||type}  |  Custodians: ${cust}  |  Platform: ${platform}\n`;
+  out+=`Data Types: ${dtypes}\n`;
+  if(notes)out+=`Notes: ${notes}\n`;
+  out+=`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+
+  out+=`ESTIMATED DATA VOLUME\n`;
+  out+=`• Estimated data volume: ${gbLo} – ${gbHi} GB\n`;
+  out+=`• Estimated document count (pre-dedup): ${(docsLo/1000).toFixed(0)}K – ${(docsHi/1000).toFixed(0)}K documents\n`;
+  out+=`• Assumption: ~${Math.round(gbBase/cust*10)/10} GB avg per custodian based on selected data types\n\n`;
+
+  out+=`PROCESSING & REVIEW TIMELINE\n`;
+  out+=`• Phase 1 — Collection & processing: 1–3 weeks\n`;
+  out+=`• Phase 2 — Culling, search terms, TAR setup: 1–2 weeks\n`;
+  out+=`• Phase 3 — First-pass review: ${Math.round(wkLo*0.5)}–${Math.round(wkHi*0.5)} weeks\n`;
+  out+=`• Phase 4 — Privilege review & production: 1–3 weeks\n`;
+  out+=`• Estimated total timeline: ${wkLo}–${wkHi} weeks from collection start\n\n`;
+
+  out+=`COST BAND ESTIMATE (indicative — subject to actual data volumes)\n`;
+  out+=`• Collection:   ${fmt(collLo)} – ${fmt(collHi)}\n`;
+  out+=`• Processing:   ${fmt(procLo)} – ${fmt(procHi)}\n`;
+  out+=`• Hosting:      ${fmt(hostLo)} – ${fmt(hostHi)} (3–6 months)\n`;
+  out+=`• Review:       ${fmt(revLo)} – ${fmt(revHi)}${tar?' (TAR rate applied)':''}\n`;
+  out+=`• Production:   ${fmt(prodLo)} – ${fmt(prodHi)}\n`;
+  out+=`────────────────────────────────────────\n`;
+  out+=`• TOTAL ESTIMATE: ${fmt(totalLo)} – ${fmt(totalHi)}\n\n`;
+
+  if(flags.length){
+    out+=`KEY RISK FLAGS\n`;
+    flags.forEach(f=>out+=`⚠  ${f}\n`);
+    out+=`\n`;
+  }
+
+  out+=`RECOMMENDED NEXT STEPS\n`;
+  out+=`1. Confirm custodian list and issue litigation hold notices\n`;
+  out+=`2. Conduct data mapping interview with IT to validate GB estimates\n`;
+  out+=`3. Agree search term and custodian prioritization with counsel\n`;
+  out+=`4. Confirm review platform and set up matter workspace\n`;
+  out+=`5. Schedule collection kick-off — target within 5 business days\n\n`;
+
+  out+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+  out+=`NOTE: All estimates are indicative only and must be validated against actual collected data volumes. Prepared by LDM Global SME team — ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}.`;
+
+  document.getElementById('sc-content').textContent=out;
+  show('sc-out','sc-ph');
+}
+
+// ════════════════════════════════════════════════════════════
+// 2. MATTER INTAKE QUESTIONNAIRE
+// ════════════════════════════════════════════════════════════
+const INTAKE_QS={
+  background:{
+    sec:['What specific regulatory inquiry or government investigation has been initiated, and which agency is involved?','What is the alleged conduct or activity under investigation?','What is the date range of the conduct in question?','Who are the key individuals alleged to be involved, and what are their roles?','Has the company received any subpoenas, CIDs, or informal requests for information? If so, provide copies.','Has outside counsel been engaged? If so, who, and when were they first retained?'],
+    internal:['What triggered this investigation — a whistleblower complaint, audit finding, or other event?','Who are the subjects of the investigation and what are their titles/roles?','Has HR been involved, and is there any parallel employment action underway?','Has a litigation hold been issued? If so, for which custodians?','Are there any parallel criminal or regulatory investigations?','Who is overseeing the investigation — inside counsel, outside counsel, or both?'],
+    employment:['What are the specific claims asserted — discrimination, harassment, wrongful termination, wage/hour?','Who are the named claimants and what departments/functions are they in?','What is the date of the alleged conduct and when was the claim first filed?','Are there any class or collective action allegations?','Has any internal HR investigation been conducted? What were the findings?','Has the matter been filed in court or is it still in the EEOC / pre-litigation stage?'],
+    ip:['What specific trade secrets or intellectual property are alleged to have been misappropriated?','Who are the alleged bad actors and when did they leave or join the organization?','Is there evidence of data exfiltration — USB devices, cloud uploads, personal email transfers?','What digital forensic investigation has been conducted to date?','Are there any non-compete or NDA agreements implicated?','Has a preliminary injunction been sought or granted?'],
+    ma:['What is the deal structure — asset purchase, stock purchase, or merger?','What regulatory approvals are required and what is the expected closing timeline?','What due diligence scope has been agreed with counterparty?','Are there any pending or threatened litigation matters that must be disclosed?','Is there any specific IP, employment, or regulatory risk that has been flagged by advisors?'],
+    antitrust:['What market conduct is alleged — price fixing, market allocation, bid rigging, or abuse of dominance?','Which jurisdictions are implicated, and which regulators have made contact?','Are there parallel civil class actions in addition to any regulatory investigation?','What communications (email, messaging) are implicated in the alleged conduct?','Have any leniency or immunity applications been made or considered?'],
+    breach:['What type of data has been confirmed or suspected to be compromised?','How was the breach initially detected and when?','What is the estimated number of individuals whose data may be affected?','Have any regulators been notified, or has notification been assessed?','What forensic firm has been engaged and what has been completed?','Has the threat actor been identified, and is the breach ongoing or contained?'],
+    commercial:['What are the core contractual obligations alleged to have been breached?','What is the dollar value of damages being claimed?','Has any pre-suit correspondence or demand letter been issued?','Are there any parallel arbitration clauses that may affect forum?','What is the nature of the relationship between the parties and how long has it existed?'],
+    subpoena:['What type of subpoena has been received — grand jury, civil investigative demand, or court-ordered?','What is the return date and have any extensions been requested?','What custodians and data sources are identified in the subpoena?','Has outside counsel been engaged to advise on scope objections?','Is there any Fifth Amendment privilege or other constitutional issue implicated?'],
+    arbitration:['What arbitral rules apply — ICC, AAA, LCIA, or other?','Where is the seat of arbitration and what governing law applies?','Who are the arbitrators, and has the tribunal been constituted?','What is the timetable ordered, including key milestones and the hearing date?','Have any interim measures or emergency relief been sought?'],
+  },
+  data:{
+    base:['How many email accounts are in scope and on what platform (Exchange, Google Workspace, other)?','What collaboration and messaging tools are in use — Microsoft Teams, Slack, Zoom, other?','What cloud storage platforms are used — SharePoint, OneDrive, Box, Dropbox, Google Drive?','Are any relevant CRM or business application records in scope — Salesforce, NetSuite, SAP?','What is the approximate volume of data held by the identified custodians?','Do any custodians use personal devices or personal email accounts for business communication?','Are there any third-party or contractor custodians whose data may be relevant?'],
+    financial:['Are any trading or financial systems in scope — Bloomberg terminals, trading platforms, financial databases?'],
+    healthcare:['Are any clinical or EHR systems in scope — Epic, Cerner, other?','Are there any HIPAA-covered systems that would require specific handling during collection?'],
+    tech:['Is source code or version control data relevant — GitHub, Bitbucket, other?','Are there cloud infrastructure logs relevant — AWS CloudTrail, Azure Monitor, GCP Audit?'],
+  },
+  hold:{
+    base:['Has a litigation hold been issued for all identified custodians?','Have auto-delete and retention policies been suspended for in-scope data?','Have custodians acknowledged receipt of hold notices in writing?','Are there any departing or departed employees whose data needs to be captured?','Has hold coverage been extended to third-party custodians where relevant?'],
+  },
+  regulatory:{
+    gdpr:['Have you mapped which EU/EEA individuals are affected?','Is your supervisory authority relationship active — have you assessed notification obligations under GDPR Article 33?','Are there cross-border data transfer restrictions affecting collection from EU/EEA entities?'],
+    ccpa:['Have California resident records been identified in the potentially affected data?','Has a CCPA breach notification assessment been conducted?'],
+    hipaa:['Has a HIPAA breach risk assessment been completed under the four-factor test?','Have covered entities and business associates been notified as required?'],
+    pci:['Has the PCI DSS breach notification process been triggered?','Have payment card brands and acquiring banks been notified?'],
+    financial:['Has notification to financial regulators (SEC, FINRA, FCA, etc.) been assessed?','Are there any reporting obligations under SOX or Dodd-Frank implicated?'],
+  },
+  resources:{
+    base:['What is the anticipated litigation budget for eDiscovery and document review?','What is the expected duration of the matter — months or years?','Who is the internal point of contact for day-to-day eDiscovery coordination?','Is there an approved review platform, or does that need to be determined?','What are the key deadline milestones — court orders, regulatory response deadlines, deal timelines?'],
+  },
+  technical:{
+    base:['What production format is required — TIFF/PDF with load files, native, or other?','What metadata fields are required for production?','Are there any Bates numbering or confidentiality designation requirements?','Has a search term protocol been agreed with opposing counsel or regulators?','Are there any data residency restrictions affecting where data can be hosted or reviewed?'],
+  }
+};
+
+function genIntake(){
+  const caseType=v('in-case');
+  const industry=v('in-ind');
+  const size=v('in-size');
+  const juris=v('in-juris');
+  const sens=getChecked('in-s');
+  if(!caseType){alert('Please select a case type.');return;}
+
+  const caseLabels={sec:'SEC / Regulatory Investigation',internal:'Internal Investigation',employment:'Employment Litigation',ip:'IP / Trade Secret Dispute',ma:'M&A Due Diligence',antitrust:'Antitrust / Competition',breach:'Data Breach / Incident Response',commercial:'Commercial Litigation',subpoena:'Government Subpoena',arbitration:'International Arbitration'};
+  const indLabels={financial:'Financial Services / Banking',healthcare:'Healthcare / Life Sciences',tech:'Technology / SaaS',energy:'Energy / Utilities',retail:'Retail / Consumer',manufacturing:'Manufacturing',legal:'Legal / Professional Services',government:'Government / Public Sector'};
+
+  let out='';
+  out+=`MATTER INTAKE QUESTIONNAIRE\n`;
+  out+=`Case Type: ${caseLabels[caseType]||caseType}  |  Industry: ${indLabels[industry]||industry||'Not specified'}  |  Size: ${size||'Not specified'}\n`;
+  if(juris)out+=`Jurisdiction(s): ${juris}\n`;
+  out+=`Prepared by LDM Global SME Team — ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}\n`;
+  out+=`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+
+  // Section 1: Matter Background
+  out+=`SECTION 1 — MATTER BACKGROUND\n\n`;
+  const bqs=INTAKE_QS.background[caseType]||INTAKE_QS.background.commercial;
+  bqs.forEach((q,i)=>out+=`${i+1}. ${q}\n\n`);
+
+  // Section 2: Data Landscape
+  out+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  out+=`SECTION 2 — DATA LANDSCAPE\n\n`;
+  let dataQs=[...INTAKE_QS.data.base];
+  if(industry==='financial')dataQs=[...dataQs,...INTAKE_QS.data.financial];
+  if(industry==='healthcare')dataQs=[...dataQs,...INTAKE_QS.data.healthcare];
+  if(industry==='tech')dataQs=[...dataQs,...INTAKE_QS.data.tech];
+  dataQs.forEach((q,i)=>out+=`${i+1}. ${q}\n\n`);
+
+  // Section 3: Legal Hold
+  out+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  out+=`SECTION 3 — LEGAL HOLD STATUS\n\n`;
+  INTAKE_QS.hold.base.forEach((q,i)=>out+=`${i+1}. ${q}\n\n`);
+
+  // Section 4: Regulatory
+  out+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  out+=`SECTION 4 — REGULATORY & COMPLIANCE CONSIDERATIONS\n\n`;
+  let regQs=[];
+  if(sens.some(s=>s.includes('GDPR')||s.includes('Personal')))regQs=[...regQs,...INTAKE_QS.regulatory.gdpr,...INTAKE_QS.regulatory.ccpa];
+  if(industry==='healthcare')regQs=[...regQs,...INTAKE_QS.regulatory.hipaa];
+  if(industry==='financial')regQs=[...regQs,...INTAKE_QS.regulatory.financial,...INTAKE_QS.regulatory.pci];
+  if(regQs.length===0)regQs=['What data privacy or sector-specific regulations apply to this matter and which jurisdictions are in scope?','Has a regulatory notification assessment been completed, and what are the applicable deadlines?','Are there any sector-specific recordkeeping regulations that affect the scope of preservation?','Have regulatory counsel advised on any compliance obligations arising from this matter?'];
+  regQs.forEach((q,i)=>out+=`${i+1}. ${q}\n\n`);
+
+  // Section 5: Resources
+  out+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  out+=`SECTION 5 — RESOURCES & CONSTRAINTS\n\n`;
+  INTAKE_QS.resources.base.forEach((q,i)=>out+=`${i+1}. ${q}\n\n`);
+
+  // Section 6: Technical
+  out+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  out+=`SECTION 6 — TECHNICAL REQUIREMENTS\n\n`;
+  INTAKE_QS.technical.base.forEach((q,i)=>out+=`${i+1}. ${q}\n\n`);
+
+  out+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+  out+=`NOTE: This questionnaire is a structured template. Questions should be reviewed and adapted by counsel before client use. LDM Global · Internal Use Only.`;
+
+  document.getElementById('in-content').textContent=out;
+  show('in-out','in-ph');
+}
+
+// ════════════════════════════════════════════════════════════
+// 3. LITIGATION HOLD DRAFTER
+// ════════════════════════════════════════════════════════════
+function genHold(){
+  const matter=v('hd-matter')||'[Matter Name]';
+  const org=v('hd-org')||'[Issuing Organization]';
+  const cust=v('hd-cust')||'all relevant employees';
+  const dateRaw=v('hd-date');
+  const dateStr=dateRaw?new Date(dateRaw+'T12:00:00').toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}):new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const sources=getTags('hd-sources')||'all business records and communications';
+  const subject=v('hd-subject')||'a legal matter requiring preservation of relevant records';
+  const tone=v('hd-tone');
+
+  function formalVersion(){
+    let t='';
+    t+=`LITIGATION HOLD NOTICE\n`;
+    t+=`PRIVILEGED AND CONFIDENTIAL — ATTORNEY-CLIENT COMMUNICATION\n\n`;
+    t+=`To:       ${cust}\n`;
+    t+=`From:     ${org} — Legal Department\n`;
+    t+=`Date:     ${dateStr}\n`;
+    t+=`Re:       Litigation Hold — ${matter}\n\n`;
+    t+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+    t+=`1. PURPOSE AND LEGAL OBLIGATION\n\n`;
+    t+=`This notice is issued to inform you of your legal obligation to preserve certain documents and electronically stored information (ESI) in connection with ${subject}.\n\n`;
+    t+=`As of ${dateStr} (the "Trigger Date"), ${org} has a reasonable anticipation of litigation or regulatory inquiry. This obligation is recognized under applicable law and requires that all potentially relevant materials be preserved immediately and maintained until further notice.\n\n`;
+    t+=`Failure to comply with this notice may result in serious legal consequences, including sanctions, adverse inference instructions, or personal liability. If you have any questions regarding your obligations, you must contact the Legal Department immediately.\n\n`;
+    t+=`2. SCOPE OF PRESERVATION\n\n`;
+    t+=`You are required to preserve ALL documents and ESI that may be relevant to ${matter}, regardless of form or location. This includes, but is not limited to, the following categories:\n\n`;
+    sources.split(', ').forEach(s=>{t+=`   • ${s}\n`;});
+    t+=`\nThis obligation applies to all materials dated from the beginning of the relevant period through the date of this notice and beyond, until this hold is formally released.\n\n`;
+    t+=`3. WHAT YOU MUST NOT DO\n\n`;
+    t+=`Effective immediately, you must NOT:\n\n`;
+    t+=`   • Delete, destroy, overwrite, or modify any potentially relevant documents or data\n`;
+    t+=`   • Allow any automated deletion or archiving routines to operate on in-scope data\n`;
+    t+=`   • Discard any physical documents, printouts, or handwritten notes that may be relevant\n`;
+    t+=`   • Transfer or copy relevant materials to personal devices or personal accounts\n`;
+    t+=`   • Discuss the existence or contents of this hold with anyone outside the Legal Department\n\n`;
+    t+=`If you are aware of any scheduled deletion or auto-archive of relevant data, contact the Legal Department immediately.\n\n`;
+    t+=`4. FREQUENTLY ASKED QUESTIONS\n\n`;
+    t+=`Q: Does this apply to my personal devices if I used them for work communication?\n`;
+    t+=`A: Yes. If you used personal devices or personal email accounts for any business communication relevant to this matter, those records must also be preserved.\n\n`;
+    t+=`Q: What should I do if I accidentally delete something?\n`;
+    t+=`A: Contact the Legal Department immediately. Do not attempt to recover or recreate the deleted item yourself.\n\n`;
+    t+=`Q: How long will this hold remain in effect?\n`;
+    t+=`A: This hold will remain in effect until the Legal Department formally notifies you in writing that it has been released. Do not assume the hold is lifted without written confirmation.\n\n`;
+    t+=`Q: Who should I contact with questions?\n`;
+    t+=`A: Contact the Legal Department at [legal@company.com] or [General Counsel Name] at [phone]. Do not discuss this matter with colleagues unless instructed by Legal.\n\n`;
+    t+=`5. ACKNOWLEDGMENT\n\n`;
+    t+=`Please confirm receipt and acknowledgment of this Litigation Hold Notice by returning a signed copy to the Legal Department by [DATE — 3 BUSINESS DAYS FROM ISSUE].\n\n`;
+    t+=`By signing below, I confirm that I have read, understood, and will comply with the obligations set forth in this Litigation Hold Notice.\n\n`;
+    t+=`Name: ___________________________  Title: ___________________________\n\n`;
+    t+=`Signature: ______________________  Date: ____________________________\n\n`;
+    return t;
+  }
+
+  function plainVersion(){
+    let t='';
+    t+=`IMPORTANT — PLEASE READ AND RESPOND: RECORD PRESERVATION NOTICE\n\n`;
+    t+=`To:    ${cust}\n`;
+    t+=`From:  ${org}\n`;
+    t+=`Date:  ${dateStr}\n`;
+    t+=`About: ${matter}\n\n`;
+    t+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+    t+=`WHY YOU ARE RECEIVING THIS\n\n`;
+    t+=`Our organization is involved in a legal matter relating to ${subject}. We are legally required to keep certain records safe and unchanged. This notice explains what you need to do.\n\n`;
+    t+=`WHAT YOU NEED TO PRESERVE\n\n`;
+    t+=`Please do not delete or change any work-related records that could be connected to this matter, including:\n\n`;
+    sources.split(', ').forEach(s=>{t+=`   • ${s}\n`;});
+    t+=`\nThis includes records on your work computer, laptop, phone, and any other device you use for work — even if it is a personal device.\n\n`;
+    t+=`WHAT YOU MUST NOT DO\n\n`;
+    t+=`   • Do not delete emails, messages, files, or documents\n`;
+    t+=`   • Do not empty your recycle bin or trash\n`;
+    t+=`   • Do not rely on automatic cleanup or archiving to handle records\n`;
+    t+=`   • Do not move records to a personal account or personal storage\n\n`;
+    t+=`If your computer or device has an automatic cleanup schedule, please contact IT immediately to pause it.\n\n`;
+    t+=`WHAT TO DO IF YOU HAVE QUESTIONS\n\n`;
+    t+=`Contact [Legal Contact Name] at [email/phone]. Do not guess — if you are unsure whether something should be kept, keep it and ask.\n\n`;
+    t+=`PLEASE REPLY TO CONFIRM\n\n`;
+    t+=`Reply to this notice to confirm you have read and understood it. Your confirmation is required by [DATE — 3 BUSINESS DAYS FROM ISSUE].\n\n`;
+    t+=`I confirm I have read this notice and will preserve the relevant records.\n\n`;
+    t+=`Name: ___________________________  Date: ____________________________\n\n`;
+    return t;
+  }
+
+  let out='⚠ TEMPLATE — Requires review by qualified legal counsel before use.\n\n';
+  if(tone==='both'){
+    out+=`VERSION A: FORMAL / LEGAL\n\n`;
+    out+=formalVersion();
+    out+=`\n${'═'.repeat(42)}\n\n`;
+    out+=`VERSION B: PLAIN LANGUAGE\n\n`;
+    out+=plainVersion();
+  } else if(tone==='plain'){
+    out+=plainVersion();
+  } else {
+    out+=formalVersion();
+  }
+
+  document.getElementById('hd-content').textContent=out;
+  show('hd-out','hd-ph');
+}
+
+// ════════════════════════════════════════════════════════════
+// 4. INCIDENT TRIAGE CHECKLIST
+// ════════════════════════════════════════════════════════════
+const TRIAGE_DATA={
+  phase0:{
+    title:'PHASE 0 — IMMEDIATE (First 60 minutes)',
+    ransomware:[
+      {p:'CRITICAL',t:'IT/Security',a:'Isolate affected systems from the network — do NOT shut down (preserve forensic state)'},
+      {p:'CRITICAL',t:'IT/Security',a:'Identify the ransomware variant and determine blast radius — which systems are encrypted?'},
+      {p:'CRITICAL',t:'Legal',a:'Notify General Counsel and outside counsel immediately — attorney-client privilege attaches now'},
+      {p:'CRITICAL',t:'Executive',a:'Escalate to C-Suite — this is a business continuity event requiring executive authority'},
+      {p:'HIGH',t:'IT/Security',a:'Disable affected user accounts and rotate privileged credentials'},
+      {p:'HIGH',t:'IT/Security',a:'Preserve system logs — do not reboot or wipe any affected system without forensic imaging'},
+      {p:'HIGH',t:'IT/Security',a:'Identify and isolate backup systems — determine if backups are also encrypted'},
+      {p:'MEDIUM',t:'Legal',a:'Assess initial notification obligations — preserve all evidence for regulatory assessment'},
+    ],
+    breach:[
+      {p:'CRITICAL',t:'IT/Security',a:'Contain the breach — revoke compromised credentials, close attack vector'},
+      {p:'CRITICAL',t:'Legal',a:'Engage outside counsel immediately to assert privilege over investigation'},
+      {p:'CRITICAL',t:'IT/Security',a:'Preserve all logs — network, authentication, endpoint — before any system changes'},
+      {p:'HIGH',t:'IT/Security',a:'Identify the scope — what data, which systems, which accounts were accessed?'},
+      {p:'HIGH',t:'Legal',a:'Begin initial notification obligation assessment — determine applicable regulations'},
+      {p:'MEDIUM',t:'IT/Security',a:'Implement enhanced monitoring on remaining systems for lateral movement'},
+    ],
+    insider:[
+      {p:'CRITICAL',t:'HR/Legal',a:'Preserve all digital forensic evidence before any employment action — coordinate with Legal'},
+      {p:'CRITICAL',t:'IT/Security',a:'Image affected devices and accounts immediately — do not alert the subject'},
+      {p:'CRITICAL',t:'Legal',a:'Engage outside counsel — insider matters often involve employment law and criminal risk'},
+      {p:'HIGH',t:'IT/Security',a:'Review DLP alerts, cloud upload logs, USB activity for the subject'},
+      {p:'HIGH',t:'HR',a:'Do not take any employment action until forensic preservation is complete'},
+      {p:'MEDIUM',t:'Legal',a:'Assess whether law enforcement referral is appropriate'},
+    ],
+    bec:[
+      {p:'CRITICAL',t:'Finance/IT',a:'Halt any pending wire transfers initiated from the compromised account'},
+      {p:'CRITICAL',t:'Finance',a:'Contact the bank immediately — request a wire recall if a fraudulent transfer was made'},
+      {p:'CRITICAL',t:'IT/Security',a:'Reset compromised account credentials and enable MFA immediately'},
+      {p:'HIGH',t:'Legal',a:'Notify counsel — FBI IC3 complaint may be required; preserve all email evidence'},
+      {p:'HIGH',t:'IT/Security',a:'Review mail rules and forwarding configurations set by the attacker'},
+      {p:'MEDIUM',t:'Communications',a:'Notify affected third parties (vendors, clients) who may have received fraudulent emails'},
+    ],
+    default:[
+      {p:'CRITICAL',t:'IT/Security',a:'Contain the incident — isolate affected systems and preserve forensic state'},
+      {p:'CRITICAL',t:'Legal',a:'Notify General Counsel and outside counsel to assert privilege'},
+      {p:'HIGH',t:'IT/Security',a:'Preserve all relevant logs and system state before any changes'},
+      {p:'HIGH',t:'Executive',a:'Escalate to appropriate leadership based on severity assessment'},
+      {p:'MEDIUM',t:'Legal',a:'Begin preliminary notification obligation assessment'},
+    ]
+  },
+  phase1:{
+    title:'PHASE 1 — SHORT-TERM (Hours 2–24)',
+    base:[
+      {p:'CRITICAL',t:'Legal/IT',a:'Issue litigation hold notice to all custodians with potentially relevant evidence'},
+      {p:'CRITICAL',t:'IT/Security',a:'Engage external forensic firm — ensure chain of custody from this point'},
+      {p:'HIGH',t:'Legal',a:'Complete initial regulatory notification obligation assessment against applicable deadlines'},
+      {p:'HIGH',t:'IT/Security',a:'Complete scope determination — all affected systems, accounts, data types, and individuals'},
+      {p:'HIGH',t:'Communications',a:'Prepare internal communication — employees need to know what happened and what not to do'},
+      {p:'HIGH',t:'IT/Security',a:'Suspend auto-deletion and retention policies for all in-scope data immediately'},
+      {p:'MEDIUM',t:'HR',a:'Identify all custodians whose data may be relevant — current and former employees'},
+      {p:'MEDIUM',t:'Legal',a:'Document all response decisions and actions taken — timestamped log required'},
+    ]
+  },
+  phase2:{
+    title:'PHASE 2 — MEDIUM-TERM (Days 2–7)',
+    base:[
+      {p:'HIGH',t:'IT/Forensics',a:'Complete forensic imaging of all affected systems before remediation'},
+      {p:'HIGH',t:'Legal',a:'Finalize notification obligation assessment and prepare regulatory notifications if required'},
+      {p:'HIGH',t:'Communications',a:'Prepare external communications — clients, regulators, public if required'},
+      {p:'HIGH',t:'Legal/IT',a:'Coordinate eDiscovery collection of all relevant ESI under chain of custody'},
+      {p:'MEDIUM',t:'IT/Security',a:'Complete root cause analysis — how did the attacker gain access?'},
+      {p:'MEDIUM',t:'Legal',a:'Brief executive team and board on legal exposure and regulatory risk'},
+      {p:'MEDIUM',t:'IT/Security',a:'Implement interim security controls while permanent remediation is planned'},
+    ]
+  },
+  phase3:{
+    title:'PHASE 3 — RECOVERY & REMEDIATION (Week 2+)',
+    base:[
+      {p:'HIGH',t:'IT/Security',a:'Execute remediation plan — patch, rebuild, or replace compromised systems'},
+      {p:'HIGH',t:'IT/Security',a:'Implement enhanced monitoring and detection controls before restoration'},
+      {p:'MEDIUM',t:'All Teams',a:'Conduct formal post-incident review — what worked, what failed?'},
+      {p:'MEDIUM',t:'IT/Security',a:'Update IR playbooks based on lessons learned from this incident'},
+      {p:'MEDIUM',t:'Legal',a:'Document all remediation steps for regulatory submission and potential litigation use'},
+      {p:'MEDIUM',t:'HR',a:'Conduct security awareness training refresh for all staff'},
+    ]
+  },
+  phase4:{
+    title:'PHASE 4 — eDISCOVERY & LEGAL HOLD',
+    base:[
+      {p:'CRITICAL',t:'Legal/eDiscovery',a:'Issue and track litigation hold notices — obtain written acknowledgments from all custodians'},
+      {p:'CRITICAL',t:'eDiscovery',a:'Collect and preserve all relevant ESI under forensic chain-of-custody protocols'},
+      {p:'HIGH',t:'Legal/eDiscovery',a:'Suspend all auto-delete, archiving, and data retention policies for in-scope data'},
+      {p:'HIGH',t:'eDiscovery',a:'Identify and collect relevant data from: email, collaboration tools, endpoints, cloud storage'},
+      {p:'HIGH',t:'Legal',a:'Establish privilege review protocol — all incident response communications may be privileged'},
+      {p:'MEDIUM',t:'eDiscovery',a:'Document data map — what was collected, from where, by whom, and when'},
+      {p:'MEDIUM',t:'Legal',a:'Coordinate with outside counsel on regulatory production obligations and deadlines'},
+    ]
+  }
+};
+
+const REG_DEADLINES={
+  'GDPR':'⏱ GDPR: 72-hour notification to supervisory authority (Art. 33) — clock starts at discovery',
+  'HIPAA':'⏱ HIPAA: 60-day notification to HHS and affected individuals — sooner if >500 individuals',
+  'CCPA':'⏱ CCPA: No fixed deadline but "expedient" notification required — notify as soon as reasonably possible',
+  'PCI-DSS':'⏱ PCI-DSS: Immediate notification to card brands and acquiring bank upon discovery',
+  'SOX':'⏱ SOX: Material cybersecurity incidents may require 8-K disclosure within 4 business days',
+  'NIS2':'⏱ NIS2: Early warning within 24 hours, incident notification within 72 hours to authority',
+};
+
+function genTriage(){
+  const type=v('tr-type');
+  const sev=v('tr-sev');
+  const org=v('tr-org')||'the organization';
+  const regs=getTags('tr-regs');
+  const teams=getChecked('tr-t');
+  if(!type){alert('Please select an incident type.');return;}
+
+  const typeLabels={ransomware:'Ransomware Attack',breach:'Data Breach / Unauthorized Access',insider:'Insider Threat / Data Exfiltration',bec:'Business Email Compromise',ddos:'DDoS Attack',phishing:'Phishing Campaign',supply:'Third-Party / Supply Chain Breach',device:'Lost / Stolen Device',exposure:'Accidental Data Exposure',cloud:'Cloud Misconfiguration'};
+  const orgLabels={financial:'Financial Services',healthcare:'Healthcare',tech:'Technology / SaaS',retail:'Retail / E-commerce',legal:'Legal / Professional Services',government:'Government / Public Sector',manufacturing:'Manufacturing / OT'};
+  const sevLabels={critical:'CRITICAL',high:'HIGH',medium:'MEDIUM',low:'LOW'};
+
+  const container=document.getElementById('tr-content');
+  container.innerHTML='';
+
+  function makeSection(phase){
+    const sec=document.createElement('div');
+    sec.className='result-section';
+    const title=document.createElement('div');
+    title.className='result-section-title';
+    title.textContent=phase.title;
+    sec.appendChild(title);
+    return sec;
+  }
+  function makeItem(item){
+    const d=document.createElement('div');
+    d.className='result-item';
+    const badge=document.createElement('span');
+    badge.className=`priority-badge pri-${item.p.toLowerCase()}`;
+    badge.textContent=item.p;
+    const team=document.createElement('span');
+    team.style.cssText='font-size:10px;font-weight:700;color:var(--blue);margin-right:6px;font-family:"DM Sans",sans-serif';
+    team.textContent='['+item.t+']';
+    d.appendChild(badge);d.appendChild(team);
+    d.appendChild(document.createTextNode(item.a));
+    return d;
+  }
+
+  // Header card
+  const hdr=document.createElement('div');
+  hdr.style.cssText='background:var(--navy);border-radius:10px;padding:16px 18px;margin-bottom:14px';
+  hdr.innerHTML=`<div style="font-size:10px;color:var(--orange);letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:6px">Incident Triage Checklist</div>
+    <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:4px">${typeLabels[type]||type}</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
+      <span style="font-size:11px;color:rgba(255,255,255,.6)">Severity: <strong style="color:#fff">${sevLabels[sev]||sev}</strong></span>
+      <span style="font-size:11px;color:rgba(255,255,255,.6)">Org: <strong style="color:#fff">${orgLabels[org]||org}</strong></span>
+      ${regs?`<span style="font-size:11px;color:rgba(255,255,255,.6)">Regs: <strong style="color:var(--orange)">${regs}</strong></span>`:''}
+    </div>`;
+  container.appendChild(hdr);
+
+  // Regulatory deadlines
+  const regArr=regs.split(', ').filter(r=>r&&REG_DEADLINES[r]);
+  if(regArr.length){
+    const regCard=document.createElement('div');
+    regCard.style.cssText='background:rgba(255,148,37,.06);border:1.5px solid rgba(255,148,37,.2);border-radius:10px;padding:14px 16px;margin-bottom:14px';
+    regCard.innerHTML=`<div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);margin-bottom:8px">Regulatory Notification Deadlines</div>`;
+    regArr.forEach(r=>{
+      const d=document.createElement('div');
+      d.style.cssText='font-size:12px;color:var(--text);margin-bottom:5px;line-height:1.6';
+      d.textContent=REG_DEADLINES[r];
+      regCard.appendChild(d);
+    });
+    container.appendChild(regCard);
+  }
+
+  // Phase 0
+  const p0=makeSection(TRIAGE_DATA.phase0);
+  const p0items=TRIAGE_DATA.phase0[type]||TRIAGE_DATA.phase0.default;
+  p0items.forEach(item=>p0.appendChild(makeItem(item)));
+  container.appendChild(p0);
+
+  // Phase 1
+  const p1=makeSection(TRIAGE_DATA.phase1);
+  TRIAGE_DATA.phase1.base.forEach(item=>p1.appendChild(makeItem(item)));
+  container.appendChild(p1);
+
+  // Phase 2
+  const p2=makeSection(TRIAGE_DATA.phase2);
+  TRIAGE_DATA.phase2.base.forEach(item=>p2.appendChild(makeItem(item)));
+  container.appendChild(p2);
+
+  // Phase 3
+  const p3=makeSection(TRIAGE_DATA.phase3);
+  TRIAGE_DATA.phase3.base.forEach(item=>p3.appendChild(makeItem(item)));
+  container.appendChild(p3);
+
+  // Phase 4
+  const p4=makeSection(TRIAGE_DATA.phase4);
+  TRIAGE_DATA.phase4.base.forEach(item=>p4.appendChild(makeItem(item)));
+  container.appendChild(p4);
+
+  // Footer note
+  const note=document.createElement('div');
+  note.style.cssText='font-size:11px;color:var(--muted);border-top:1px solid var(--border);padding-top:12px;margin-top:4px;line-height:1.6';
+  note.textContent=`Generated ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})} · LDM Global SME Team · Teams involved: ${teams.join(', ')||'IT/Security, Legal'}`;
+  container.appendChild(note);
+
+  show('tr-out','tr-ph');
+}
+
+// ════════════════════════════════════════════════════════════
+// 5. REVIEW PROTOCOL GENERATOR
+// ════════════════════════════════════════════════════════════
+const PROTOCOL_DATA={
+  coding:{
+    base:['Relevant / Not Relevant / Needs Review'],
+    privilege:['Privilege (AC / WP / Joint Defense)','Privilege — Produce Redacted','Privilege Log Required'],
+    redaction:['Redact — PII','Redact — Confidential / Trade Secret'],
+    standard:['Confidentiality Designation (Confidential / Highly Confidential — AEO)','Key Document Flag','Hot Document Flag'],
+    issue:['Issue codes — to be defined by counsel based on key claims and defenses'],
+  },
+  qc:{
+    small:'5% random sample of all reviewed documents; 100% review of all privilege calls',
+    medium:'5% random QC sample; statistical sampling validation at 95% confidence ±5%; 100% privilege review',
+    large:'Statistical sampling at 95% confidence ±3%; tiered QC (first-pass 5%, elevated review of borderline calls); privilege logging review',
+    xlarge:'Continuous Active Learning (CAL) validation metrics; elusion testing; stratified sampling by custodian and date range; senior QC layer for all privilege and hot documents',
+  },
+  rateAssumptions:{
+    small:'500–800 documents per reviewer per day (first-pass linear)',
+    medium:'400–600 docs/day linear; 2,000–4,000 docs/day with TAR after seed set',
+    large:'TAR/CAL strongly recommended — 60–75% cost reduction vs. linear; 3,000–6,000 docs/day throughput post-training',
+    xlarge:'TAR/CAL required at this volume; plan 6–10 week model training and validation period before substantive review begins',
+  },
+  prodFormats:{
+    us_federal:'TIFF (Group IV) with OCR text files; single-page TIFFs with .opt load file; full metadata load file (DAT) with standard Relativity fields; Bates XXXXXX format',
+    us_state:'TIFF or PDF per state court local rules — confirm with counsel; metadata per agreed ESI protocol',
+    uk:'Native + extracted text preferred under CPR Practice Direction 57AD; Bates/page numbering per agreed protocol',
+    eu:'Native production with metadata preferred; data residency within EU may be required — confirm hosting location with counsel',
+    australia:'Typically PDF or TIFF per Federal Court Practice Note CM 6 — confirm with Australian counsel',
+    singapore:'Confirm format per Singapore International Commercial Court or SIAC rules',
+    multi:'Agree unified production format early — TIFF with full metadata typically satisfies most jurisdictions',
+    internal:'Native format with metadata extraction; no court-specific format requirements — agree with client',
+  },
+  jurisdictionNotes:{
+    us_federal:'FRCP Rule 26(f) ESI conference required; proportionality standard under Rule 26(b)(1); meet-and-confer on search methodology',
+    us_state:'Confirm local rules for ESI protocols — many jurisdictions adopt FRCP standards; check for specific e-filing requirements',
+    uk:'CPR Practice Direction 57AD (Disclosure Pilot) applies in Business and Property Courts; DRD (Disclosure Review Document) required; disclosure models from Model A (standard) to Model E (extended search)',
+    eu:'GDPR data minimization principles apply to collection scope; cross-border transfer restrictions for non-EU processing; consider EU hosting',
+    australia:'Federal Court Practice Note CM 6 — technology-assisted review expressly permitted; proportionality emphasized',
+    singapore:'SICC Practice Directions for disclosure; document intensive disputes may use Redfern Schedule methodology',
+    multi:'Early alignment of counsel across jurisdictions on unified protocol is critical; data sovereignty issues must be resolved before collection',
+    internal:'No court-ordered disclosure obligations; scope defined by investigation mandate from counsel or board',
+  }
+};
+
+function genProtocol(){
+  const matter=v('pr-matter')||'Unnamed Matter';
+  const juris=v('pr-juris')||'us_federal';
+  const vol=v('pr-vol')||'medium';
+  const sens=v('pr-sens')||'standard';
+  const docs=getTags('pr-docs')||'Email & Attachments';
+  const approaches=getChecked('pr-a');
+  const tar=approaches.some(a=>a.includes('TAR'));
+  const priv=approaches.some(a=>a.includes('Privilege'));
+  const redact=approaches.some(a=>a.includes('Redact'));
+  const foreign=approaches.some(a=>a.includes('Foreign'));
+  const qc2=approaches.some(a=>a.includes('QC'));
+
+  const jurisLabels={us_federal:'US Federal (FRCP)',us_state:'US State Court',uk:'UK (CPR / PD 57AD)',eu:'EU / GDPR-governed',australia:'Australia (Federal Court)',singapore:'Singapore',multi:'Multi-jurisdictional',internal:'Internal (no court)'};
+  const volLabels={small:'Small (< 10,000 docs)',medium:'Medium (10,000–100,000 docs)',large:'Large (100,000–1M docs)',xlarge:'Very Large (1M+ docs)'};
+  const sensLabels={standard:'Standard',elevated:'Elevated (PII / Financial)',high:'High (Regulated / PHI)',classified:'Classified / Highly Confidential'};
+
+  let out='';
+  out+=`REVIEW PROTOCOL\n`;
+  out+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+  out+=`Matter:       ${matter}\n`;
+  out+=`Jurisdiction: ${jurisLabels[juris]||juris}\n`;
+  out+=`Volume:       ${volLabels[vol]||vol}\n`;
+  out+=`Sensitivity:  ${sensLabels[sens]||sens}\n`;
+  out+=`Doc Types:    ${docs}\n`;
+  out+=`Approach:     ${approaches.join(', ')||'Standard linear review'}\n`;
+  out+=`Prepared:     LDM Global SME Team · ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}\n`;
+  out+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+
+  out+=`1. MATTER OVERVIEW & OBJECTIVES\n\n`;
+  out+=`Matter: ${matter}\n`;
+  out+=`Review Goal: Identify documents responsive to the claims and defenses at issue; identify and log privilege; flag key and hot documents for counsel attention.\n`;
+  out+=`Success Criteria: Complete, defensible review within agreed timeline; privilege log ready for service; production meeting all format specifications.\n\n`;
+
+  out+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  out+=`2. SCOPE & DOCUMENT UNIVERSE\n\n`;
+  out+=`Document Types in Scope: ${docs}\n`;
+  out+=`Estimated Volume: ${volLabels[vol]||vol}\n`;
+  out+=`Custodian Universe: To be finalized with counsel — confirm with data map prior to review launch.\n`;
+  out+=`Date Range: To be confirmed with counsel based on key events identified in investigation.\n`;
+  out+=`Exclusions: System-generated messages, newsletters, and clearly irrelevant domains — agree exclusion list with counsel before applying.\n\n`;
+
+  out+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  out+=`3. REVIEW WORKFLOW\n\n`;
+  if(tar){
+    out+=`Stage 1 — Seed Set & Model Training\n`;
+    out+=`  • Senior reviewer trains TAR model on representative seed set (minimum 500 documents)\n`;
+    out+=`  • Validate model using elusion testing before substantive review begins\n`;
+    out+=`  • Document model training decisions and seed set composition for defensibility\n\n`;
+    out+=`Stage 2 — TAR-Assisted Review\n`;
+    out+=`  • System ranks documents by predicted relevance — prioritize high-confidence documents\n`;
+    out+=`  • Reviewers code documents and feed back to model in iterative cycles\n`;
+    out+=`  • Continue until recall target achieved (typically 75%+ recall at agreed confidence)\n\n`;
+  } else {
+    out+=`Stage 1 — First-Pass Linear Review\n`;
+    out+=`  • Reviewers apply relevance determination, issue coding, and initial privilege flag\n`;
+    out+=`  • Review rate assumption: ${PROTOCOL_DATA.rateAssumptions[vol]||PROTOCOL_DATA.rateAssumptions.medium}\n\n`;
+  }
+  if(priv){
+    out+=`Stage ${tar?3:2} — Privilege Review\n`;
+    out+=`  • Senior attorney reviews all documents flagged as potentially privileged\n`;
+    out+=`  • Prepare privilege log entries for all withheld or redacted documents\n`;
+    out+=`  • Apply clawback agreement provisions if inadvertent disclosure occurs\n\n`;
+  }
+  out+=`Final Stage — Production Preparation\n`;
+  out+=`  • Apply Bates numbering and confidentiality designations\n`;
+  out+=`  • Generate load files and metadata extracts per agreed production specifications\n`;
+  out+=`  • Senior review of production set before delivery\n\n`;
+
+  out+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  out+=`4. CODING FRAMEWORK\n\n`;
+  out+=`Relevance Tier:\n`;
+  PROTOCOL_DATA.coding.base.forEach(c=>out+=`  • ${c}\n`);
+  if(priv){out+=`\nPrivilege Tier:\n`;PROTOCOL_DATA.coding.privilege.forEach(c=>out+=`  • ${c}\n`);}
+  if(redact){out+=`\nRedaction Tier:\n`;PROTOCOL_DATA.coding.redaction.forEach(c=>out+=`  • ${c}\n`);}
+  out+=`\nStandard Fields:\n`;
+  PROTOCOL_DATA.coding.standard.forEach(c=>out+=`  • ${c}\n`);
+  out+=`\nIssue Codes:\n`;
+  PROTOCOL_DATA.coding.issue.forEach(c=>out+=`  • ${c}\n`);
+  out+=`\n⚠ Counsel sign-off required on all coding categories before review launch.\n\n`;
+
+  if(priv){
+    out+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+    out+=`5. PRIVILEGE REVIEW PROCEDURES\n\n`;
+    out+=`Privilege Types Logged: Attorney-Client Privilege; Work Product Doctrine; Joint Defense / Common Interest\n`;
+    out+=`Identification Criteria: Communication to/from counsel; legal advice sought or given; document prepared in anticipation of litigation\n`;
+    out+=`Log Fields: Bates number (or control number); document date; author; recipients; privilege type; brief description (without disclosing privileged content)\n`;
+    out+=`Clawback: FRE 502(d) order or clawback agreement should be in place before production. Inadvertent disclosures: notify opposing counsel within 3 business days.\n\n`;
+  }
+
+  out+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  out+=`6. QUALITY CONTROL MEASURES\n\n`;
+  out+=`QC Methodology: ${PROTOCOL_DATA.qc[vol]||PROTOCOL_DATA.qc.medium}\n`;
+  if(qc2)out+=`Second-Level Review: Required for all key documents, privilege calls, and borderline relevance decisions.\n`;
+  out+=`Error Rate Threshold: Target < 2% coding error rate; re-review triggered if exceeded in QC sample.\n`;
+  out+=`Consistency Checks: Weekly calibration sessions for multi-reviewer matters; coding disputes escalated to review supervisor.\n\n`;
+
+  out+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  out+=`7. PRODUCTION SPECIFICATIONS\n\n`;
+  out+=`Format: ${PROTOCOL_DATA.prodFormats[juris]||PROTOCOL_DATA.prodFormats.us_federal}\n`;
+  out+=`Confidentiality: Designations per agreed Protective Order — confirm stamping format with counsel.\n`;
+  out+=`Delivery: Encrypted hard drive or secure FTP — no unencrypted email production.\n\n`;
+
+  out+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  out+=`8. JURISDICTION-SPECIFIC REQUIREMENTS\n\n`;
+  out+=`${PROTOCOL_DATA.jurisdictionNotes[juris]||PROTOCOL_DATA.jurisdictionNotes.us_federal}\n\n`;
+  if(sens==='high'||sens==='classified')out+=`⚠ Elevated sensitivity: Implement restricted access controls on review platform. AEO documents accessible to outside counsel only unless otherwise agreed.\n\n`;
+  if(foreign)out+=`⚠ Foreign language documents: Budget additional time for translation review; ensure reviewers with appropriate language capability are allocated.\n\n`;
+
+  out+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  out+=`9. TEAM STRUCTURE & RESPONSIBILITIES\n\n`;
+  out+=`• LDM Project Manager — matter setup, reviewer allocation, timeline tracking, client communication\n`;
+  out+=`• Review Supervisor — coding quality, reviewer calibration, escalation decisions\n`;
+  out+=`• First-Pass Reviewers — document review per coding protocol\n`;
+  if(priv)out+=`• Senior Attorney (Privilege) — privilege review and log preparation\n`;
+  if(qc2||vol==='large'||vol==='xlarge')out+=`• QC Reviewer — independent quality control sampling\n`;
+  out+=`• Client / Outside Counsel — coding protocol approval, issue code definition, production sign-off\n\n`;
+
+  out+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+  out+=`10. TIMELINE & MILESTONES\n\n`;
+  const reviewDays={small:'5–10 business days',medium:'2–4 weeks',large:'6–10 weeks',xlarge:'12–20+ weeks'};
+  out+=`• Day 1–3:     Matter setup, platform configuration, user access provisioning\n`;
+  out+=`• Day 2–5:     Coding protocol finalization and reviewer training/calibration\n`;
+  if(tar)out+=`• Week 1–2:   TAR seed set training and model validation\n`;
+  out+=`• ${tar?'Week 2':'Day 5'}+:     Substantive review commences — target rate: ${PROTOCOL_DATA.rateAssumptions[vol]||PROTOCOL_DATA.rateAssumptions.medium}\n`;
+  out+=`• Review duration: ${reviewDays[vol]||reviewDays.medium} (first-pass)\n`;
+  if(priv)out+=`• Privilege review & logging: Allow 1–2 additional weeks after first-pass complete\n`;
+  out+=`• Production preparation: 3–5 business days after review completion\n\n`;
+
+  out+=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+  out+=`⚠ PROTOCOL NOTE: This document requires review and approval by supervising counsel before review launch. Coding categories, production specifications, and search methodology must be agreed with opposing counsel or regulators where applicable. LDM Global · Internal Use Only.`;
+
+  document.getElementById('pr-content').textContent=out;
+  show('pr-out','pr-ph');
+}
+
+// ── Print Tool (isolated per tool) ──────────────────────────
+function printTool(screenId, reportTitle){
+  // Set date on print header
+  const dateStr = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const prefixMap = {
+    'screen-scope':'sc','screen-intake':'in','screen-hold':'hd',
+    'screen-triage':'tr','screen-protocol':'pr'
+  };
+  const prefix = prefixMap[screenId];
+  const dateEl = document.getElementById(prefix+'-print-date');
+  if(dateEl) dateEl.textContent = reportTitle + ' · ' + dateStr;
+
+  // Mark only this screen as print target
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('print-target'));
+  document.getElementById(screenId).classList.add('print-target');
+
+  // Temporarily show all screens for print (only print-target will be visible via CSS)
+  document.querySelectorAll('.screen').forEach(s => s.style.display = 'block');
+
+  window.print();
+
+  // Restore display after print
+  setTimeout(() => {
+    document.querySelectorAll('.screen').forEach(s => {
+      s.style.display = '';
+    });
+    // Re-apply active class display
+    document.querySelectorAll('.screen').forEach(s => {
+      if(!s.classList.contains('active')) s.style.display = 'none';
+    });
+    document.getElementById(screenId).classList.remove('print-target');
+  }, 1000);
+}
+</script>
+</body>
+</html>
