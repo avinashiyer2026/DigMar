@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>eDiscovery Services | LDM Global</title>
+<meta name="description" content="LDM Global delivers AI-enabled, attorney-led eDiscovery services — managed document review, data processing, early case assessment, and litigation support for AmLaw firms worldwide.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+/* ── Brand palette (PDF-exact) ────────────────────────────────────────── */
+:root{
+  --navy:#152148; --navy-dp:#0A1628; --navy-mid:#1B2E54;
+  --steel:#446280; --steel-lt:#5A7A9A;
+  --orange:#FF9425; --amber:#FFAB43; --amber-lt:#FFCD8A; --orange-dp:#FE720D;
+  --offwhite:#E7EAE7; --warmgrey:#B7B7AB; --midgrey:#8C9196;
+  --white:#FFFFFF; --surface:#F2F4F7; --surface-lt:#F8F9FA;
+  --body:#263347; --muted:#566070; --card:#FFFFFF; --border:rgba(21,33,72,0.08);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Montserrat',sans-serif;background:var(--surface-lt);color:var(--body);line-height:1.7;font-size:16px;overflow-x:hidden}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--navy-dp)}::-webkit-scrollbar-thumb{background:var(--orange);border-radius:2px}
+
+/* ── Nav ───────────────────────────────────────────────────────────────── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(10,22,40,0.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,148,37,0.12);transition:border-color .3s}
+nav.scrolled{border-bottom-color:rgba(255,148,37,0.28)}
+.nav-inner{max-width:1240px;margin:0 auto;padding:0 40px;height:70px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo img{height:40px;width:auto;display:block}
+.nav-links{list-style:none;display:flex;align-items:center;gap:32px}
+.nav-links a{font-size:12.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:rgba(231,234,231,.75);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--amber)}
+.nav-cta{background:var(--orange);color:var(--navy-dp)!important;padding:9px 20px;border-radius:3px;font-weight:700!important;opacity:1!important;transition:background .2s,transform .15s!important}
+.nav-cta:hover{background:var(--amber)!important;transform:translateY(-1px)}
+
+/* ── Hero ──────────────────────────────────────────────────────────────── */
+.hero{position:relative;min-height:92vh;background:var(--navy-dp);display:flex;align-items:center;padding-top:70px;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(-48deg,transparent,transparent 58px,rgba(68,98,128,.055) 58px,rgba(68,98,128,.055) 59px)}
+.hero::after{content:'';position:absolute;top:70px;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--orange-dp),var(--orange),var(--amber),var(--amber-lt))}
+.hero-glow{position:absolute;pointer-events:none;top:15%;left:-8%;width:800px;height:800px;background:radial-gradient(ellipse,rgba(255,148,37,.065) 0%,transparent 62%)}
+.hero-glow2{position:absolute;pointer-events:none;bottom:0;right:-5%;width:600px;height:600px;background:radial-gradient(ellipse,rgba(68,98,128,.15) 0%,transparent 65%)}
+.hero-inner{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:96px 40px 120px;display:grid;grid-template-columns:1fr 390px;gap:72px;align-items:center}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--orange);margin-bottom:22px}
+.hero-eyebrow::before{content:'';display:block;width:26px;height:2px;background:var(--orange)}
+h1.hero-headline{font-size:clamp(34px,4.2vw,54px);font-weight:800;line-height:1.09;letter-spacing:-.025em;color:var(--white);margin-bottom:26px}
+h1.hero-headline em{font-style:normal;color:var(--orange)}
+.hero-lead{font-size:16.5px;font-weight:400;color:var(--warmgrey);line-height:1.8;max-width:580px;margin-bottom:38px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--orange);color:var(--navy-dp);padding:13px 26px;border-radius:3px;font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;box-shadow:0 4px 18px rgba(255,148,37,.28);transition:background .2s,transform .15s,box-shadow .2s}
+.btn-primary:hover{background:var(--amber);transform:translateY(-2px);box-shadow:0 8px 26px rgba(255,148,37,.34)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--offwhite);padding:13px 26px;border-radius:3px;font-size:12.5px;font-weight:600;letter-spacing:.06em;text-decoration:none;border:1px solid rgba(231,234,231,.22);transition:border-color .2s,color .2s,background .2s}
+.btn-ghost:hover{border-color:var(--steel);color:var(--white);background:rgba(68,98,128,.1)}
+
+/* Hero stat card */
+.hero-card{background:rgba(21,33,72,.72);border:1px solid rgba(255,148,37,.18);border-top:3px solid var(--orange);border-radius:4px;padding:32px 28px;backdrop-filter:blur(8px)}
+.hc-label{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin-bottom:24px}
+.hc-item{padding:16px 0;border-bottom:1px solid rgba(68,98,128,.22)}
+.hc-item:first-of-type{padding-top:0}.hc-item:last-child{border-bottom:none;padding-bottom:0}
+.hc-num{font-size:36px;font-weight:900;color:var(--white);line-height:1;margin-bottom:4px}
+.hc-num span{color:var(--orange)}
+.hc-desc{font-size:11.5px;color:var(--warmgrey);line-height:1.55;font-weight:500}
+
+/* ── Shared helpers ─────────────────────────────────────────────────────── */
+.container{max-width:1240px;margin:0 auto;padding:0 40px}
+.s-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:10.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--steel);margin-bottom:14px}
+.s-eyebrow::before,.s-eyebrow::after{content:'';display:block;width:20px;height:1px;background:var(--steel);opacity:.5}
+h2.s-title{font-size:clamp(26px,2.8vw,38px);font-weight:800;line-height:1.15;letter-spacing:-.02em;color:var(--navy)}
+h2.s-title em{font-style:normal;color:var(--orange)}
+h2.s-title.light{color:var(--white)}
+h2.s-title.light em{color:var(--orange)}
+.s-sub{font-size:15.5px;color:var(--muted);line-height:1.75;max-width:600px;margin:14px auto 0}
+.s-sub.light{color:var(--warmgrey)}
+.s-header{text-align:center;margin-bottom:60px}
+.s-header .s-eyebrow{justify-content:center}
+
+/* ── Audience strip ─────────────────────────────────────────────────────── */
+.audience{background:var(--navy);padding:72px 0;position:relative;overflow:hidden}
+.audience::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--orange-dp),var(--amber-lt))}
+.audience-inner{max-width:1240px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:300px 1fr;gap:72px;align-items:start}
+.aud-label{font-size:10.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-bottom:14px}
+.aud-heading{font-size:28px;font-weight:800;color:var(--white);line-height:1.22}
+.aud-heading em{font-style:italic;color:var(--amber)}
+.aud-sub{font-size:13px;color:var(--warmgrey);margin-top:14px;line-height:1.7}
+.aud-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.aud-card{border-left:2px solid rgba(255,171,67,.32);padding-left:18px}
+.aud-role{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+.aud-text{font-size:13.5px;color:var(--offwhite);line-height:1.65}
+
+/* ── Stakes ────────────────────────────────────────────────────────────── */
+.stakes{background:var(--surface-lt);padding:96px 0}
+.stake-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(21,33,72,.07)}
+.stake-card{background:var(--card);padding:38px 32px;position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s}
+.stake-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:transparent;transition:background .25s}
+.stake-card:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(21,33,72,.11);z-index:1}
+.stake-card:hover::before{background:linear-gradient(90deg,var(--orange),var(--amber))}
+.sc-icon{width:46px;height:46px;background:var(--navy);border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:22px}
+.sc-icon svg{width:20px;height:20px;fill:var(--orange)}
+.sc-role{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-bottom:9px}
+.sc-title{font-size:16.5px;font-weight:700;color:var(--navy);margin-bottom:11px;line-height:1.3}
+.sc-text{font-size:13.5px;color:var(--muted);line-height:1.72}
+
+/* ── eDiscovery lifecycle strip ────────────────────────────────────────── */
+.lifecycle{background:var(--navy-dp);padding:80px 0;position:relative;overflow:hidden}
+.lifecycle::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(-48deg,transparent,transparent 58px,rgba(68,98,128,.04) 58px,rgba(68,98,128,.04) 59px)}
+.lifecycle::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--orange-dp),var(--orange),var(--amber),var(--amber-lt))}
+.lc-steps{position:relative;z-index:1;display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:rgba(68,98,128,.18)}
+.lc-step{background:rgba(21,33,72,.85);padding:32px 24px;position:relative;transition:background .25s;cursor:default}
+.lc-step:hover{background:rgba(30,46,84,.98)}
+.lc-step::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:transparent;transition:background .25s}
+.lc-step:hover::after{background:var(--orange)}
+.lc-num{font-size:38px;font-weight:900;line-height:1;color:rgba(255,148,37,.1);letter-spacing:-.03em;margin-bottom:10px;transition:color .25s}
+.lc-step:hover .lc-num{color:rgba(255,148,37,.2)}
+.lc-name{font-size:12px;font-weight:700;color:var(--white);margin-bottom:8px;line-height:1.3}
+.lc-desc{font-size:11px;color:var(--warmgrey);line-height:1.6}
+
+/* ── Capabilities ──────────────────────────────────────────────────────── */
+.capabilities{background:var(--surface-lt);padding:96px 0}
+.cap-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:rgba(21,33,72,.07)}
+.cap-card{background:var(--card);padding:40px 36px;position:relative;transition:transform .25s,box-shadow .25s}
+.cap-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:transparent;transition:background .25s}
+.cap-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(21,33,72,.1);z-index:1}
+.cap-card:hover::before{background:linear-gradient(90deg,var(--orange),var(--amber))}
+.cc-num{font-size:44px;font-weight:900;line-height:1;color:rgba(21,33,72,.07);letter-spacing:-.03em;margin-bottom:8px}
+.cc-title{font-size:17px;font-weight:700;color:var(--navy);margin-bottom:8px;line-height:1.3}
+.cc-bar{width:28px;height:2px;background:var(--orange);margin-bottom:16px;transition:width .3s}
+.cap-card:hover .cc-bar{width:50px}
+.cc-text{font-size:13.5px;color:var(--muted);line-height:1.76}
+.cc-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px}
+.cc-tag{font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);background:rgba(68,98,128,.09);border:1px solid rgba(68,98,128,.18);padding:4px 9px;border-radius:2px}
+
+/* ── Technology & platforms ────────────────────────────────────────────── */
+.tech{background:var(--navy);padding:80px 0;position:relative;overflow:hidden}
+.tech::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--orange-dp),var(--orange),var(--amber),var(--amber-lt))}
+.tech-inner{max-width:1240px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+.tech-left .s-eyebrow{color:var(--amber-lt)}
+.tech-left .s-eyebrow::before,.tech-left .s-eyebrow::after{background:var(--amber-lt)}
+.tech-left h2{color:var(--white)}
+.tech-left h2 em{color:var(--orange)}
+.tech-lead{font-size:14.5px;color:var(--warmgrey);line-height:1.8;margin:16px 0 32px}
+.platform-list{display:flex;flex-direction:column;gap:12px}
+.plat-item{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:rgba(28,46,84,.55);border-left:3px solid var(--orange);transition:background .2s}
+.plat-item:hover{background:rgba(28,46,84,.85)}
+.plat-name{font-size:14px;font-weight:700;color:var(--white)}
+.plat-sub{font-size:11.5px;color:var(--warmgrey)}
+.tech-right{display:flex;flex-direction:column;gap:14px;padding-top:8px}
+.metric-bar{background:rgba(10,22,40,.7);padding:20px 24px 20px 26px;border-right:3px solid var(--orange);transition:transform .2s,background .2s}
+.metric-bar:hover{transform:translateX(4px);background:rgba(10,22,40,.9)}
+.mb-num{font-size:36px;font-weight:900;color:var(--white);line-height:1;margin-bottom:4px}
+.mb-num span{color:var(--orange)}
+.mb-label{font-size:11.5px;font-weight:500;color:var(--warmgrey);line-height:1.5}
+
+/* ── Why LDM Global ────────────────────────────────────────────────────── */
+.why{background:var(--surface-lt);padding:96px 0}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:rgba(21,33,72,.07)}
+.why-card{background:var(--card);padding:34px 28px;position:relative;transition:transform .25s,box-shadow .25s}
+.why-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:transparent;transition:background .25s}
+.why-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(21,33,72,.1);z-index:1}
+.why-card:hover::before{background:linear-gradient(90deg,var(--orange),var(--amber))}
+.wc-icon{width:42px;height:42px;background:var(--navy);border-radius:4px;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.wc-icon svg{width:18px;height:18px;fill:var(--orange)}
+.wc-title{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:10px;line-height:1.3}
+.wc-text{font-size:13px;color:var(--muted);line-height:1.7}
+
+/* ── Process timeline ──────────────────────────────────────────────────── */
+.process{background:var(--white);padding:96px 0}
+.proc-track{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.proc-track::before{content:'';position:absolute;top:24px;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--orange),var(--amber),var(--amber-lt),transparent)}
+.proc-step{padding:60px 20px 0;position:relative}
+.proc-dot{position:absolute;top:14px;left:20px;width:22px;height:22px;background:var(--navy);border:3px solid var(--orange);border-radius:50%;transition:background .2s,transform .2s}
+.proc-step:hover .proc-dot{background:var(--orange);transform:scale(1.2)}
+.pstep-num{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);margin-bottom:7px}
+.pstep-title{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:8px;line-height:1.3}
+.pstep-text{font-size:12.5px;color:var(--muted);line-height:1.7}
+
+/* ── Advantage section ─────────────────────────────────────────────────── */
+.advantage{background:var(--navy-dp);padding:96px 0;position:relative;overflow:hidden}
+.advantage::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(-48deg,transparent,transparent 58px,rgba(68,98,128,.04) 58px,rgba(68,98,128,.04) 59px)}
+.adv-inner{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.adv-left .s-eyebrow{color:var(--amber-lt)}
+.adv-left .s-eyebrow::before,.adv-left .s-eyebrow::after{background:var(--amber-lt)}
+.adv-lead{font-size:14.5px;color:var(--warmgrey);line-height:1.8;margin:16px 0 32px}
+.diff-list{display:flex;flex-direction:column;gap:16px}
+.diff-item{display:flex;align-items:flex-start;gap:14px;padding:18px 20px;background:rgba(28,46,84,.55);border-left:3px solid var(--orange);transition:background .2s}
+.diff-item:hover{background:rgba(28,46,84,.88)}
+.diff-num{font-size:11px;font-weight:800;color:var(--orange);min-width:24px;padding-top:2px}
+.diff-title{font-size:13.5px;font-weight:700;color:var(--white);margin-bottom:5px}
+.diff-text{font-size:12.5px;color:var(--warmgrey);line-height:1.6}
+.adv-right{display:flex;flex-direction:column;gap:2px;background:rgba(68,98,128,.15)}
+.adv-stat{padding:28px 30px;background:rgba(21,33,72,.8);transition:background .2s}
+.adv-stat:hover{background:rgba(21,33,72,.96)}
+.as-num{font-size:40px;font-weight:900;color:var(--white);line-height:1;margin-bottom:6px}
+.as-num span{color:var(--orange)}
+.as-label{font-size:12px;color:var(--warmgrey);font-weight:500;line-height:1.5}
+
+/* ── CTA ───────────────────────────────────────────────────────────────── */
+.cta-section{background:var(--navy);padding:96px 0;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(254,114,13,.07) 0%,transparent 55%,rgba(68,98,128,.1) 100%)}
+.cta-section::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--orange-dp),var(--orange),var(--amber),var(--amber-lt))}
+.cta-inner{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 40px;text-align:center}
+.cta-inner .s-eyebrow{color:var(--amber-lt);justify-content:center}
+.cta-inner .s-eyebrow::before,.cta-inner .s-eyebrow::after{background:var(--amber-lt)}
+h2.cta-title{font-size:clamp(26px,3.2vw,42px);font-weight:800;color:var(--white);line-height:1.12;letter-spacing:-.02em;margin-bottom:18px}
+h2.cta-title em{font-style:normal;color:var(--orange)}
+.cta-sub{font-size:15px;color:var(--warmgrey);line-height:1.75;margin-bottom:40px}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* ── Footer ────────────────────────────────────────────────────────────── */
+footer{background:var(--navy-dp);padding:56px 0 28px;border-top:1px solid rgba(68,98,128,.18)}
+.foot-top{max-width:1240px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:220px 1fr;gap:72px;margin-bottom:44px}
+.foot-logo img{height:38px;width:auto}
+.foot-tagline{font-size:12px;color:var(--midgrey);margin-top:11px;line-height:1.6}
+.foot-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.foot-col-title{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);margin-bottom:14px}
+.foot-col a{display:block;font-size:12.5px;color:var(--warmgrey);text-decoration:none;margin-bottom:9px;transition:color .2s}
+.foot-col a:hover{color:var(--amber)}
+.foot-bottom{max-width:1240px;margin:0 auto;padding:20px 40px 0;border-top:1px solid rgba(68,98,128,.13);display:flex;align-items:center;justify-content:space-between}
+.foot-copy{font-size:11.5px;color:var(--midgrey)}
+.foot-copy a{color:var(--midgrey);text-decoration:none}
+.foot-badges{display:flex;gap:10px}
+.badge{font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:rgba(255,171,67,.09);border:1px solid rgba(255,171,67,.18);padding:4px 10px;border-radius:2px}
+
+/* ── Animations ────────────────────────────────────────────────────────── */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideInLeft{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.a-ey{animation:slideInLeft .55s ease both .1s}
+.a-h1{animation:fadeInUp .65s ease both .22s}
+.a-lp{animation:fadeInUp .65s ease both .36s}
+.a-btn{animation:fadeInUp .65s ease both .48s}
+.a-card{animation:fadeIn .85s ease both .55s}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .58s ease,transform .58s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── Responsive ────────────────────────────────────────────────────────── */
+@media(max-width:1060px){.hero-inner,.audience-inner,.tech-inner,.adv-inner{grid-template-columns:1fr;gap:44px}.lc-steps{grid-template-columns:repeat(3,1fr)}.why-grid{grid-template-columns:repeat(2,1fr)}.proc-track{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.cap-grid,.stake-grid{grid-template-columns:1fr}.why-grid{grid-template-columns:1fr}.lc-steps{grid-template-columns:repeat(2,1fr)}.aud-cards{grid-template-columns:1fr}.proc-track{grid-template-columns:1fr 1fr}.foot-top{grid-template-columns:1fr;gap:36px}.foot-cols{grid-template-columns:1fr 1fr}.nav-links{display:none}}
+@media(max-width:480px){.proc-track{grid-template-columns:1fr}.lc-steps{grid-template-columns:1fr}.foot-cols{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="https://www.ldmglobal.com">
+      <img src="https://www.ldmglobal.com/wp-content/uploads/2025/02/logo.png" alt="LDM Global powered by EXOedge">
+    </a>
+    <ul class="nav-links">
+      <li><a href="https://www.ldmglobal.com/#solutions">Solutions</a></li>
+      <li><a href="https://www.ldmglobal.com/legal-consulting/">Insights</a></li>
+      <li><a href="https://www.ldmglobal.com/get-to-know-us/">About</a></li>
+      <li><a class="nav-cta" href="https://www.ldmglobal.com/contact-us/">Speak with Us</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow a-ey">eDiscovery Services</div>
+      <h1 class="hero-headline a-h1">
+        Attorney-Led eDiscovery,<br>
+        <em>AI-Enabled</em> From Day One
+      </h1>
+      <p class="hero-lead a-lp">
+        When litigation volume spikes, timelines compress, or data sets run into the millions of documents, you need a managed eDiscovery partner whose review quality you can stake your advice on — not just another vendor with a platform to sell. We combine AI-enabled workflows with human experts in the loop at every critical juncture.
+      </p>
+      <div class="hero-btns a-btn">
+        <a class="btn-primary" href="https://www.ldmglobal.com/contact-us/">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          Request a Briefing
+        </a>
+        <a class="btn-ghost" href="#capabilities">
+          See Our Approach
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M16.01 11H4v2h12.01v3L20 12l-3.99-4z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-card a-card">
+      <div class="hc-label">LDM Global — By the Numbers</div>
+      <div class="hc-item">
+        <div class="hc-num"><span>210</span>M+</div>
+        <div class="hc-desc">Documents reviewed across litigation, investigations, regulatory matters, and data breach response</div>
+      </div>
+      <div class="hc-item">
+        <div class="hc-num"><span>6,100</span>+</div>
+        <div class="hc-desc">Projects completed since 1996 — spanning AmLaw firms, global corporations, and insurance carriers</div>
+      </div>
+      <div class="hc-item">
+        <div class="hc-num"><span>47</span></div>
+        <div class="hc-desc">Countries served, with 24/7 global operations and a 1,300-seat delivery center</div>
+      </div>
+      <div class="hc-item">
+        <div class="hc-num"><span>30</span>+</div>
+        <div class="hc-desc">Years in legal process outsourcing — ISO 27001 and SOC 2 Type II certified</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE CONTEXT -->
+<section class="audience">
+  <div class="audience-inner">
+    <div>
+      <div class="aud-label">Who We Work With</div>
+      <h2 class="aud-heading">Built for the teams<br>who carry the <em>weight of discovery.</em></h2>
+      <p class="aud-sub">eDiscovery touches legal strategy, data security, cost management, and regulatory compliance at the same time. Our managed service model is designed around the distinct pressures each stakeholder faces.</p>
+    </div>
+    <div class="aud-cards">
+      <div class="aud-card reveal">
+        <div class="aud-role">General Counsel &amp; Litigation Teams</div>
+        <div class="aud-text">Defensibility, proportionality, and chain-of-custody are not operational details — they are the standard against which your discovery conduct will be judged. You need a review partner whose methodology holds up when challenged, not one that relies on assertions made after the fact.</div>
+      </div>
+      <div class="aud-card reveal">
+        <div class="aud-role">Chief Compliance Officers</div>
+        <div class="aud-text">Regulatory investigations impose their own document identification and production obligations — often with tighter timelines and less precedent than civil litigation. The eDiscovery partner you rely on needs to handle both simultaneously without breaking stride.</div>
+      </div>
+      <div class="aud-card reveal">
+        <div class="aud-role">CISO &amp; Information Security Leaders</div>
+        <div class="aud-text">Data handling in a review engagement is a security question as much as a legal one. Our certified infrastructure, zero-training-on-client-data policy, and dedicated client environments are designed to meet the standards your organization requires before any data leaves your control.</div>
+      </div>
+      <div class="aud-card reveal">
+        <div class="aud-role">CFO &amp; Finance Leadership</div>
+        <div class="aud-text">Discovery cost is the variable most likely to surprise your organization mid-litigation. Early case assessment and AI-assisted review are the primary controls — but only when deployed with discipline from day one. We help you understand and manage cost from scope to production.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STAKES -->
+<section class="stakes">
+  <div class="container">
+    <div class="s-header reveal">
+      <div class="s-eyebrow">What's at stake</div>
+      <h2 class="s-title">The real cost of <em>discovery done poorly</em></h2>
+      <p class="s-sub">Poor eDiscovery practice doesn't just create operational friction — it creates legal exposure. These risks are well-established in case law and regulatory precedent.</p>
+    </div>
+    <div class="stake-grid">
+      <div class="stake-card reveal">
+        <div class="sc-icon"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></div>
+        <div class="sc-role">Litigation Risk</div>
+        <div class="sc-title">Spoliation findings and adverse inference instructions</div>
+        <div class="sc-text">Failure to preserve potentially relevant ESI — or inability to demonstrate that preservation was adequate — exposes parties to spoliation motions, adverse inference instructions, and case-dispositive sanctions. The duty to preserve attaches before litigation is filed. Your review partner must be able to demonstrate both what was done and why.</div>
+      </div>
+      <div class="stake-card reveal">
+        <div class="sc-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div>
+        <div class="sc-role">Regulatory Exposure</div>
+        <div class="sc-title">Incomplete productions compound the underlying investigation</div>
+        <div class="sc-text">Regulators treat production quality as a proxy for compliance posture. A production that is late, over-redacted, or methodologically indefensible doesn't just fail to satisfy the inquiry — it signals broader organizational risk and often extends the investigation.</div>
+      </div>
+      <div class="stake-card reveal">
+        <div class="sc-icon"><svg viewBox="0 0 24 24"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg></div>
+        <div class="sc-role">Cost Overrun</div>
+        <div class="sc-title">Discovery cost expands with data volume unless controlled from day one</div>
+        <div class="sc-text">Without early case assessment and a structured review workflow, discovery cost scales proportionally with the data universe — regardless of what percentage of that data is actually relevant. The organizations that control discovery cost do so because they make the right technology and workflow decisions in the first week, not the third month.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDISCOVERY LIFECYCLE -->
+<section class="lifecycle">
+  <div class="container">
+    <div class="s-header reveal" style="margin-bottom:48px">
+      <div class="s-eyebrow" style="color:var(--amber-lt)"><span style="display:inline-flex;align-items:center;gap:10px"><span style="width:20px;height:1px;background:var(--amber-lt);opacity:.5;display:block"></span>The EDRM framework<span style="width:20px;height:1px;background:var(--amber-lt);opacity:.5;display:block"></span></span></div>
+      <h2 class="s-title light">We operate across the<br><em>full discovery lifecycle</em></h2>
+      <p class="s-sub light">Not as a handoff model between vendors — as an integrated managed service under unified project oversight, with AI-enabled workflows and human expertise at every stage.</p>
+    </div>
+    <div class="lc-steps">
+      <div class="lc-step reveal">
+        <div class="lc-num">01</div>
+        <div class="lc-name">Identification</div>
+        <div class="lc-desc">Mapping potentially relevant data sources before any collection begins — custodians, repositories, formats, jurisdictions</div>
+      </div>
+      <div class="lc-step reveal">
+        <div class="lc-num">02</div>
+        <div class="lc-name">Preservation</div>
+        <div class="lc-desc">Legal holds, custodian notices, and forensic chain-of-custody protocols established from day one</div>
+      </div>
+      <div class="lc-step reveal">
+        <div class="lc-num">03</div>
+        <div class="lc-name">Collection</div>
+        <div class="lc-desc">Defensible on-site, remote, and lab-based collection across enterprise systems, mobile devices, and cloud platforms</div>
+      </div>
+      <div class="lc-step reveal">
+        <div class="lc-num">04</div>
+        <div class="lc-name">Processing &amp; ECA</div>
+        <div class="lc-desc">AI-assisted ingestion, deduplication, threading, and early case assessment — narrowing scope before human review begins</div>
+      </div>
+      <div class="lc-step reveal">
+        <div class="lc-num">05</div>
+        <div class="lc-name">Review</div>
+        <div class="lc-desc">AI-enabled and attorney-led review with defensible QC protocols, privilege logging, and continuous supervision</div>
+      </div>
+      <div class="lc-step reveal">
+        <div class="lc-num">06</div>
+        <div class="lc-name">Production</div>
+        <div class="lc-desc">Court- and regulator-ready productions with format specifications met, load file integrity verified, and full documentation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section class="capabilities" id="capabilities">
+  <div class="container">
+    <div class="s-header reveal">
+      <div class="s-eyebrow">Service capabilities</div>
+      <h2 class="s-title">What we do,<br><em>and how we do it differently</em></h2>
+      <p class="s-sub">Each capability is built around a single principle: AI-enabled speed, human expertise in the loop, and a managed service approach that keeps your team focused on strategy.</p>
+    </div>
+    <div class="cap-grid">
+
+      <div class="cap-card reveal">
+        <div class="cc-num">01</div>
+        <div class="cc-title">Data Processing &amp; Hosting</div>
+        <div class="cc-bar"></div>
+        <div class="cc-text">We ingest, normalize, and process large and complex data sets quickly — structured and unstructured, across formats — and host them on the leading eDiscovery platforms your matter already specifies. Flexible ingestion, deduplication, and AI-assisted filtering reduce the review population before a single attorney touches a document, cutting cost at the source.</div>
+        <div class="cc-tags"><span class="cc-tag">Legal Document Management</span><span class="cc-tag">Data Processing</span><span class="cc-tag">eDiscovery</span></div>
+      </div>
+
+      <div class="cap-card reveal">
+        <div class="cc-num">02</div>
+        <div class="cc-title">Early Case Assessment &amp; Analytics</div>
+        <div class="cc-bar"></div>
+        <div class="cc-text">Before committing to a full review workflow, we apply AI and advanced analytics to the full data universe to surface key custodians, date ranges, communication patterns, and issue identification. The intelligence generated at ECA shapes your entire review strategy — and typically determines 60–70% of discovery cost. Human experts in the loop ensure the analysis translates into defensible decisions.</div>
+        <div class="cc-tags"><span class="cc-tag">Litigation Support</span><span class="cc-tag">Risk Assessment</span><span class="cc-tag">Scope Reduction</span></div>
+      </div>
+
+      <div class="cap-card reveal">
+        <div class="cc-num">03</div>
+        <div class="cc-title">AI-Assisted Document Review</div>
+        <div class="cc-bar"></div>
+        <div class="cc-text">Our AI-enabled review workflows — including technology-assisted review, continuous active learning, and predictive coding — dramatically reduce the volume requiring human review while improving consistency. Critically, licensed attorneys remain in the loop at every classification decision that matters: privilege determinations, complex responsiveness calls, and QC validation. Speed without sacrificing defensibility.</div>
+        <div class="cc-tags"><span class="cc-tag">Automated Document Review</span><span class="cc-tag">Managed Document Review</span><span class="cc-tag">Legal Document Review Service</span></div>
+      </div>
+
+      <div class="cap-card reveal">
+        <div class="cc-num">04</div>
+        <div class="cc-title">Privilege Review &amp; Production</div>
+        <div class="cc-bar"></div>
+        <div class="cc-text">Privilege calls are high-stakes, and privilege logs are scrutinized. Our attorney-led privilege review team applies consistent frameworks across large populations and produces defensible logs that hold up through meet-and-confer. Productions are prepared to your specific court or regulator's format requirements, with pre-production QC to ensure nothing goes out the door that shouldn't.</div>
+        <div class="cc-tags"><span class="cc-tag">Document Review Provider</span><span class="cc-tag">Document Review Process</span><span class="cc-tag">Paralegal Support</span></div>
+      </div>
+
+      <div class="cap-card reveal">
+        <div class="cc-num">05</div>
+        <div class="cc-title">Data Breach Document Review</div>
+        <div class="cc-bar"></div>
+        <div class="cc-text">After a forensic firm extracts the data from a compromised environment, the legal work begins. We review it — identifying PII across millions of records, categorizing affected individuals by data type, and building the structured notification population your breach counsel needs to assess regulatory obligations accurately. AI-enabled workflows accelerate volume; attorneys validate every classification that drives a notification decision. Fast, accurate, defensible.</div>
+        <div class="cc-tags"><span class="cc-tag">Data Breach Review</span><span class="cc-tag">Notification Document Review</span><span class="cc-tag">Data Breach Notification Service</span><span class="cc-tag">Cyber Incident Response Support</span></div>
+      </div>
+
+      <div class="cap-card reveal">
+        <div class="cc-num">06</div>
+        <div class="cc-title">Regulatory, Investigation &amp; Contract Review</div>
+        <div class="cc-bar"></div>
+        <div class="cc-text">Regulatory response matters and internal investigations demand the same attorney-led, AI-enabled precision as litigation — often under tighter timelines. We also support high-volume AI contract review and contract management engagements, providing the human expertise to validate AI outputs and contextualize clause-level analysis at scale. The managed service model means consistent quality regardless of volume.</div>
+        <div class="cc-tags"><span class="cc-tag">AI Contract Review</span><span class="cc-tag">AI Contract Management</span><span class="cc-tag">Legal Process Outsourcing</span><span class="cc-tag">Outsource eDiscovery Services</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TECHNOLOGY & PLATFORMS -->
+<section class="tech">
+  <div class="tech-inner">
+    <div class="tech-left">
+      <div class="s-eyebrow reveal">Technology &amp; platforms</div>
+      <h2 class="s-title reveal">Platform fluency<br>across the tools<br><em>your matters already use</em></h2>
+      <p class="tech-lead reveal">We are not a technology platform and we are not selling you one. We are a managed service provider that runs AI-enabled review on the leading eDiscovery tools — adapting to your existing technology stack rather than requiring you to change it. Our team holds certified proficiency across the platforms your matters specify.</p>
+      <div class="platform-list reveal">
+        <div class="plat-item">
+          <div><div class="plat-name">Leading Review Platforms</div><div class="plat-sub">Full workflow proficiency — review, analytics, production</div></div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="rgba(255,171,67,0.5)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </div>
+        <div class="plat-item">
+          <div><div class="plat-name">AI-Assisted Review Tools</div><div class="plat-sub">Technology-assisted review, predictive coding, continuous active learning</div></div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="rgba(255,171,67,0.5)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </div>
+        <div class="plat-item">
+          <div><div class="plat-name">Cloud eDiscovery Environments</div><div class="plat-sub">Scalable hosting with jurisdiction-aware data residency</div></div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="rgba(255,171,67,0.5)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </div>
+        <div class="plat-item">
+          <div><div class="plat-name">Data Breach &amp; Privacy Review Tools</div><div class="plat-sub">Specialist PII identification and notification population tooling</div></div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="rgba(255,171,67,0.5)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </div>
+        <div class="plat-item">
+          <div><div class="plat-name">AI Contract Management Systems</div><div class="plat-sub">Clause extraction, obligation tracking, and lifecycle management</div></div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="rgba(255,171,67,0.5)"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="tech-right">
+      <div class="metric-bar reveal">
+        <div class="mb-num"><span>210</span>M+</div>
+        <div class="mb-label">Documents reviewed — across litigation, regulatory matters, data breach response, and contract analysis</div>
+      </div>
+      <div class="metric-bar reveal">
+        <div class="mb-num"><span>6,100</span>+</div>
+        <div class="mb-label">Projects completed since 1996 across 47 countries and every major legal market</div>
+      </div>
+      <div class="metric-bar reveal">
+        <div class="mb-num"><span>24/7</span></div>
+        <div class="mb-label">Global operations — continuous coverage across time zones without quality degradation</div>
+      </div>
+      <div class="metric-bar reveal">
+        <div class="mb-num"><span>30</span>+</div>
+        <div class="mb-label">Years in legal process outsourcing — ISO 27001 and SOC 2 Type II certified</div>
+      </div>
+      <div class="metric-bar reveal">
+        <div class="mb-num"><span>100</span>%</div>
+        <div class="mb-label">Platform-agnostic — we adapt to your technology stack; we never require you to change it</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY LDM GLOBAL -->
+<section class="why">
+  <div class="container">
+    <div class="s-header reveal">
+      <div class="s-eyebrow">Why LDM Global</div>
+      <h2 class="s-title">What separates a trusted partner<br>from <em>a capable vendor</em></h2>
+      <p class="s-sub">In uncertain litigation environments, the question isn't just "who can do this?" It's "who will still deliver when things go sideways?" These are the operational characteristics that answer that question.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="wc-icon"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></div>
+        <div class="wc-title">AI-enabled, with human expertise in the loop</div>
+        <div class="wc-text">AI accelerates throughput and flags patterns at scale. Our licensed attorneys own every determination that carries legal weight — privilege calls, complex responsiveness decisions, QC sign-off. Defensibility comes from the people, not just the tools.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="wc-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15.5v-9l6 4.5-6 4.5z"/></svg></div>
+        <div class="wc-title">We reduce surprises, not just costs</div>
+        <div class="wc-text">Clear scope, documented protocols, and proactive communication at every stage. When matters evolve — and they do — we adapt without disruption. Our stakeholders know what we are doing, why, and what it means for their timeline.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="wc-icon"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg></div>
+        <div class="wc-title">ISO 27001 and SOC 2 Type II certified</div>
+        <div class="wc-text">Our global delivery team holds ISO 27001 and SOC 2 Type II certification, AES-256 encryption, and a zero-training-on-client-data policy. We meet the security bar that AmLaw firms and Fortune 500 legal teams require before a document leaves your jurisdiction.</div>
+      </div>
+      <div class="why-card reveal">
+        <div class="wc-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+        <div class="wc-title">Global scale with local accountability</div>
+        <div class="wc-text">24/7 operations across time zones, with a 1,300-seat delivery center behind us. The global scale that absorbs surge capacity — and the direct accountability that means your matter lead is reachable when it matters, not routed through a call center.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS — 4 tiles in one row -->
+<section class="process">
+  <div class="container">
+    <div class="s-header reveal">
+      <div class="s-eyebrow">What distinguishes how we run discovery</div>
+      <h2 class="s-title">From matter intake<br>to <em>production delivery</em></h2>
+      <p class="s-sub">A structured, auditable workflow initiated within hours of engagement and scaled to the matter's full data universe — with AI-enabled tools and human experts at every decision point.</p>
+    </div>
+    <div class="proc-track">
+      <div class="proc-step reveal">
+        <div class="proc-dot"></div>
+        <div class="pstep-num">Step 01</div>
+        <div class="pstep-title">Scoping &amp; Protocol</div>
+        <div class="pstep-text">Data sources, custodians, jurisdiction, privilege framework, and proportionality parameters established before any collection begins. No ambiguity at the start means no rework at the end.</div>
+      </div>
+      <div class="proc-step reveal">
+        <div class="proc-dot"></div>
+        <div class="pstep-num">Step 02</div>
+        <div class="pstep-title">Collection &amp; Processing</div>
+        <div class="pstep-text">Forensic collection with full chain-of-custody documentation, followed by AI-assisted ingestion, deduplication, and early case assessment to reduce the review population before human review begins.</div>
+      </div>
+      <div class="proc-step reveal">
+        <div class="proc-dot"></div>
+        <div class="pstep-num">Step 03</div>
+        <div class="pstep-title">AI-Enabled, Attorney-Led Review</div>
+        <div class="pstep-text">Technology-assisted review at scale, with licensed attorneys validating AI classifications and owning every privilege determination and complex coding decision. Independent QC runs concurrently throughout — not just at the end.</div>
+      </div>
+      <div class="proc-step reveal">
+        <div class="proc-dot"></div>
+        <div class="pstep-num">Step 04</div>
+        <div class="pstep-title">Production &amp; Documentation</div>
+        <div class="pstep-text">Productions formatted to your specific court or regulator requirements. Privilege logs, redaction logs, and methodology documentation delivered alongside — so the review can be explained and defended if challenged.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LDM ADVANTAGE -->
+<section class="advantage">
+  <div class="adv-inner">
+    <div class="adv-left">
+      <div class="s-eyebrow reveal">The LDM Global approach</div>
+      <h2 class="s-title light reveal">What distinguishes<br>how we <em>run eDiscovery</em></h2>
+      <p class="adv-lead reveal">For legal and compliance teams evaluating eDiscovery partners, the operational choices a provider makes — not just the platforms they list — determine the quality of outcomes and the reliability of the relationship.</p>
+      <div class="diff-list">
+        <div class="diff-item reveal">
+          <div class="diff-num">01</div>
+          <div>
+            <div class="diff-title">AI that is auditable, not just fast</div>
+            <div class="diff-text">Every AI classification in our workflow produces a documented audit trail. When opposing counsel challenges your technology-assisted review protocol, you have the methodology records to defend it — not just the assertion that AI was used.</div>
+          </div>
+        </div>
+        <div class="diff-item reveal">
+          <div class="diff-num">02</div>
+          <div>
+            <div class="diff-title">Attorneys in the loop at every critical juncture</div>
+            <div class="diff-text">Attorney-led review is not a marketing claim for us — it is the operational model. Licensed legal professionals supervise review, own privilege determinations, and sign off on QC. That's the defensibility story that holds up in court.</div>
+          </div>
+        </div>
+        <div class="diff-item reveal">
+          <div class="diff-num">03</div>
+          <div>
+            <div class="diff-title">Unified oversight from collection to production</div>
+            <div class="diff-text">A single managed service layer across the full discovery lifecycle. No knowledge gaps at handoff points between disconnected vendors. When something changes mid-matter, we adapt — without losing the thread of what came before.</div>
+          </div>
+        </div>
+        <div class="diff-item reveal">
+          <div class="diff-num">04</div>
+          <div>
+            <div class="diff-title">Competitive rates without compromising quality</div>
+            <div class="diff-text">Our global delivery model delivers significantly lower blended rates than domestic review alternatives — with the same attorney-led quality and the same certified security infrastructure. The value proposition is not cost instead of quality; it is quality at a cost that makes sense for your matters.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="adv-right">
+      <div class="adv-stat reveal">
+        <div class="as-num"><span>210</span>M+</div>
+        <div class="as-label">Documents reviewed — the foundation of our operational knowledge base</div>
+      </div>
+      <div class="adv-stat reveal">
+        <div class="as-num"><span>6,100</span>+</div>
+        <div class="as-label">Projects completed across litigation, regulatory matters, data breach response, and contract review</div>
+      </div>
+      <div class="adv-stat reveal">
+        <div class="as-num"><span>30</span>+</div>
+        <div class="as-label">Years in legal process outsourcing — operational depth that only comes from doing the work</div>
+      </div>
+      <div class="adv-stat reveal">
+        <div class="as-num"><span>47</span></div>
+        <div class="as-label">Countries served — global reach with local jurisdiction awareness built in</div>
+      </div>
+      <div class="adv-stat reveal">
+        <div class="as-num"><span>24/7</span></div>
+        <div class="as-label">Global operations — matters don't wait for business hours, and neither do we</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="s-eyebrow reveal">Work with us</div>
+    <h2 class="cta-title reveal">Ready to bring more rigour<br>to your <em>next eDiscovery matter?</em></h2>
+    <p class="cta-sub reveal">Whether you have a matter in flight, a regulatory investigation underway, or want to discuss how a managed eDiscovery partnership could work for your organization — we welcome a direct conversation. No sales process. A substantive discussion about the specifics of your situation.</p>
+    <div class="cta-btns reveal">
+      <a class="btn-primary" href="mailto:sales@ldmglobal.com">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        Contact Our Team
+      </a>
+      <a class="btn-ghost" href="https://www.ldmglobal.com/fact-sheet/" style="color:var(--offwhite)">
+        Download Fact Sheet
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-top">
+    <div>
+      <div class="foot-logo">
+        <img src="https://www.ldmglobal.com/wp-content/uploads/2025/02/logo.png" alt="LDM Global powered by EXOedge">
+      </div>
+      <div class="foot-tagline">Legal Intelligence. Delivered Globally.<br>Powered by EXOedge.</div>
+    </div>
+    <div class="foot-cols">
+      <div class="foot-col">
+        <div class="foot-col-title">Solutions</div>
+        <a href="https://www.ldmglobal.com/cyber-incident-response-review/">Cyber Incident Response</a>
+        <a href="https://www.ldmglobal.com/managed-document-review/">Managed Document Review</a>
+        <a href="https://www.ldmglobal.com/ediscovery-services/">eDiscovery Services</a>
+        <a href="https://www.ldmglobal.com/contract-lifecycle-management/">Contract Lifecycle Management</a>
+        <a href="https://www.ldmglobal.com/compliance-and-risk-management/">Compliance &amp; Risk</a>
+        <a href="https://www.ldmglobal.com/ai-analytics-services/">AI &amp; Analytics</a>
+      </div>
+      <div class="foot-col">
+        <div class="foot-col-title">Company</div>
+        <a href="https://www.ldmglobal.com/get-to-know-us/">About Us</a>
+        <a href="https://www.ldmglobal.com/get-to-know-us#leadership-team">Leadership</a>
+        <a href="https://www.ldmglobal.com/contact-us/locations/">Locations</a>
+        <a href="https://www.ldmglobal.com/get-to-know-us/client-testimonials/">Client Testimonials</a>
+        <a href="https://www.ldmglobal.com/contact-us/careers/">Careers</a>
+      </div>
+      <div class="foot-col">
+        <div class="foot-col-title">Resources</div>
+        <a href="https://www.ldmglobal.com/legal-consulting/">Insights &amp; Blog</a>
+        <a href="https://www.ldmglobal.com/legal-staffing/">Case Studies</a>
+        <a href="https://www.ldmglobal.com/fact-sheet/">Fact Sheet</a>
+        <a href="https://www.ldmglobal.com/upcoming-events/">Events</a>
+        <a href="https://www.ldmglobal.com/contact-us/">Contact</a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div class="foot-copy">© 2025 LDM Global. All rights reserved. &nbsp;|&nbsp; <a href="https://www.ldmglobal.com/data-privacy-statement/">Privacy Notice</a></div>
+    <div class="foot-badges">
+      <span class="badge">ISO 27001</span>
+      <span class="badge">SOC 2 Type II</span>
+      <span class="badge">HIPAA Compliant</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const siblings = [...(entry.target.parentElement?.querySelectorAll('.reveal') || [])];
+      let delay = 0;
+      siblings.forEach(el => {
+        if (!el.classList.contains('visible')) {
+          el.style.transitionDelay = delay + 'ms';
+          delay += 70;
+        }
+      });
+      entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
+  reveals.forEach(el => io.observe(el));
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 50); }, { passive: true });
+</script>
+</body>
+</html>
