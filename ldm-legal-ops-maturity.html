@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legal Ops Maturity Assessment | LDM Global</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #152148;
+    --blue: #446280;
+    --orange: #FF9425;
+    --grey-light: #F5F6F8;
+    --grey-mid: #E2E6EC;
+    --grey-text: #6B7280;
+    --white: #ffffff;
+    --radius: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--grey-light);
+    color: var(--navy);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--navy);
+    padding: 18px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: var(--white);
+    letter-spacing: 0.04em;
+  }
+  .logo span { color: var(--orange); }
+  header p {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.5);
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ── PROGRESS BAR ── */
+  #progress-bar-wrap {
+    background: var(--navy);
+    padding: 0 40px 16px;
+    display: none;
+  }
+  #progress-track {
+    background: rgba(255,255,255,0.15);
+    border-radius: 4px;
+    height: 5px;
+    overflow: hidden;
+  }
+  #progress-fill {
+    height: 100%;
+    background: var(--orange);
+    border-radius: 4px;
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+  #progress-label {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.5);
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 6px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── SCREENS ── */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* ── HERO ── */
+  #screen-intro {
+    max-width: 760px;
+    margin: 60px auto;
+    padding: 0 24px;
+    text-align: center;
+  }
+  .eyebrow {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+  h1 em {
+    font-style: normal;
+    color: var(--blue);
+  }
+  .intro-sub {
+    font-size: 1.05rem;
+    color: var(--grey-text);
+    line-height: 1.7;
+    max-width: 600px;
+    margin: 0 auto 36px;
+  }
+
+  .dimension-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+  .chip {
+    background: var(--white);
+    border: 1.5px solid var(--grey-mid);
+    border-radius: 20px;
+    padding: 7px 16px;
+    font-size: 0.82rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    margin-bottom: 36px;
+  }
+  .meta-item { text-align: center; }
+  .meta-item .num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--navy);
+  }
+  .meta-item .lbl {
+    font-size: 0.75rem;
+    color: var(--grey-text);
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── BUTTONS ── */
+  .btn-primary {
+    background: var(--orange);
+    color: var(--white);
+    border: none;
+    padding: 16px 40px;
+    border-radius: var(--radius);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-primary:hover { background: #e0820f; transform: translateY(-1px); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--navy);
+    border: 1.5px solid var(--grey-mid);
+    padding: 12px 28px;
+    border-radius: var(--radius);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: border-color 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--blue); }
+
+  /* ── QUESTION SCREEN ── */
+  #screen-quiz {
+    max-width: 720px;
+    margin: 50px auto;
+    padding: 0 24px;
+  }
+
+  .dimension-header {
+    background: var(--navy);
+    border-radius: var(--radius);
+    padding: 22px 28px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .dim-icon {
+    width: 44px;
+    height: 44px;
+    background: rgba(255,148,37,0.18);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+  .dimension-header h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+  .dimension-header p {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.55);
+    margin-top: 3px;
+  }
+
+  .question-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 20px;
+    border: 1.5px solid var(--grey-mid);
+  }
+  .question-card h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 18px;
+    line-height: 1.5;
+  }
+  .q-num {
+    display: inline-block;
+    background: var(--orange);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.68rem;
+    padding: 3px 9px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    letter-spacing: 0.06em;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 13px 16px;
+    border: 1.5px solid var(--grey-mid);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.18s, background 0.18s;
+    position: relative;
+  }
+  .option:hover { border-color: var(--blue); background: #f0f4f8; }
+  .option.selected { border-color: var(--orange); background: #fff8f0; }
+  .option input[type="radio"] { display: none; }
+  .option-dot {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--grey-mid);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 1px;
+    transition: border-color 0.18s, background 0.18s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .option.selected .option-dot {
+    border-color: var(--orange);
+    background: var(--orange);
+  }
+  .option.selected .option-dot::after {
+    content: '';
+    width: 6px; height: 6px;
+    background: white;
+    border-radius: 50%;
+  }
+  .option-text { font-size: 0.88rem; line-height: 1.5; color: var(--navy); }
+  .option-level {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--grey-text);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .quiz-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 28px;
+  }
+  .nav-dim {
+    font-size: 0.8rem;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--grey-text);
+    font-weight: 600;
+  }
+
+  /* ── EMAIL GATE ── */
+  #screen-gate {
+    max-width: 560px;
+    margin: 80px auto;
+    padding: 0 24px;
+    text-align: center;
+  }
+  #screen-gate h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 12px;
+    line-height: 1.25;
+  }
+  #screen-gate p {
+    color: var(--grey-text);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+  .gate-form {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 32px;
+    border: 1.5px solid var(--grey-mid);
+    text-align: left;
+  }
+  .form-group { margin-bottom: 18px; }
+  .form-group label {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 7px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .form-group input, .form-group select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--grey-mid);
+    border-radius: 7px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.92rem;
+    color: var(--navy);
+    outline: none;
+    transition: border-color 0.18s;
+    background: var(--grey-light);
+  }
+  .form-group input:focus, .form-group select:focus { border-color: var(--blue); background: var(--white); }
+  .gate-form .btn-primary { width: 100%; margin-top: 8px; padding: 15px; }
+  .gate-privacy {
+    font-size: 0.74rem;
+    color: var(--grey-text);
+    text-align: center;
+    margin-top: 14px;
+    line-height: 1.5;
+  }
+
+  /* ── RESULTS ── */
+  #screen-results {
+    max-width: 860px;
+    margin: 50px auto;
+    padding: 0 24px 60px;
+  }
+  .results-hero {
+    background: var(--navy);
+    border-radius: var(--radius);
+    padding: 36px 40px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 32px;
+  }
+  .score-dial {
+    flex-shrink: 0;
+    position: relative;
+    width: 120px;
+    height: 120px;
+  }
+  .score-dial svg { width: 120px; height: 120px; }
+  .score-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  .score-num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1;
+  }
+  .score-out {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.45);
+    font-family: 'Montserrat', sans-serif;
+  }
+  .results-meta h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.55rem;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .maturity-badge {
+    display: inline-block;
+    background: var(--orange);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .results-meta p {
+    color: rgba(255,255,255,0.65);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    max-width: 480px;
+  }
+
+  /* dimension grid */
+  .dim-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .dim-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 22px;
+    border: 1.5px solid var(--grey-mid);
+    position: relative;
+    overflow: hidden;
+  }
+  .dim-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--orange);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .dim-card.gap::before { opacity: 1; }
+  .dim-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+  .dim-name {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .dim-score-badge {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 12px;
+    background: var(--grey-light);
+    color: var(--navy);
+  }
+  .dim-bar-track {
+    background: var(--grey-mid);
+    border-radius: 4px;
+    height: 6px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .dim-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: var(--blue);
+    width: 0%;
+    transition: width 0.7s ease;
+  }
+  .dim-bar-fill.gap { background: var(--orange); }
+  .dim-level {
+    font-size: 0.78rem;
+    color: var(--grey-text);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .dim-service {
+    font-size: 0.78rem;
+    color: var(--blue);
+    font-weight: 500;
+  }
+  .dim-service strong {
+    color: var(--orange);
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  /* recommendations */
+  .reco-section {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 28px;
+    border: 1.5px solid var(--grey-mid);
+    margin-bottom: 20px;
+  }
+  .reco-section h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1.5px solid var(--grey-mid);
+  }
+  .reco-item {
+    display: flex;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--grey-light);
+  }
+  .reco-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .reco-icon {
+    width: 36px; height: 36px;
+    background: var(--grey-light);
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .reco-text h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 3px;
+  }
+  .reco-text p { font-size: 0.82rem; color: var(--grey-text); line-height: 1.5; }
+  .reco-tag {
+    display: inline-block;
+    background: #EBF2FF;
+    color: var(--blue);
+    font-size: 0.7rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 10px;
+    margin-top: 5px;
+    letter-spacing: 0.04em;
+  }
+
+  /* CTA block */
+  .cta-block {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+    border-radius: var(--radius);
+    padding: 36px 40px;
+    text-align: center;
+    margin-top: 8px;
+  }
+  .cta-block h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+  .cta-block p {
+    color: rgba(255,255,255,0.65);
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .cta-btn-main {
+    background: var(--orange);
+    color: var(--white);
+    border: none;
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s;
+  }
+  .cta-btn-main:hover { background: #e0820f; }
+  .cta-btn-ghost {
+    background: transparent;
+    color: rgba(255,255,255,0.8);
+    border: 1.5px solid rgba(255,255,255,0.3);
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .cta-btn-ghost:hover { border-color: rgba(255,255,255,0.7); }
+
+  .disclaimer {
+    text-align: center;
+    font-size: 0.74rem;
+    color: var(--grey-text);
+    margin-top: 32px;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 640px) {
+    header { padding: 16px 20px; }
+    h1 { font-size: 1.7rem; }
+    .dim-grid { grid-template-columns: 1fr; }
+    .results-hero { flex-direction: column; text-align: center; gap: 20px; }
+    .results-meta p { max-width: 100%; }
+    .cta-block { padding: 28px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">LDM<span>.</span>GLOBAL</div>
+  <p>Legal Operations Maturity Assessment</p>
+</header>
+
+<div id="progress-bar-wrap">
+  <div id="progress-track"><div id="progress-fill"></div></div>
+  <div id="progress-label" id="progress-label">Question 1 of 12</div>
+</div>
+
+<!-- INTRO -->
+<div id="screen-intro" class="screen active">
+  <p class="eyebrow">Free Assessment Tool</p>
+  <h1>Where does your legal ops function <em>actually</em> stand?</h1>
+  <p class="intro-sub">Most legal teams know their pain points. Fewer have a structured view of where they are — and what closing each gap is worth. This 12-question assessment gives you a clear maturity score across six capability areas, with benchmarks and next steps.</p>
+
+  <div class="dimension-chips">
+    <span class="chip">⚡ eDiscovery Readiness</span>
+    <span class="chip">🔐 Cyber IR Preparedness</span>
+    <span class="chip">📄 Contract Management</span>
+    <span class="chip">✅ Compliance Process</span>
+    <span class="chip">💰 Cost Management</span>
+    <span class="chip">🤖 AI &amp; Tech Adoption</span>
+  </div>
+
+  <div class="meta-row">
+    <div class="meta-item"><div class="num">12</div><div class="lbl">Questions</div></div>
+    <div class="meta-item"><div class="num">5 min</div><div class="lbl">To complete</div></div>
+    <div class="meta-item"><div class="num">CMM</div><div class="lbl">Score model</div></div>
+  </div>
+
+  <button class="btn-primary" onclick="startQuiz()">Start the Assessment →</button>
+  <br>
+  <button class="btn-secondary" onclick="startQuiz()">Already know your gaps? See the framework</button>
+</div>
+
+<!-- QUIZ -->
+<div id="screen-quiz" class="screen">
+  <div class="dimension-header" id="dim-header">
+    <div class="dim-icon" id="dim-icon"></div>
+    <div>
+      <h2 id="dim-title"></h2>
+      <p id="dim-desc"></p>
+    </div>
+  </div>
+  <div id="questions-container"></div>
+  <div class="quiz-nav">
+    <span class="nav-dim" id="dim-counter"></span>
+    <button class="btn-primary" id="btn-next" onclick="nextDimension()">Next →</button>
+  </div>
+</div>
+
+<!-- EMAIL GATE -->
+<div id="screen-gate" class="screen">
+  <p class="eyebrow">Your results are ready</p>
+  <h2>One step to unlock your full report</h2>
+  <p>Enter your details below to see your maturity score, dimension breakdown, and tailored recommendations.</p>
+
+  <div class="gate-form">
+    <div class="form-group">
+      <label>Your Name</label>
+      <input type="text" id="gate-name" placeholder="e.g. Sarah Chen">
+    </div>
+    <div class="form-group">
+      <label>Firm / Organization</label>
+      <input type="text" id="gate-firm" placeholder="e.g. Davis Polk & Wardwell">
+    </div>
+    <div class="form-group">
+      <label>Work Email</label>
+      <input type="email" id="gate-email" placeholder="you@yourfirm.com">
+    </div>
+    <div class="form-group">
+      <label>Your Role</label>
+      <select id="gate-role">
+        <option value="">Select your role</option>
+        <option>General Counsel</option>
+        <option>Head of Legal Operations</option>
+        <option>Chief Information Security Officer</option>
+        <option>Chief Compliance Officer</option>
+        <option>CFO / Finance</option>
+        <option>Associate GC / Deputy GC</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <button class="btn-primary" onclick="showResults()">View My Results →</button>
+  </div>
+  <p class="gate-privacy">🔒 Your information is never shared or sold. LDM Global may reach out with relevant legal ops resources.</p>
+</div>
+
+<!-- RESULTS -->
+<div id="screen-results" class="screen">
+  <div class="results-hero">
+    <div class="score-dial">
+      <svg viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="10"/>
+        <circle cx="60" cy="60" r="50" fill="none" stroke="#FF9425" stroke-width="10"
+          stroke-dasharray="314" stroke-dashoffset="314"
+          stroke-linecap="round" transform="rotate(-90 60 60)"
+          id="score-arc"/>
+      </svg>
+      <div class="score-center">
+        <div class="score-num" id="score-display">0</div>
+        <div class="score-out">/ 60</div>
+      </div>
+    </div>
+    <div class="results-meta">
+      <div class="maturity-badge" id="maturity-badge">Loading…</div>
+      <h2 id="results-headline">Your Legal Ops Maturity</h2>
+      <p id="results-summary"></p>
+    </div>
+  </div>
+
+  <div class="dim-grid" id="dim-grid"></div>
+
+  <div class="reco-section" id="reco-section">
+    <h3>🎯 Priority Recommendations for Your Team</h3>
+    <div id="reco-list"></div>
+  </div>
+
+  <div class="cta-block">
+    <h3>Ready to close the gaps?</h3>
+    <p>LDM Global works with AmLaw 50 and Magic Circle law firms on exactly these capability areas — managed review, eDiscovery, cyber incident response, and more. Let's talk about where we can help.</p>
+    <div class="cta-buttons">
+      <a href="mailto:sales@ldmglobal.com" class="cta-btn-main">Schedule a Conversation</a>
+      <button class="cta-btn-ghost" onclick="window.print()">Download My Report</button>
+    </div>
+  </div>
+
+  <p class="disclaimer">This assessment is for self-evaluation purposes. Results reflect responses provided and are not a formal audit. © LDM Global 2026.</p>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────────
+
+const DIMENSIONS = [
+  {
+    id: "ediscovery",
+    icon: "⚡",
+    name: "eDiscovery Readiness",
+    desc: "Litigation hold, data collection, processing and production workflows",
+    service: "eDiscovery & Managed Document Review",
+    questions: [
+      {
+        text: "How does your team manage litigation holds and custodian notifications when a matter is triggered?",
+        options: [
+          { level: "Initial", text: "We handle holds ad hoc — emails and verbal instructions, no formal process", score: 1 },
+          { level: "Managed", text: "We have a basic litigation hold template but deployment is inconsistent", score: 2 },
+          { level: "Defined", text: "We have a documented hold process with a designated system and custodian tracking", score: 3 },
+          { level: "Quantified", text: "We use a technology platform for holds with audit trails and compliance reporting", score: 4 },
+          { level: "Optimizing", text: "Our hold process is fully automated with integration to HR, IT, and matter management", score: 5 }
+        ]
+      },
+      {
+        text: "When a large-scale discovery matter arrives, how long does it typically take your team to begin document production?",
+        options: [
+          { level: "Initial", text: "Weeks — we're finding the data, selecting vendors, and scoping at the same time", score: 1 },
+          { level: "Managed", text: "One to two weeks — we have preferred vendors but each matter starts from scratch", score: 2 },
+          { level: "Defined", text: "Three to five days — we have standing vendor relationships and defined workflows", score: 3 },
+          { level: "Quantified", text: "48 to 72 hours — we have a managed review program with pre-negotiated terms", score: 4 },
+          { level: "Optimizing", text: "Under 24 hours — our review infrastructure is on-call with pre-built matter templates", score: 5 }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cyberir",
+    icon: "🔐",
+    name: "Cyber IR Preparedness",
+    desc: "Data breach response, PII review, and state notification management",
+    service: "Cyber Incident Response & Data Breach Review",
+    questions: [
+      {
+        text: "If a data breach were confirmed today, how would your team determine which individuals require notification under state law?",
+        options: [
+          { level: "Initial", text: "We would research each state's requirements as we go — we don't have a process", score: 1 },
+          { level: "Managed", text: "We rely on outside counsel to advise us — our internal knowledge of state laws is limited", score: 2 },
+          { level: "Defined", text: "We have a breach response playbook and a defined vendor for PII review and notification mapping", score: 3 },
+          { level: "Quantified", text: "We have a preferred breach review partner with SLAs and a notification population workflow", score: 4 },
+          { level: "Optimizing", text: "Our breach response infrastructure runs 24/7 with pre-authorized vendor triggers and real-time jurisdiction tracking", score: 5 }
+        ]
+      },
+      {
+        text: "How does your team handle the document review phase after a forensic firm delivers the extracted data set?",
+        options: [
+          { level: "Initial", text: "We haven't defined this — document review in breach response is unclear internally", score: 1 },
+          { level: "Managed", text: "We use a general litigation review vendor, not one specialised in breach PII review", score: 2 },
+          { level: "Defined", text: "We have a breach-specific review partner with attorney-led PII identification workflows", score: 3 },
+          { level: "Quantified", text: "Our breach review vendor uses AI-assisted triage with attorney sign-off, and we track accuracy metrics", score: 4 },
+          { level: "Optimizing", text: "End-to-end breach review is a managed program with known cost-per-document and SLA guarantees", score: 5 }
+        ]
+      }
+    ]
+  },
+  {
+    id: "contracts",
+    icon: "📄",
+    name: "Contract Management",
+    desc: "Contract review, abstraction, lifecycle management and CLM adoption",
+    service: "Contract Review & CLM Support",
+    questions: [
+      {
+        text: "How does your organization manage the review and abstraction of high-volume contracts (NDAs, vendor agreements, leases)?",
+        options: [
+          { level: "Initial", text: "Associates or paralegals review manually — we have no systematic abstraction process", score: 1 },
+          { level: "Managed", text: "We have checklists but review is still largely manual and varies by reviewer", score: 2 },
+          { level: "Defined", text: "We use a third-party legal services provider for high-volume abstraction with standard deliverables", score: 3 },
+          { level: "Quantified", text: "Contract abstraction is systematized with defined turnaround, output format, and quality metrics", score: 4 },
+          { level: "Optimizing", text: "AI-assisted contract review with attorney validation is embedded in our standard workflow", score: 5 }
+        ]
+      },
+      {
+        text: "How visible is your contract portfolio — do you know what obligations, renewal dates, and risk terms are in your active agreements?",
+        options: [
+          { level: "Initial", text: "Largely invisible — contracts live in email inboxes and shared drives", score: 1 },
+          { level: "Managed", text: "We track renewals in a spreadsheet but have limited visibility into clause-level risk", score: 2 },
+          { level: "Defined", text: "We have a CLM system in place with basic renewal and obligation tracking", score: 3 },
+          { level: "Quantified", text: "Our CLM system has clause-level abstraction and triggers for key obligations and risk terms", score: 4 },
+          { level: "Optimizing", text: "Full contract intelligence — automated risk scoring, obligation management, and integration to finance systems", score: 5 }
+        ]
+      }
+    ]
+  },
+  {
+    id: "compliance",
+    icon: "✅",
+    name: "Compliance Process",
+    desc: "Regulatory monitoring, compliance review workflows and audit readiness",
+    service: "Compliance & Regulatory Support",
+    questions: [
+      {
+        text: "How does your legal team stay current with regulatory changes that affect your business (state laws, federal rules, sector regulations)?",
+        options: [
+          { level: "Initial", text: "Ad hoc — we rely on alerts from outside counsel or catch things when they become urgent", score: 1 },
+          { level: "Managed", text: "We subscribe to a few regulatory newsletters but there's no systematic intake or triage process", score: 2 },
+          { level: "Defined", text: "We have a defined regulatory monitoring process with a designated owner and escalation path", score: 3 },
+          { level: "Quantified", text: "We use a RegTech tool or managed service for monitoring, with regular reporting to leadership", score: 4 },
+          { level: "Optimizing", text: "Real-time regulatory intelligence is integrated into our compliance calendar with automatic matter triggering", score: 5 }
+        ]
+      },
+      {
+        text: "How prepared is your team to respond to a regulatory inquiry or internal compliance audit with a 48-hour notice?",
+        options: [
+          { level: "Initial", text: "Not prepared — we would scramble to locate documents and establish a response team", score: 1 },
+          { level: "Managed", text: "We could respond but it would require significant all-hands effort and significant external counsel spend", score: 2 },
+          { level: "Defined", text: "We have a defined audit response protocol and know where key documentation lives", score: 3 },
+          { level: "Quantified", text: "We conduct periodic audit readiness exercises and maintain indexed documentation repositories", score: 4 },
+          { level: "Optimizing", text: "Audit response is a managed program — pre-built response packages updated quarterly", score: 5 }
+        ]
+      }
+    ]
+  },
+  {
+    id: "cost",
+    icon: "💰",
+    name: "Legal Cost Management",
+    desc: "Outside counsel spend visibility, matter budgeting and cost predictability",
+    service: "Managed Document Review (MDR) — Fixed-Fee Model",
+    questions: [
+      {
+        text: "How accurately can your team forecast the cost of a major litigation matter before it begins?",
+        options: [
+          { level: "Initial", text: "We can't — matter costs are largely unpredictable until we see the final invoice", score: 1 },
+          { level: "Managed", text: "We get rough estimates from outside counsel but they frequently miss by a significant margin", score: 2 },
+          { level: "Defined", text: "We use historical matter data and defined billing guidelines to build budgets at matter opening", score: 3 },
+          { level: "Quantified", text: "We track cost-per-document and cost-per-hour benchmarks and use them to challenge outside counsel estimates", score: 4 },
+          { level: "Optimizing", text: "Fixed-fee managed review is our standard model — we know the cost before the first document is reviewed", score: 5 }
+        ]
+      },
+      {
+        text: "What visibility does your finance or CFO function have into the legal department's matter-level spend in real time?",
+        options: [
+          { level: "Initial", text: "None — finance sees invoices after the fact, usually in the next billing cycle", score: 1 },
+          { level: "Managed", text: "Quarterly reviews with finance — but matter-level granularity is limited", score: 2 },
+          { level: "Defined", text: "Finance has access to a matter management dashboard with budget vs. actual tracking", score: 3 },
+          { level: "Quantified", text: "Real-time spend visibility with automated alerts when matters exceed budget thresholds", score: 4 },
+          { level: "Optimizing", text: "Legal spend is fully integrated into corporate financial planning with predictive cost modeling", score: 5 }
+        ]
+      }
+    ]
+  },
+  {
+    id: "ai",
+    icon: "🤖",
+    name: "AI & Technology Adoption",
+    desc: "Legal tech stack maturity, AI tool adoption and governance",
+    service: "AI-Led Review & eDiscovery Technology",
+    questions: [
+      {
+        text: "How is your team currently using AI tools in legal workflows (review, contract analysis, research, drafting)?",
+        options: [
+          { level: "Initial", text: "We are not using AI tools in any formal legal workflow", score: 1 },
+          { level: "Managed", text: "Some individuals use AI tools on an ad hoc basis — no governance or standards in place", score: 2 },
+          { level: "Defined", text: "We have approved AI tools and basic usage guidelines, with selected workflows using AI assistance", score: 3 },
+          { level: "Quantified", text: "AI is embedded in core workflows (review, drafting, research) with performance metrics and human oversight protocols", score: 4 },
+          { level: "Optimizing", text: "AI governance framework in place with vendor assessment, ongoing model evaluation, and defensibility documentation", score: 5 }
+        ]
+      },
+      {
+        text: "How does your team evaluate and approve new legal technology vendors before adding them to the workflow?",
+        options: [
+          { level: "Initial", text: "No formal vetting — tools are adopted if someone finds them useful", score: 1 },
+          { level: "Managed", text: "Basic security questionnaire, but legal-specific tech evaluation criteria are informal", score: 2 },
+          { level: "Defined", text: "Defined vendor evaluation process covering security certifications, data handling, and SLAs", score: 3 },
+          { level: "Quantified", text: "Formal tech due diligence checklist including SOC 2, ISO 27001, pricing model, and integration requirements", score: 4 },
+          { level: "Optimizing", text: "Ongoing vendor governance program with periodic re-certification and performance benchmarking", score: 5 }
+        ]
+      }
+    ]
+  }
+];
+
+const MATURITY_LEVELS = [
+  { min: 0,  max: 12, label: "Initial",     color: "#E5534B", desc: "Legal ops functions are largely reactive, undocumented, and dependent on individual effort. Significant exposure to cost spikes, compliance gaps, and breach response delays." },
+  { min: 13, max: 24, label: "Managed",     color: "#D4883F", desc: "Core processes exist but are inconsistent. You have the building blocks in place — the next stage is standardisation and reducing reliance on heroics." },
+  { min: 25, max: 36, label: "Defined",     color: "#E6B84A", desc: "Documented processes and defined vendor relationships are in place across most areas. The focus now is on measurement — knowing whether your processes are actually performing." },
+  { min: 37, max: 48, label: "Quantified",  color: "#4A9D6F", desc: "You are measuring what matters and using data to manage legal ops performance. The next frontier is predictive capability and continuous optimisation." },
+  { min: 49, max: 60, label: "Optimizing",  color: "#2D7DD2", desc: "Legal ops is a strategic function in your organisation — proactive, data-driven, and integrated into business planning. You are a benchmark for your peers." }
+];
+
+// ─────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────
+let currentDimIdx = 0;
+let answers = {}; // { dimId_qIdx: score }
+
+// ─────────────────────────────────────────────
+// NAVIGATION
+// ─────────────────────────────────────────────
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function startQuiz() {
+  currentDimIdx = 0;
+  answers = {};
+  document.getElementById('progress-bar-wrap').style.display = 'block';
+  renderDimension(0);
+  show('screen-quiz');
+  updateProgress();
+}
+
+function renderDimension(idx) {
+  const dim = DIMENSIONS[idx];
+  document.getElementById('dim-icon').textContent = dim.icon;
+  document.getElementById('dim-title').textContent = dim.name;
+  document.getElementById('dim-desc').textContent = dim.desc;
+  document.getElementById('dim-counter').textContent = `Dimension ${idx + 1} of ${DIMENSIONS.length}`;
+
+  const nextBtn = document.getElementById('btn-next');
+  nextBtn.textContent = idx < DIMENSIONS.length - 1 ? 'Next →' : 'See My Results →';
+
+  const container = document.getElementById('questions-container');
+  container.innerHTML = '';
+
+  const qOffset = idx * 2;
+
+  dim.questions.forEach((q, qi) => {
+    const qKey = `${dim.id}_${qi}`;
+    const globalNum = qOffset + qi + 1;
+
+    const card = document.createElement('div');
+    card.className = 'question-card';
+
+    let optionsHtml = q.options.map((opt, oi) => {
+      const sel = answers[qKey] === opt.score ? 'selected' : '';
+      return `
+        <label class="option ${sel}" onclick="selectOption(this, '${qKey}', ${opt.score})">
+          <div class="option-dot"></div>
+          <div class="option-text">
+            <div class="option-level">${opt.level}</div>
+            ${opt.text}
+          </div>
+        </label>`;
+    }).join('');
+
+    card.innerHTML = `
+      <div class="q-num">Q${globalNum}</div>
+      <h3>${q.text}</h3>
+      <div class="options">${optionsHtml}</div>`;
+    container.appendChild(card);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function selectOption(el, qKey, score) {
+  const options = el.closest('.options').querySelectorAll('.option');
+  options.forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers[qKey] = score;
+  updateProgress();
+}
+
+function updateProgress() {
+  const total = DIMENSIONS.length * 2;
+  const answered = Object.keys(answers).length;
+  const pct = (answered / total) * 100;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = `Question ${Math.min(answered + 1, total)} of ${total}`;
+}
+
+function nextDimension() {
+  // Validate both questions answered
+  const dim = DIMENSIONS[currentDimIdx];
+  for (let qi = 0; qi < dim.questions.length; qi++) {
+    const qKey = `${dim.id}_${qi}`;
+    if (!answers[qKey]) {
+      alert('Please answer both questions before continuing.');
+      return;
+    }
+  }
+
+  if (currentDimIdx < DIMENSIONS.length - 1) {
+    currentDimIdx++;
+    renderDimension(currentDimIdx);
+  } else {
+    show('screen-gate');
+    document.getElementById('progress-bar-wrap').style.display = 'none';
+  }
+}
+
+// ─────────────────────────────────────────────
+// GATE → RESULTS
+// ─────────────────────────────────────────────
+function showResults() {
+  const name = document.getElementById('gate-name').value.trim();
+  const firm = document.getElementById('gate-firm').value.trim();
+  const email = document.getElementById('gate-email').value.trim();
+  const role = document.getElementById('gate-role').value;
+
+  if (!name || !firm || !email || !role) {
+    alert('Please complete all fields to view your results.');
+    return;
+  }
+  if (!email.includes('@') || !email.includes('.')) {
+    alert('Please enter a valid work email address.');
+    return;
+  }
+
+  buildResults(name, firm);
+  show('screen-results');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  animateResults();
+}
+
+function buildResults(name, firm) {
+  // Calculate scores per dimension
+  let totalScore = 0;
+  const dimScores = DIMENSIONS.map(dim => {
+    let ds = 0;
+    dim.questions.forEach((q, qi) => {
+      ds += (answers[`${dim.id}_${qi}`] || 0);
+    });
+    totalScore += ds;
+    return { ...dim, score: ds, max: 10 };
+  });
+
+  // Maturity band
+  const band = MATURITY_LEVELS.find(l => totalScore >= l.min && totalScore <= l.max) || MATURITY_LEVELS[0];
+
+  // Score display
+  document.getElementById('score-display').textContent = totalScore;
+  document.getElementById('maturity-badge').textContent = band.label;
+  document.getElementById('results-headline').textContent = `${name}'s Legal Ops Profile — ${firm}`;
+  document.getElementById('results-summary').textContent = band.desc;
+
+  // Arc animation
+  const pct = totalScore / 60;
+  const circum = 314;
+  document.getElementById('score-arc').style.strokeDashoffset = circum - (circum * pct);
+  document.getElementById('score-arc').style.transition = 'stroke-dashoffset 1s ease';
+
+  // Dimension grid
+  const grid = document.getElementById('dim-grid');
+  grid.innerHTML = '';
+  const gaps = dimScores.filter(d => d.score <= 6);
+
+  dimScores.forEach(dim => {
+    const isGap = dim.score <= 6;
+    const levelIdx = Math.round((dim.score / 10) * 4);
+    const levelName = ["Initial", "Managed", "Defined", "Quantified", "Optimizing"][Math.min(levelIdx, 4)];
+    const fillPct = (dim.score / 10) * 100;
+
+    const card = document.createElement('div');
+    card.className = `dim-card ${isGap ? 'gap' : ''}`;
+    card.innerHTML = `
+      <div class="dim-card-top">
+        <div>
+          <div style="font-size:1.2rem;margin-bottom:4px">${dim.icon}</div>
+          <div class="dim-name">${dim.name}</div>
+        </div>
+        <div class="dim-score-badge">${dim.score}/10</div>
+      </div>
+      <div class="dim-bar-track">
+        <div class="dim-bar-fill ${isGap ? 'gap' : ''}" style="width:${fillPct}%"></div>
+      </div>
+      <div class="dim-level">${levelName}</div>
+      <div class="dim-service">${isGap ? '<strong>Gap area →</strong> ' : ''}${dim.service}</div>`;
+    grid.appendChild(card);
+  });
+
+  // Recommendations — prioritize gaps
+  const recoList = document.getElementById('reco-list');
+  recoList.innerHTML = '';
+
+  const RECOS = {
+    ediscovery: {
+      icon: "⚡",
+      title: "Establish a Managed Review Program",
+      text: "Reactive discovery is your single biggest cost risk. A standing managed review relationship with defined SLAs, pre-negotiated pricing, and matter-ready infrastructure eliminates the scramble and reduces cost-per-document significantly.",
+      tag: "eDiscovery & MDR"
+    },
+    cyberir: {
+      icon: "🔐",
+      title: "Build a Breach Response Infrastructure Before You Need It",
+      text: "The worst time to find a breach review vendor is after a forensic firm has delivered 2 million files and your outside counsel is waiting. A pre-authorized breach review partner with attorney-led PII workflows is table stakes for any organization with significant data exposure.",
+      tag: "Cyber IR Response"
+    },
+    contracts: {
+      icon: "📄",
+      title: "Move Contract Abstraction Out of Associate Hours",
+      text: "High-volume contract review is predictable, repeatable work that does not need to be done by your most expensive legal resources. Managed contract abstraction services deliver structured data at a fraction of the in-house cost.",
+      tag: "Contract Review"
+    },
+    compliance: {
+      icon: "✅",
+      title: "Convert Compliance from Reactive to Managed",
+      text: "Regulatory monitoring is infrastructure, not a project. A managed compliance support program — with defined review cadences and structured escalation — removes the burden from in-house counsel and ensures nothing falls through the gaps.",
+      tag: "Compliance Support"
+    },
+    cost: {
+      icon: "💰",
+      title: "Demand Fixed-Fee Pricing for Document Review",
+      text: "Cost-per-hour document review is a structural budget problem disguised as a vendor issue. Fixed-fee managed review converts unpredictable invoice spikes into a known cost line your CFO can plan around.",
+      tag: "MDR — Fixed-Fee"
+    },
+    ai: {
+      icon: "🤖",
+      title: "Adopt AI-Assisted Review with Attorney Oversight",
+      text: "AI alone is not defensible in litigation. AI flagging with licensed attorney sign-off is. The right model accelerates review speed without introducing the accuracy risk that comes from removing human judgment from the final call.",
+      tag: "AI-Led Review"
+    }
+  };
+
+  // Show gaps first, then strong areas as reinforcement
+  const sorted = [...dimScores].sort((a, b) => a.score - b.score);
+  sorted.forEach(dim => {
+    const r = RECOS[dim.id];
+    if (!r) return;
+    const item = document.createElement('div');
+    item.className = 'reco-item';
+    item.innerHTML = `
+      <div class="reco-icon">${r.icon}</div>
+      <div class="reco-text">
+        <h4>${r.title}</h4>
+        <p>${r.text}</p>
+        <span class="reco-tag">${r.tag}</span>
+      </div>`;
+    recoList.appendChild(item);
+  });
+}
+
+function animateResults() {
+  const fills = document.querySelectorAll('.dim-bar-fill');
+  fills.forEach(f => {
+    const w = f.style.width;
+    f.style.width = '0%';
+    setTimeout(() => { f.style.width = w; }, 300);
+  });
+}
+</script>
+</body>
+</html>
